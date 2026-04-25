@@ -91,34 +91,10 @@ public class CollegeMgmt {
 
       switch (choice) {
       case 1:
-        String lecturerName;
-        boolean alreadyExists;
-
-        do {
-          System.out.print("Enter lecturer name: ");
-          lecturerName = s.nextLine();
-
-          alreadyExists = false;
-          for (int i = 0; i < lecturers.length; i++) {
-            if (lecturers[i].equals(lecturerName))
-              alreadyExists = true;
-          }
-
-          if (alreadyExists)
-            System.err.println("Lecturer " + lecturerName + " already exists!");
-        } while (alreadyExists);
-
+        String newLecturer = promptForItem(lecturers, s,
+            "Enter lecturer name: ", "Lecturer already exists!");
+        lecturers = addItem(lecturers, lecturerCount, newLecturer);
         lecturerCount++;
-        // Skip resizing array?
-        if (lecturerCount <= lecturers.length)
-          break;
-
-        String[] newLecturers = new String[lecturers.length * 2];
-        for (int i = 0; i < lecturers.length; i++) {
-          newLecturers[i] = lecturers[i];
-        }
-        newLecturers[lecturerCount - 1] = lecturerName;
-        lecturers = newLecturers;
         System.out.println("Lecturer added.");
         break;
 
@@ -128,15 +104,8 @@ public class CollegeMgmt {
         break;
 
       case 7:
-        if (lecturers.length < 1) {
-          System.err.println("No lecturers added.");
-          break;
-        }
-
         System.out.println("ALL LECTURERS");
-        for (int i = 0; i < lecturers.length; i++) {
-          System.out.println(lecturers[i]);
-        }
+        printItems(lecturers);
         break;
 
       // TODO: Reorder
