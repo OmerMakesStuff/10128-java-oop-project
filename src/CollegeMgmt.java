@@ -122,7 +122,22 @@ public class CollegeMgmt {
         break;
 
       case 4:
-        System.out.println("TODO: Option " + choice);
+        System.out.print("Enter lecturer name: ");
+        String lecturerName = s.nextLine();
+        boolean lecturerExists = itemExists(lecturers, lecturerName);
+        if (!lecturerExists) {
+          System.err.println("Lecturer doesn't exist!");
+          break;
+        }
+
+        System.out.print("Enter committee name: ");
+        String committeeName = s.nextLine();
+        boolean committeeExists = itemExists(committees, committeeName);
+        if (!committeeExists)
+          System.err.println("Committee doesn't exist!");
+
+        // TODO: Rest of implementation
+
         break;
 
       case 5:
