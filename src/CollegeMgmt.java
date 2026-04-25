@@ -4,26 +4,26 @@ import java.util.Scanner;
  * Omer Peled - 209110519
  */
 public class CollegeMgmt {
-  final static String MENU = """
-      COLLEGE STAFF MANAGEMENT
-
-      1 - Add lecturer
-      2 - Add committee
-      3 - Add department
-      4 - Add lecturer to department
-      5 - Show lecturer salary average
-      6 - Show lecturer salary average in department
-      7 - Show all lecturer details
-      8 - Show all committee details
-
-      0 - Exit
-      """;
-
   public static void main(String[] args) {
-    Scanner s = new Scanner(System.in);
+    final String MENU = """
+        COLLEGE STAFF MANAGEMENT
 
-    String[] lecturers = new String[0];
+        1 - Add lecturer
+        2 - Add committee
+        3 - Add department
+        4 - Add lecturer to department
+        5 - Show lecturer salary average
+        6 - Show lecturer salary average in department
+        7 - Show all lecturer details
+        8 - Show all committee details
+
+        0 - Exit
+        """;
+
+    String[] lecturers = new String[1];
     int lecturerCount = 0;
+
+    Scanner s = new Scanner(System.in);
     int choice = 0;
 
     do {
