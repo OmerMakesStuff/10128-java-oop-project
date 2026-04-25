@@ -4,6 +4,14 @@ import java.util.Scanner;
  * Omer Peled - 209110519
  */
 public class CollegeMgmt {
+  public static boolean itemExists(String[] items, String item) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] != null && items[i].equals(item))
+        return true;
+    }
+    return false;
+  }
+
   public static String promptForItem(String[] items, Scanner s,
       String promptMsg, String alreadyExistsMsg) {
     String newItem;
@@ -20,12 +28,7 @@ public class CollegeMgmt {
       if (isEmpty)
         return newItem;
 
-      alreadyExists = false;
-      for (int i = 0; i < items.length; i++) {
-        if (items[i] != null && items[i].equals(newItem))
-          alreadyExists = true;
-      }
-
+      alreadyExists = itemExists(items, newItem);
       if (alreadyExists)
         System.err.println(alreadyExistsMsg);
     } while (alreadyExists);
