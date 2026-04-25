@@ -22,7 +22,7 @@ public class CollegeMgmt {
 
       alreadyExists = false;
       for (int i = 0; i < items.length; i++) {
-        if (items[i].equals(newItem))
+        if (items[i] != null && items[i].equals(newItem))
           alreadyExists = true;
       }
 
