@@ -64,6 +64,11 @@ public class CollegeMgmt {
         System.out.println("Lecturer added.");
         break;
 
+      case 5:
+      case 6:
+        System.err.println("Not implemented yet.");
+        break;
+
       case 7:
         if (lecturers.length < 1) {
           System.err.println("No lecturers added.");
@@ -80,8 +85,6 @@ public class CollegeMgmt {
       case 2:
       case 3:
       case 4:
-      case 5:
-      case 6:
       case 8:
         System.out.println("TODO: Option " + choice);
         break;
