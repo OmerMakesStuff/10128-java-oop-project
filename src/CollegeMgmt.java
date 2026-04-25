@@ -2,8 +2,6 @@ import java.util.Scanner;
 
 /**
  * Omer Peled - 209110519
- * 
- * Insert other name here - 123456789
  */
 public class CollegeMgmt {
   final static String MENU = """
