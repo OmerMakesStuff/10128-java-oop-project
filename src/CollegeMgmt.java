@@ -80,6 +80,10 @@ public class CollegeMgmt {
 
     String[] lecturers = new String[1];
     int lecturerCount = 0;
+    String[] committees = new String[1];
+    int committeeCount = 0;
+    String[] departments = new String[1];
+    int departmentCount = 0;
 
     Scanner s = new Scanner(System.in);
     int choice = 0;
@@ -98,6 +102,26 @@ public class CollegeMgmt {
         System.out.println("Lecturer added.");
         break;
 
+      case 2:
+        String newCommittee = promptForItem(committees, s,
+            "Enter committee name: ", "Committee already exists!");
+        committees = addItem(committees, committeeCount, newCommittee);
+        committeeCount++;
+        System.out.println("committee added.");
+        break;
+
+      case 3:
+        String newDepartment = promptForItem(departments, s,
+            "Enter department name: ", "Department already exists!");
+        departments = addItem(departments, departmentCount, newDepartment);
+        departmentCount++;
+        System.out.println("department added.");
+        break;
+
+      case 4:
+        System.out.println("TODO: Option " + choice);
+        break;
+
       case 5:
       case 6:
         System.err.println("Not implemented yet.");
@@ -108,12 +132,9 @@ public class CollegeMgmt {
         printItems(lecturers);
         break;
 
-      // TODO: Reorder
-      case 2:
-      case 3:
-      case 4:
       case 8:
-        System.out.println("TODO: Option " + choice);
+        System.out.println("ALL COMMITTEES");
+        printItems(committees);
         break;
 
       case 0:
