@@ -4,6 +4,17 @@ import java.util.Scanner;
  * Omer Peled - 209110519
  */
 public class CollegeMgmt {
+  public static boolean isArrayEmpty(String[] items) {
+    if (items.length < 1)
+      return true;
+    // Arrays with only null are considered empty
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] != null)
+        return false;
+    }
+    return true;
+  }
+
   public static boolean itemExists(String[] items, String item) {
     for (int i = 0; i < items.length; i++) {
       if (items[i] != null && items[i].equals(item))
@@ -20,13 +31,6 @@ public class CollegeMgmt {
     do {
       System.out.print(promptMsg);
       newItem = s.nextLine();
-
-      // If array is empty, skip checking if already exists
-      // Since array length always needs to be doubled when resized,
-      // it starts at 1
-      boolean isEmpty = (items.length == 1) && (items[0] == null);
-      if (isEmpty)
-        return newItem;
 
       alreadyExists = itemExists(items, newItem);
       if (alreadyExists)
@@ -52,10 +56,7 @@ public class CollegeMgmt {
   }
 
   public static void printItems(String[] items) {
-    // Since array length always needs to be doubled when resized,
-    // it starts at 1
-    boolean isEmpty = (items.length == 1) && (items[0] == null);
-    if (isEmpty)
+    if (isArrayEmpty(items))
       System.err.println("None exist.");
     else {
       for (int i = 0; i < items.length; i++) {
