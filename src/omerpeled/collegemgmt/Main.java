@@ -90,20 +90,12 @@ public class Main {
   public static final MenuOption[] MENU_OPTIONS = MenuOption.values();
 
   public static void main(String[] args) {
-    final String MENU = """
-        COLLEGE STAFF MANAGEMENT
-
-        1 - Add lecturer
-        2 - Add committee
-        3 - Add department
-        4 - Add lecturer to department
-        5 - Show lecturer salary average
-        6 - Show lecturer salary average in department
-        7 - Show all lecturer details
-        8 - Show all committee details
-
-        0 - Exit
-        """;
+    StringBuffer menuBuf = new StringBuffer("COLLEGE STAFF MANAGEMENT\n\n");
+    for (int i = 0; i < MENU_OPTIONS.length; i++) {
+      menuBuf.append(MENU_OPTIONS[i].ordinal() + ") "
+          + MENU_OPTIONS[i].displayText + "\n");
+    }
+    final String MENU = menuBuf.toString();
 
     String[] lecturers = new String[1];
     int lecturerCount = 0;
