@@ -1,7 +1,7 @@
 package omerpeled.collegemgmt;
 
 public class College {
-  private String name;
+  private final String name;
 
   // TODO: Use lecturer, committee, department objects
   private String[] lecturers;
