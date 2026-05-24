@@ -7,6 +7,8 @@ package omerpeled.collegemgmt;
 import java.util.Scanner;
 
 public class Main {
+  private static Scanner s;
+
   // region Menu options
   public enum MenuOption {
     EXIT("Exit"),
@@ -111,7 +113,7 @@ public class Main {
     String[] departments = new String[1];
     int departmentCount = 0;
 
-    Scanner s = new Scanner(System.in);
+    s = new Scanner(System.in);
     int choiceIdx;
 
     do {
