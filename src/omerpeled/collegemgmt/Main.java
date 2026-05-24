@@ -69,6 +69,26 @@ public class Main {
     }
   }
 
+  public enum MenuOption {
+    EXIT("Exit"),
+    ADD_LECTURER("Add lecturer"),
+    ADD_COMMITTEE("Add committee"),
+    ADD_DEPARTMENT("Add department"),
+    ADD_LECTURER_TO_COMM("Add lecturer to committee"),
+    SHOW_LECTURER_SALARY_AVG("Show lecturer salary average"),
+    SHOW_LECTURER_SALARY_DEPT_AVG("Show lecturer salary average in department"),
+    SHOW_LECTURERS("Show all lecturer details"),
+    SHOW_COMMITTEES("Show all committee details");
+
+    public final String displayText;
+
+    MenuOption(String displayText) {
+      this.displayText = displayText;
+    }
+  }
+
+  public static final MenuOption[] MENU_OPTIONS = MenuOption.values();
+
   public static void main(String[] args) {
     final String MENU = """
         COLLEGE STAFF MANAGEMENT
