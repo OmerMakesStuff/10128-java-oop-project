@@ -1,1 +1,8 @@
+# Compiled .class directories
 bin/
+out/
+*.class
+
+# IntelliJ
+.idea/shelf/
+.idea/workspace.xml
