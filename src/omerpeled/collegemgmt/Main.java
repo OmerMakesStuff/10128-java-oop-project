@@ -87,7 +87,7 @@ public class Main {
   // region Main
   public static String buildMenu() {
     StringBuffer menuBuf = new StringBuffer(
-        "COLLEGE STAFF MANAGEMENT\n\n");
+        "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
       menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
           .append(MENU_OPTIONS[i].displayText).append("\n");
@@ -100,6 +100,11 @@ public class Main {
     college = new College("Afeka");
 
     s = new Scanner(System.in);
+
+    System.out.print("Welcome!\nEnter college name: ");
+    String collegeName = s.nextLine();
+    college = new College(collegeName);
+    System.out.println();
 
     final String MENU = buildMenu();
 
