@@ -7,7 +7,8 @@ package omerpeled.collegemgmt;
 import java.util.Scanner;
 
 public class Main {
-  private static Scanner s;
+  static Scanner s;
+  static College college;
 
   // region Menu options
   public enum MenuOption {
@@ -28,65 +29,51 @@ public class Main {
     }
   }
 
-  public static final MenuOption[] MENU_OPTIONS = MenuOption.values();
-  // endregion
-
-  // region General string array utils
-  public static boolean isArrayEmpty(String[] items) {
-    if (items.length < 1)
-      return true;
-    // Arrays with only null are considered empty
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null)
-        return false;
-    }
-    return true;
-  }
-
-  public static boolean itemExists(String[] items, String item) {
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null && items[i].equals(item))
-        return true;
-    }
-    return false;
-  }
-
-  public static String[] addItem(String[] items, int logicalSize,
-      String newItem) {
-    // If array is too small, double its length and copy existing items
-    if (logicalSize == items.length) {
-      String[] resizedItems = new String[items.length * 2];
-      for (int i = 0; i < items.length; i++) {
-        resizedItems[i] = items[i];
-      }
-      items = resizedItems;
-    }
-
-    items[logicalSize] = newItem;
-    return items;
-  }
+  static final MenuOption[] MENU_OPTIONS = MenuOption.values();
   // endregion
 
   // region I/O utils (printing messages, user input)
-  public static String promptForItem(String[] items, Scanner s,
-      String promptMsg, String alreadyExistsMsg) {
+  public static void promptForItem(College.ItemType type) {
+
     String newItem;
-    boolean alreadyExists;
+    College.AddItemStatus addStatus = College.AddItemStatus.SUCCESS;
 
     do {
-      System.out.print(promptMsg);
+      System.out.print("Enter " + type.displayName.toLowerCase() + " name: ");
       newItem = s.nextLine();
+      switch (type) {
+        case College.ItemType.LECTURER:
+          addStatus = college.addLecturer(newItem);
+          break;
+        case College.ItemType.COMMITTEE:
+          addStatus = college.addCommittee(newItem);
+          break;
+        case College.ItemType.DEPARTMENT:
+          addStatus = college.addDepartment(newItem);
+          break;
+      }
 
-      alreadyExists = itemExists(items, newItem);
-      if (alreadyExists)
-        System.err.println(alreadyExistsMsg);
-    } while (alreadyExists);
-
-    return newItem;
+      switch (addStatus) {
+        case College.AddItemStatus.FAIL_EXISTS:
+          System.err
+              .println(type.displayName + " " + newItem + " already exists!");
+          break;
+        case College.AddItemStatus.SUCCESS:
+          System.out.println(type.displayName + " added.");
+          break;
+      }
+    } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
   public static void printItems(String[] items) {
-    if (isArrayEmpty(items))
+    boolean isArrayEmpty = true;
+    // Arrays with only null are considered empty
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] != null)
+        isArrayEmpty = false;
+    }
+
+    if (isArrayEmpty)
       System.err.println("None exist.");
     else {
       for (int i = 0; i < items.length; i++) {
@@ -101,17 +88,13 @@ public class Main {
   public static void main(String[] args) {
     StringBuffer menuBuf = new StringBuffer("COLLEGE STAFF MANAGEMENT\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
-      menuBuf.append(MENU_OPTIONS[i].ordinal() + ") "
-          + MENU_OPTIONS[i].displayText + "\n");
+      menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
+          .append(MENU_OPTIONS[i].displayText).append("\n");
     }
     final String MENU = menuBuf.toString();
 
-    String[] lecturers = new String[1];
-    int lecturerCount = 0;
-    String[] committees = new String[1];
-    int committeeCount = 0;
-    String[] departments = new String[1];
-    int departmentCount = 0;
+    // TODO: Prompt user for college name
+    college = new College("Afeka");
 
     s = new Scanner(System.in);
     int choiceIdx;
@@ -134,61 +117,50 @@ public class Main {
           break; // Just exit - choiceIdx = 0
 
         case MenuOption.ADD_LECTURER:
-          String newLecturer = promptForItem(lecturers, s,
-              "Enter lecturer name: ", "Lecturer already exists!");
-          lecturers = addItem(lecturers, lecturerCount, newLecturer);
-          lecturerCount++;
-          System.out.println("Lecturer added.");
+          promptForItem(College.ItemType.LECTURER);
           break;
 
         case MenuOption.ADD_COMMITTEE:
-          String newCommittee = promptForItem(committees, s,
-              "Enter committee name: ", "Committee already exists!");
-          committees = addItem(committees, committeeCount, newCommittee);
-          committeeCount++;
-          System.out.println("committee added.");
+          promptForItem(College.ItemType.COMMITTEE);
           break;
 
         case MenuOption.ADD_DEPARTMENT:
-          String newDepartment = promptForItem(departments, s,
-              "Enter department name: ", "Department already exists!");
-          departments = addItem(departments, departmentCount, newDepartment);
-          departmentCount++;
-          System.out.println("department added.");
+          promptForItem(College.ItemType.DEPARTMENT);
           break;
 
         case MenuOption.ADD_LECTURER_TO_COMM:
           System.out.print("Enter lecturer name: ");
           String lecturerName = s.nextLine();
-          boolean lecturerExists = itemExists(lecturers, lecturerName);
-          if (!lecturerExists) {
+          String existingLecturer = college.getLecturerByName(lecturerName);
+          if (existingLecturer == null) {
             System.err.println("Lecturer doesn't exist!");
             break;
           }
 
           System.out.print("Enter committee name: ");
           String committeeName = s.nextLine();
-          boolean committeeExists = itemExists(committees, committeeName);
-          if (!committeeExists)
+          String existingCommittee = college.getCommitteeByName(committeeName);
+          if (existingCommittee == null) {
             System.err.println("Committee doesn't exist!");
+            break;
+          }
 
           // TODO: Rest of implementation
 
           break;
 
-        case SHOW_LECTURER_SALARY_AVG:
-        case SHOW_LECTURER_SALARY_DEPT_AVG:
+        case SHOW_LECTURER_SALARY_AVG, SHOW_LECTURER_SALARY_DEPT_AVG:
           System.err.println("Not implemented yet.");
           break;
 
         case SHOW_LECTURERS:
           System.out.println("ALL LECTURERS");
-          printItems(lecturers);
+          printItems(college.getLecturers());
           break;
 
         case SHOW_COMMITTEES:
           System.out.println("ALL COMMITTEES");
-          printItems(committees);
+          printItems(college.getCommittees());
           break;
       }
 
