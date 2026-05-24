@@ -7,68 +7,7 @@ package omerpeled.collegemgmt;
 import java.util.Scanner;
 
 public class Main {
-  public static boolean isArrayEmpty(String[] items) {
-    if (items.length < 1)
-      return true;
-    // Arrays with only null are considered empty
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null)
-        return false;
-    }
-    return true;
-  }
-
-  public static boolean itemExists(String[] items, String item) {
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null && items[i].equals(item))
-        return true;
-    }
-    return false;
-  }
-
-  public static String promptForItem(String[] items, Scanner s,
-      String promptMsg, String alreadyExistsMsg) {
-    String newItem;
-    boolean alreadyExists;
-
-    do {
-      System.out.print(promptMsg);
-      newItem = s.nextLine();
-
-      alreadyExists = itemExists(items, newItem);
-      if (alreadyExists)
-        System.err.println(alreadyExistsMsg);
-    } while (alreadyExists);
-
-    return newItem;
-  }
-
-  public static String[] addItem(String[] items, int logicalSize,
-      String newItem) {
-    // If array is too small, double its length and copy existing items
-    if (logicalSize == items.length) {
-      String[] resizedItems = new String[items.length * 2];
-      for (int i = 0; i < items.length; i++) {
-        resizedItems[i] = items[i];
-      }
-      items = resizedItems;
-    }
-
-    items[logicalSize] = newItem;
-    return items;
-  }
-
-  public static void printItems(String[] items) {
-    if (isArrayEmpty(items))
-      System.err.println("None exist.");
-    else {
-      for (int i = 0; i < items.length; i++) {
-        if (items[i] != null)
-          System.out.println(items[i]);
-      }
-    }
-  }
-
+  // region Menu options
   public enum MenuOption {
     EXIT("Exit"),
     ADD_LECTURER("Add lecturer"),
@@ -88,7 +27,75 @@ public class Main {
   }
 
   public static final MenuOption[] MENU_OPTIONS = MenuOption.values();
+  // endregion
 
+  // region General string array utils
+  public static boolean isArrayEmpty(String[] items) {
+    if (items.length < 1)
+      return true;
+    // Arrays with only null are considered empty
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] != null)
+        return false;
+    }
+    return true;
+  }
+
+  public static boolean itemExists(String[] items, String item) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i] != null && items[i].equals(item))
+        return true;
+    }
+    return false;
+  }
+
+  public static String[] addItem(String[] items, int logicalSize,
+      String newItem) {
+    // If array is too small, double its length and copy existing items
+    if (logicalSize == items.length) {
+      String[] resizedItems = new String[items.length * 2];
+      for (int i = 0; i < items.length; i++) {
+        resizedItems[i] = items[i];
+      }
+      items = resizedItems;
+    }
+
+    items[logicalSize] = newItem;
+    return items;
+  }
+  // endregion
+
+  // region I/O utils (printing messages, user input)
+  public static String promptForItem(String[] items, Scanner s,
+      String promptMsg, String alreadyExistsMsg) {
+    String newItem;
+    boolean alreadyExists;
+
+    do {
+      System.out.print(promptMsg);
+      newItem = s.nextLine();
+
+      alreadyExists = itemExists(items, newItem);
+      if (alreadyExists)
+        System.err.println(alreadyExistsMsg);
+    } while (alreadyExists);
+
+    return newItem;
+  }
+
+  public static void printItems(String[] items) {
+    if (isArrayEmpty(items))
+      System.err.println("None exist.");
+    else {
+      for (int i = 0; i < items.length; i++) {
+        if (items[i] != null)
+          System.out.println(items[i]);
+      }
+    }
+  }
+  // endregion
+
+  // region Main
   public static void main(String[] args) {
     StringBuffer menuBuf = new StringBuffer("COLLEGE STAFF MANAGEMENT\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
@@ -188,4 +195,5 @@ public class Main {
 
     s.close();
   }
+  // endregion
 }
