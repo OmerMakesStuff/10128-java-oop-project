@@ -85,18 +85,24 @@ public class Main {
   // endregion
 
   // region Main
-  public static void main(String[] args) {
-    StringBuffer menuBuf = new StringBuffer("COLLEGE STAFF MANAGEMENT\n\n");
+  public static String buildMenu() {
+    StringBuffer menuBuf = new StringBuffer(
+        "COLLEGE STAFF MANAGEMENT\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
       menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
           .append(MENU_OPTIONS[i].displayText).append("\n");
     }
-    final String MENU = menuBuf.toString();
+    return menuBuf.toString();
+  }
 
+  public static void main(String[] args) {
     // TODO: Prompt user for college name
     college = new College("Afeka");
 
     s = new Scanner(System.in);
+
+    final String MENU = buildMenu();
+
     int choiceIdx;
 
     do {
