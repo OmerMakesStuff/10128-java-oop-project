@@ -105,82 +105,86 @@ public class Main {
     int departmentCount = 0;
 
     Scanner s = new Scanner(System.in);
-    int choice = 0;
+    int choiceIdx;
 
     do {
       System.out.print(MENU + "\nEnter choice: ");
-      choice = Integer.parseInt(s.nextLine()); // Avoid \n in buffer after Enter
+      // Avoid \n in buffer after Enter
+      choiceIdx = Integer.parseInt(s.nextLine());
       System.out.println();
 
+      // Handle choices not covered by MenuOption enum
+      if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
+        System.err.println("Invalid choice!");
+        continue;
+      }
+
+      MenuOption choice = MENU_OPTIONS[choiceIdx];
       switch (choice) {
-      case 1:
-        String newLecturer = promptForItem(lecturers, s,
-            "Enter lecturer name: ", "Lecturer already exists!");
-        lecturers = addItem(lecturers, lecturerCount, newLecturer);
-        lecturerCount++;
-        System.out.println("Lecturer added.");
-        break;
+        case EXIT:
+          break; // Just exit - choiceIdx = 0
 
-      case 2:
-        String newCommittee = promptForItem(committees, s,
-            "Enter committee name: ", "Committee already exists!");
-        committees = addItem(committees, committeeCount, newCommittee);
-        committeeCount++;
-        System.out.println("committee added.");
-        break;
-
-      case 3:
-        String newDepartment = promptForItem(departments, s,
-            "Enter department name: ", "Department already exists!");
-        departments = addItem(departments, departmentCount, newDepartment);
-        departmentCount++;
-        System.out.println("department added.");
-        break;
-
-      case 4:
-        System.out.print("Enter lecturer name: ");
-        String lecturerName = s.nextLine();
-        boolean lecturerExists = itemExists(lecturers, lecturerName);
-        if (!lecturerExists) {
-          System.err.println("Lecturer doesn't exist!");
+        case MenuOption.ADD_LECTURER:
+          String newLecturer = promptForItem(lecturers, s,
+              "Enter lecturer name: ", "Lecturer already exists!");
+          lecturers = addItem(lecturers, lecturerCount, newLecturer);
+          lecturerCount++;
+          System.out.println("Lecturer added.");
           break;
-        }
 
-        System.out.print("Enter committee name: ");
-        String committeeName = s.nextLine();
-        boolean committeeExists = itemExists(committees, committeeName);
-        if (!committeeExists)
-          System.err.println("Committee doesn't exist!");
+        case MenuOption.ADD_COMMITTEE:
+          String newCommittee = promptForItem(committees, s,
+              "Enter committee name: ", "Committee already exists!");
+          committees = addItem(committees, committeeCount, newCommittee);
+          committeeCount++;
+          System.out.println("committee added.");
+          break;
 
-        // TODO: Rest of implementation
+        case MenuOption.ADD_DEPARTMENT:
+          String newDepartment = promptForItem(departments, s,
+              "Enter department name: ", "Department already exists!");
+          departments = addItem(departments, departmentCount, newDepartment);
+          departmentCount++;
+          System.out.println("department added.");
+          break;
 
-        break;
+        case MenuOption.ADD_LECTURER_TO_COMM:
+          System.out.print("Enter lecturer name: ");
+          String lecturerName = s.nextLine();
+          boolean lecturerExists = itemExists(lecturers, lecturerName);
+          if (!lecturerExists) {
+            System.err.println("Lecturer doesn't exist!");
+            break;
+          }
 
-      case 5:
-      case 6:
-        System.err.println("Not implemented yet.");
-        break;
+          System.out.print("Enter committee name: ");
+          String committeeName = s.nextLine();
+          boolean committeeExists = itemExists(committees, committeeName);
+          if (!committeeExists)
+            System.err.println("Committee doesn't exist!");
 
-      case 7:
-        System.out.println("ALL LECTURERS");
-        printItems(lecturers);
-        break;
+          // TODO: Rest of implementation
 
-      case 8:
-        System.out.println("ALL COMMITTEES");
-        printItems(committees);
-        break;
+          break;
 
-      case 0:
-        break; // Just exit
+        case SHOW_LECTURER_SALARY_AVG:
+        case SHOW_LECTURER_SALARY_DEPT_AVG:
+          System.err.println("Not implemented yet.");
+          break;
 
-      default:
-        System.out.println("Invalid choice!");
-        break;
+        case SHOW_LECTURERS:
+          System.out.println("ALL LECTURERS");
+          printItems(lecturers);
+          break;
+
+        case SHOW_COMMITTEES:
+          System.out.println("ALL COMMITTEES");
+          printItems(committees);
+          break;
       }
 
       System.out.println();
-    } while (choice != 0);
+    } while (choiceIdx != 0);
 
     s.close();
   }
