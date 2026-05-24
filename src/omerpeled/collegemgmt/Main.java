@@ -1,9 +1,12 @@
-import java.util.Scanner;
-
 /**
  * Omer Peled - 209110519
  */
-public class CollegeMgmt {
+
+package omerpeled.collegemgmt;
+
+import java.util.Scanner;
+
+public class Main {
   public static boolean isArrayEmpty(String[] items) {
     if (items.length < 1)
       return true;
