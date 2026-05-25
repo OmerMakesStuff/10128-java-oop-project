@@ -61,7 +61,7 @@ public class Main {
   /**
    * Generic prompt for string; Will be removed later.
    */
-  public static void promptForItem(College.ItemType type) {
+  private static void promptForItem(College.ItemType type) {
 
     String newItem;
     College.AddItemStatus addStatus;
@@ -94,7 +94,7 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
-  // FIXME: CODE DUPLICATION because of different array types :(
+  // FIXME: CODE DUPLICATION due to different array types :(
   // Will be unified when I can use generics
   private static void printLecturers() {
     Lecturer[] lecturers = college.getLecturers();
@@ -122,7 +122,7 @@ public class Main {
   // endregion
 
   // region Main
-  public static String buildMenu() {
+  private static String buildMenu() {
     StringBuffer menuBuf = new StringBuffer(
         "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
