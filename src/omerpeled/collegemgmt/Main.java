@@ -65,20 +65,28 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
-  public static void printItems(String[] items) {
-    boolean isArrayEmpty = true;
-    // Arrays with only null are considered empty
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null)
-        isArrayEmpty = false;
-    }
-
-    if (isArrayEmpty)
-      System.err.println("None exist.");
+  // FIXME: CODE DUPLICATION because of different array types :(
+  // Will be unified when I can use generics
+  private static void printLecturers() {
+    Lecturer[] lecturers = college.getLecturers();
+    if (lecturers[0] == null)
+      System.err.println("No lecturers exist.");
     else {
-      for (int i = 0; i < items.length; i++) {
-        if (items[i] != null)
-          System.out.println(items[i]);
+      for (int i = 0; i < lecturers.length; i++) {
+        if (lecturers[i] != null)
+          System.out.println(lecturers[i]);
+      }
+    }
+  }
+
+  private static void printCommittees() {
+    String[] committees = college.getCommittees();
+    if (committees[0] == null)
+      System.err.println("No committees exist.");
+    else {
+      for (int i = 0; i < committees.length; i++) {
+        if (committees[i] != null)
+          System.out.println(committees[i]);
       }
     }
   }
@@ -142,7 +150,7 @@ public class Main {
         case MenuOption.ADD_LECTURER_TO_COMM:
           System.out.print("Enter lecturer name: ");
           String lecturerName = s.nextLine();
-          String existingLecturer = college.getLecturerByName(lecturerName);
+          Lecturer existingLecturer = college.getLecturerByName(lecturerName);
           if (existingLecturer == null) {
             System.err.println("Lecturer doesn't exist!");
             break;
@@ -166,12 +174,12 @@ public class Main {
 
         case SHOW_LECTURERS:
           System.out.println("ALL LECTURERS");
-          printItems(college.getLecturers());
+          printLecturers();
           break;
 
         case SHOW_COMMITTEES:
           System.out.println("ALL COMMITTEES");
-          printItems(college.getCommittees());
+          printCommittees();
           break;
       }
 

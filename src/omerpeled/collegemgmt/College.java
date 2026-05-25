@@ -3,9 +3,9 @@ package omerpeled.collegemgmt;
 public class College {
   private final String name;
 
-  // TODO: Use lecturer, committee, department objects
-  private String[] lecturers;
+  private Lecturer[] lecturers;
   private int lecturerCount;
+  // TODO: Use Committee, Department instead of strings
   private String[] committees;
   private int committeeCount;
   private String[] departments;
@@ -31,7 +31,7 @@ public class College {
   public College(String name) {
     this.name = name;
 
-    this.lecturers = new String[1];
+    this.lecturers = new Lecturer[1];
     this.lecturerCount = 0;
     this.committees = new String[1];
     this.committeeCount = 0;
@@ -44,21 +44,43 @@ public class College {
   }
 
   // region Lecturers
-  public String[] getLecturers() {
+  public Lecturer[] getLecturers() {
     return lecturers;
   }
 
-  public String getLecturerByName(String name) {
-    return getItem(lecturers, name);
+  public Lecturer getLecturerByName(String name) {
+    for (int i = 0; i < lecturers.length; i++) {
+      if (lecturers[i] != null && lecturers[i].getName().equals(name))
+        return lecturers[i];
+    }
+    return null;
   }
 
   public AddItemStatus addLecturer(String name) {
-    for (int i = 0; i < this.lecturers.length; i++) {
-      if (this.lecturers[i] != null && this.lecturers[i].equals(name))
-        return AddItemStatus.FAIL_EXISTS;
+    Lecturer existingByName = getLecturerByName(name);
+    if (existingByName != null)
+      return AddItemStatus.FAIL_EXISTS;
+
+    // Double array size if too small
+    // FIXME: CODE DUPLICATION :( Extract when I can use generics
+    if (lecturerCount == lecturers.length) {
+      Lecturer[] resizedItems = new Lecturer[lecturers.length * 2];
+      for (int i = 0; i < lecturers.length; i++) {
+        resizedItems[i] = lecturers[i];
+      }
+      lecturers = resizedItems;
     }
 
-    lecturers = addItem(this.lecturers, this.lecturerCount, name);
+    // TODO: Replace dummy data
+    Lecturer newLecturer = new Lecturer(
+        name,
+        "123546789",
+        Lecturer.Degree.BSC,
+        "Dummy",
+        1000,
+        null);
+    lecturers[lecturerCount] = newLecturer;
+
     this.lecturerCount++;
     return AddItemStatus.SUCCESS;
   }
