@@ -10,6 +10,13 @@ public class Main {
   static Scanner s;
   static College college;
 
+  // region Messages
+  private static final String MSG_PROMPT = "Enter %s: ";
+  private static final String MSG_SUCCESS_ADD = "%s added.\n";
+  private static final String MSG_FAIL_EXISTS = "%s already exists!\n";
+  private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
+  // endregion
+
   // region Menu options
   public enum MenuOption {
     EXIT("Exit"),
@@ -37,22 +44,22 @@ public class Main {
     Lecturer existingLecturer;
     String name;
     do {
-      System.out.print("Enter lecturer name: ");
+      System.out.printf(MSG_PROMPT, "lecturer name");
       name = s.nextLine();
 
       existingLecturer = college.getLecturerByName(name);
       if (existingLecturer != null)
-        System.err.println("Lecturer " + name + " already exists!");
+        System.err.printf(MSG_FAIL_EXISTS, "Lecturer " + name);
     } while (existingLecturer != null);
 
     String id;
     do {
-      System.out.print("Enter lecturer ID: ");
+      System.out.printf(MSG_PROMPT, "lecturer ID");
       id = s.nextLine();
 
       existingLecturer = college.getLecturerById(id);
       if (existingLecturer != null)
-        System.err.println("Lecturer with ID " + id + " already exists!");
+        System.err.printf(MSG_FAIL_EXISTS, "Lecturer with ID " + id);
     } while (existingLecturer != null);
 
     // TODO: Prompt for degree (menu)
@@ -67,6 +74,7 @@ public class Main {
         1000,
         null);
     college.addLecturer(newLecturer);
+    System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
   }
 
   /**
@@ -96,10 +104,10 @@ public class Main {
       switch (addStatus) {
         case College.AddItemStatus.FAIL_EXISTS:
           System.err
-              .println(type.displayName + " " + newItem + " already exists!");
+              .printf(MSG_FAIL_EXISTS, type.displayName + " " + newItem);
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.println(type.displayName + " added.");
+          System.out.printf(MSG_SUCCESS_ADD, type.displayName);
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
@@ -189,7 +197,7 @@ public class Main {
           String lecturerName = s.nextLine();
           Lecturer existingLecturer = college.getLecturerByName(lecturerName);
           if (existingLecturer == null) {
-            System.err.println("Lecturer doesn't exist!");
+            System.err.printf(MSG_FAIL_NOT_EXISTS, "Lecturer");
             break;
           }
 
@@ -197,7 +205,7 @@ public class Main {
           String committeeName = s.nextLine();
           String existingCommittee = college.getCommitteeByName(committeeName);
           if (existingCommittee == null) {
-            System.err.println("Committee doesn't exist!");
+            System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
             break;
           }
 
