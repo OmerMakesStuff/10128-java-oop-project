@@ -56,6 +56,14 @@ public class College {
     return null;
   }
 
+  public Lecturer getLecturerById(String id) {
+    for (int i = 0; i < lecturers.length; i++) {
+      if (lecturers[i] != null && lecturers[i].getId().equals(id))
+        return lecturers[i];
+    }
+    return null;
+  }
+
   public void addLecturer(Lecturer newLecturer) {
     // Double array size if too small
     // FIXME: CODE DUPLICATION :( Extract when I can use generics
