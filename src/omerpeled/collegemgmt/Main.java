@@ -34,23 +34,34 @@ public class Main {
 
   // region I/O utils (printing messages, user input)
   private static void promptForLecturer() {
+    Lecturer existingLecturer;
     String name;
-    Lecturer existingByName;
     do {
       System.out.print("Enter lecturer name: ");
       name = s.nextLine();
 
-      existingByName = college.getLecturerByName(name);
-      if (existingByName != null)
+      existingLecturer = college.getLecturerByName(name);
+      if (existingLecturer != null)
         System.err.println("Lecturer " + name + " already exists!");
-    } while (existingByName != null);
+    } while (existingLecturer != null);
 
-    // TODO: Enter id, check for existing by id
+    String id;
+    do {
+      System.out.print("Enter lecturer ID: ");
+      id = s.nextLine();
+
+      existingLecturer = college.getLecturerById(id);
+      if (existingLecturer != null)
+        System.err.println("Lecturer with ID " + id + " already exists!");
+    } while (existingLecturer != null);
+
+    // TODO: Prompt for degree (menu)
+    // TODO: Enter department, check if exists, leave empty for null
     // TODO: Enter other details
 
     Lecturer newLecturer = new Lecturer(
         name,
-        "123546789",
+        id,
         Lecturer.Degree.BSC,
         "Dummy",
         1000,

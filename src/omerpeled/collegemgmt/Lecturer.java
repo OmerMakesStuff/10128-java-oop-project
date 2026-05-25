@@ -31,7 +31,6 @@ public class Lecturer {
     this.degreeTitle = degreeTitle;
     this.salary = salary;
     this.department = department;
-    // TODO for main: Leave empty to set this to null
   }
 
   public String getName() {
