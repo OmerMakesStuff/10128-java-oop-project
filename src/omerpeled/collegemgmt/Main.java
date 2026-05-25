@@ -33,24 +33,53 @@ public class Main {
   // endregion
 
   // region I/O utils (printing messages, user input)
+  private static void promptForLecturer() {
+    String name;
+    Lecturer existingByName;
+    do {
+      System.out.print("Enter lecturer name: ");
+      name = s.nextLine();
+
+      existingByName = college.getLecturerByName(name);
+      if (existingByName != null)
+        System.err.println("Lecturer " + name + " already exists!");
+    } while (existingByName != null);
+
+    // TODO: Enter id, check for existing by id
+    // TODO: Enter other details
+
+    Lecturer newLecturer = new Lecturer(
+        name,
+        "123546789",
+        Lecturer.Degree.BSC,
+        "Dummy",
+        1000,
+        null);
+    college.addLecturer(newLecturer);
+  }
+
+  /**
+   * Generic prompt for string; Will be removed later.
+   */
   public static void promptForItem(College.ItemType type) {
 
     String newItem;
-    College.AddItemStatus addStatus = College.AddItemStatus.SUCCESS;
+    College.AddItemStatus addStatus;
 
     do {
       System.out.print("Enter " + type.displayName.toLowerCase() + " name: ");
       newItem = s.nextLine();
       switch (type) {
-        case College.ItemType.LECTURER:
-          addStatus = college.addLecturer(newItem);
-          break;
         case College.ItemType.COMMITTEE:
           addStatus = college.addCommittee(newItem);
           break;
         case College.ItemType.DEPARTMENT:
           addStatus = college.addDepartment(newItem);
           break;
+        default:
+          System.out.println(
+              "Invalid item type, or it cannot be used with promptForItem.");
+          return;
       }
 
       switch (addStatus) {
@@ -136,7 +165,7 @@ public class Main {
           break; // Just exit - choiceIdx = 0
 
         case MenuOption.ADD_LECTURER:
-          promptForItem(College.ItemType.LECTURER);
+          promptForLecturer();
           break;
 
         case MenuOption.ADD_COMMITTEE:

@@ -56,11 +56,7 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addLecturer(String name) {
-    Lecturer existingByName = getLecturerByName(name);
-    if (existingByName != null)
-      return AddItemStatus.FAIL_EXISTS;
-
+  public void addLecturer(Lecturer newLecturer) {
     // Double array size if too small
     // FIXME: CODE DUPLICATION :( Extract when I can use generics
     if (lecturerCount == lecturers.length) {
@@ -70,19 +66,8 @@ public class College {
       }
       lecturers = resizedItems;
     }
-
-    // TODO: Replace dummy data
-    Lecturer newLecturer = new Lecturer(
-        name,
-        "123546789",
-        Lecturer.Degree.BSC,
-        "Dummy",
-        1000,
-        null);
     lecturers[lecturerCount] = newLecturer;
-
     this.lecturerCount++;
-    return AddItemStatus.SUCCESS;
   }
   // endregion
 
