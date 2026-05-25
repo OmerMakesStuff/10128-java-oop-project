@@ -61,7 +61,9 @@ public class Lecturer {
   // TODO: Setters?
 
   public String toString() {
-    // TODO: toString
-    return super.toString();
+    return name + " (" + id + "), " + degree.displayName + " in " + degreeTitle
+        + "\n\t" +
+        "Department: " + (department == null ? "None" : department.getName())
+        + " | Salary: " + salary + "₪";
   }
 }
