@@ -133,9 +133,6 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    // TODO: Prompt user for college name
-    college = new College("Afeka");
-
     s = new Scanner(System.in);
 
     System.out.print("Welcome!\nEnter college name: ");
