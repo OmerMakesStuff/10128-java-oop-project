@@ -28,7 +28,11 @@ public class Department {
   // TODO: Remove lecturer - move others back in array
 
   public String toString() {
-    // TODO: toString
-    return super.toString();
+    StringBuffer buf = new StringBuffer(
+        name + " (" + studentCount + " students)\n\t");
+    for (int i = 0; i < lecturers.length; i++) {
+      buf.append("\n\t").append(lecturers[i].toString().split("\n")[0]);
+    }
+    return buf.toString();
   }
 }
