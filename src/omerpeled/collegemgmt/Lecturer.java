@@ -11,34 +11,34 @@ public class Lecturer {
     }
   }
 
-  private String name;
   private String id;
+  private String name;
   private Degree degree;
   private String degreeTitle;
   private double salary;
   private Department department;
 
   public Lecturer(
-      String name,
       String id,
+      String name,
       Degree degree,
       String degreeTitle,
       double salary,
       Department department) {
-    this.name = name;
     this.id = id;
+    this.name = name;
     this.degree = degree;
     this.degreeTitle = degreeTitle;
     this.salary = salary;
     this.department = department;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public String getId() {
     return id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public Degree getDegree() {

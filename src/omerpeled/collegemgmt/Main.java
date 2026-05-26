@@ -136,16 +136,6 @@ public class Main {
   // region I/O (printing messages, user input)
   private static void promptForLecturer() {
     Lecturer existingLecturer;
-    String name;
-    do {
-      System.out.printf(MSG_PROMPT, "lecturer name");
-      name = s.nextLine();
-
-      existingLecturer = college.getLecturerByName(name);
-      if (existingLecturer != null)
-        System.err.printf(MSG_FAIL_EXISTS, "Lecturer " + name);
-    } while (existingLecturer != null);
-
     String id;
     do {
       System.out.printf(MSG_PROMPT, "lecturer ID");
@@ -156,6 +146,9 @@ public class Main {
         System.err.printf(MSG_FAIL_EXISTS, "Lecturer with ID " + id);
     } while (existingLecturer != null);
 
+    System.out.printf(MSG_PROMPT, "lecturer name");
+    String name = s.nextLine();
+    
     // TODO: Prompt for degree (menu)
     // TODO: Enter department, check if exists, leave empty for null
     // TODO: Enter other details
