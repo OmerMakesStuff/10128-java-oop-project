@@ -64,7 +64,11 @@ public class College {
     return null;
   }
 
-  public void addLecturer(Lecturer newLecturer) {
+  public AddItemStatus addLecturer(Lecturer newLecturer) {
+    Lecturer existingByName = getLecturerByName(newLecturer.getName());
+    if (existingByName != null)
+      return AddItemStatus.FAIL_EXISTS;
+
     // Double array size if too small
     // FIXME: CODE DUPLICATION :( Extract when I can use generics
     if (lecturerCount == lecturers.length) {
@@ -74,8 +78,10 @@ public class College {
       }
       lecturers = resizedItems;
     }
+
     lecturers[lecturerCount] = newLecturer;
     this.lecturerCount++;
+    return AddItemStatus.SUCCESS;
   }
   // endregion
 

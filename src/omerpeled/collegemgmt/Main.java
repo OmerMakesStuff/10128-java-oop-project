@@ -167,8 +167,15 @@ public class Main {
         "Dummy",
         1000,
         null);
-    college.addLecturer(newLecturer);
-    System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
+    College.AddItemStatus addStatus = college.addLecturer(newLecturer);
+    switch (addStatus) {
+      case College.AddItemStatus.FAIL_EXISTS:
+        System.err.printf(MSG_FAIL_EXISTS, "Lecturer");
+        break;
+      case College.AddItemStatus.SUCCESS:
+        System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
+        break;
+    }
   }
 
   /**
