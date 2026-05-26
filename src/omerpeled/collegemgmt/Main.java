@@ -10,6 +10,89 @@ public class Main {
   static Scanner s;
   static College college;
 
+  public static void main(String[] args) {
+    s = new Scanner(System.in);
+
+    System.out.print("Welcome!\nEnter college name: ");
+    String collegeName = s.nextLine();
+    college = new College(collegeName);
+    System.out.println();
+
+    final String MENU = buildMenuString();
+
+    int choiceIdx;
+
+    do {
+      System.out.print(MENU + "\nEnter choice: ");
+      // Avoid \n in buffer after Enter
+      choiceIdx = Integer.parseInt(s.nextLine());
+      System.out.println();
+
+      // Handle choices not covered by MenuOption enum
+      if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
+        System.err.println("Invalid choice!");
+        continue;
+      }
+
+      MenuOption choice = MENU_OPTIONS[choiceIdx];
+      switch (choice) {
+        case EXIT:
+          break; // Just exit - choiceIdx = 0
+
+        case MenuOption.ADD_LECTURER:
+          promptForLecturer();
+          break;
+
+        case MenuOption.ADD_COMMITTEE:
+          promptForItem(College.ItemType.COMMITTEE);
+          break;
+
+        case MenuOption.ADD_DEPARTMENT:
+          promptForItem(College.ItemType.DEPARTMENT);
+          break;
+
+        case MenuOption.ADD_LECTURER_TO_COMM:
+          System.out.print("Enter lecturer name: ");
+          String lecturerName = s.nextLine();
+          Lecturer existingLecturer = college.getLecturerByName(lecturerName);
+          if (existingLecturer == null) {
+            System.err.printf(MSG_FAIL_NOT_EXISTS, "Lecturer");
+            break;
+          }
+
+          System.out.print("Enter committee name: ");
+          String committeeName = s.nextLine();
+          String existingCommittee = college.getCommitteeByName(committeeName);
+          if (existingCommittee == null) {
+            System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
+            break;
+          }
+
+          // TODO: Rest of implementation
+
+          break;
+
+        case SHOW_LECTURER_SALARY_AVG, SHOW_LECTURER_SALARY_DEPT_AVG:
+          System.err.println("Not implemented yet.");
+          break;
+
+        case SHOW_LECTURERS:
+          System.out.println("ALL LECTURERS");
+          printLecturers();
+          break;
+
+        case SHOW_COMMITTEES:
+          System.out.println("ALL COMMITTEES");
+          printCommittees();
+          break;
+      }
+
+      System.out.println();
+    } while (choiceIdx != 0);
+
+    s.close();
+  }
+
   // region Messages
   private static final String MSG_PROMPT = "Enter %s: ";
   private static final String MSG_SUCCESS_ADD = "%s added.\n";
@@ -17,8 +100,9 @@ public class Main {
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
   // endregion
 
-  // region Menu options
+  // region Main menu
   public enum MenuOption {
+    // TODO: Add missing menu options, make sure to order correctly
     EXIT("Exit"),
     ADD_LECTURER("Add lecturer"),
     ADD_COMMITTEE("Add committee"),
@@ -37,9 +121,19 @@ public class Main {
   }
 
   static final MenuOption[] MENU_OPTIONS = MenuOption.values();
+
+  private static String buildMenuString() {
+    StringBuffer menuBuf = new StringBuffer(
+        "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
+    for (int i = 0; i < MENU_OPTIONS.length; i++) {
+      menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
+          .append(MENU_OPTIONS[i].displayText).append("\n");
+    }
+    return menuBuf.toString();
+  }
   // endregion
 
-  // region I/O utils (printing messages, user input)
+  // region I/O (printing messages, user input)
   private static void promptForLecturer() {
     Lecturer existingLecturer;
     String name;
@@ -137,101 +231,6 @@ public class Main {
           System.out.println(committees[i]);
       }
     }
-  }
-  // endregion
-
-  // region Main
-  private static String buildMenu() {
-    StringBuffer menuBuf = new StringBuffer(
-        "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
-    for (int i = 0; i < MENU_OPTIONS.length; i++) {
-      menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
-          .append(MENU_OPTIONS[i].displayText).append("\n");
-    }
-    return menuBuf.toString();
-  }
-
-  public static void main(String[] args) {
-    s = new Scanner(System.in);
-
-    System.out.print("Welcome!\nEnter college name: ");
-    String collegeName = s.nextLine();
-    college = new College(collegeName);
-    System.out.println();
-
-    final String MENU = buildMenu();
-
-    int choiceIdx;
-
-    do {
-      System.out.print(MENU + "\nEnter choice: ");
-      // Avoid \n in buffer after Enter
-      choiceIdx = Integer.parseInt(s.nextLine());
-      System.out.println();
-
-      // Handle choices not covered by MenuOption enum
-      if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
-        System.err.println("Invalid choice!");
-        continue;
-      }
-
-      MenuOption choice = MENU_OPTIONS[choiceIdx];
-      switch (choice) {
-        case EXIT:
-          break; // Just exit - choiceIdx = 0
-
-        case MenuOption.ADD_LECTURER:
-          promptForLecturer();
-          break;
-
-        case MenuOption.ADD_COMMITTEE:
-          promptForItem(College.ItemType.COMMITTEE);
-          break;
-
-        case MenuOption.ADD_DEPARTMENT:
-          promptForItem(College.ItemType.DEPARTMENT);
-          break;
-
-        case MenuOption.ADD_LECTURER_TO_COMM:
-          System.out.print("Enter lecturer name: ");
-          String lecturerName = s.nextLine();
-          Lecturer existingLecturer = college.getLecturerByName(lecturerName);
-          if (existingLecturer == null) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS, "Lecturer");
-            break;
-          }
-
-          System.out.print("Enter committee name: ");
-          String committeeName = s.nextLine();
-          String existingCommittee = college.getCommitteeByName(committeeName);
-          if (existingCommittee == null) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
-            break;
-          }
-
-          // TODO: Rest of implementation
-
-          break;
-
-        case SHOW_LECTURER_SALARY_AVG, SHOW_LECTURER_SALARY_DEPT_AVG:
-          System.err.println("Not implemented yet.");
-          break;
-
-        case SHOW_LECTURERS:
-          System.out.println("ALL LECTURERS");
-          printLecturers();
-          break;
-
-        case SHOW_COMMITTEES:
-          System.out.println("ALL COMMITTEES");
-          printCommittees();
-          break;
-      }
-
-      System.out.println();
-    } while (choiceIdx != 0);
-
-    s.close();
   }
   // endregion
 }
