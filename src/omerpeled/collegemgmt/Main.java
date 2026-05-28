@@ -52,30 +52,27 @@ public class Main {
           promptForDepartment();
           break;
 
-        case MenuOption.ADD_LECTURER_TO_COMM:
-          System.out.print("Enter lecturer name: ");
-          String lecturerName = s.nextLine();
-          Lecturer existingLecturer = college.getLecturerByName(lecturerName);
-          if (existingLecturer == null) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS, "Lecturer");
+        case MenuOption.ADD_COMMITTEE_MEMBER:
+          System.out.print("Enter lecturer ID: ");
+          String lecturerId = s.nextLine();
+          boolean lecturerExists = college.getLecturerById(lecturerId) != null;
+          if (!lecturerExists) {
+            System.err.printf(MSG_FAIL_NOT_EXISTS,
+                "Lecturer with ID " + lecturerId);
             break;
           }
 
           System.out.print("Enter committee name: ");
           String committeeName = s.nextLine();
-          Committee existingCommittee = college
-              .getCommitteeByName(committeeName);
-          if (existingCommittee == null) {
+          boolean committeeExists = college
+              .getCommitteeByName(committeeName) != null;
+          if (!committeeExists) {
             System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
             break;
           }
 
           // TODO: Rest of implementation
 
-          break;
-
-        case SHOW_LECTURER_SALARY_AVG, SHOW_LECTURER_SALARY_DEPT_AVG:
-          System.err.println("Not implemented yet.");
           break;
 
         case SHOW_LECTURERS:
@@ -86,6 +83,10 @@ public class Main {
         case SHOW_COMMITTEES:
           System.out.println("ALL COMMITTEES");
           printCommittees();
+          break;
+
+        default:
+          System.err.println("Not implemented yet.");
           break;
       }
 
@@ -104,12 +105,14 @@ public class Main {
 
   // region Menus
   public enum MenuOption {
-    // TODO: Add missing menu options, make sure to order correctly
     EXIT("Exit"),
     ADD_LECTURER("Add lecturer"),
     ADD_COMMITTEE("Add committee"),
+    ADD_COMMITTEE_MEMBER("Add lecturer to committee"),
+    SET_COMMITTEE_HEAD("Set committee head"),
+    REMOVE_COMMITTEE_MEMBER("Remove lecturer from committee"),
     ADD_DEPARTMENT("Add department"),
-    ADD_LECTURER_TO_COMM("Add lecturer to committee"),
+    ADD_DEPARTMENT_LECTURER("Add lecturer to department"),
     SHOW_LECTURER_SALARY_AVG("Show lecturer salary average"),
     SHOW_LECTURER_SALARY_DEPT_AVG("Show lecturer salary average in department"),
     SHOW_LECTURERS("Show all lecturer details"),
