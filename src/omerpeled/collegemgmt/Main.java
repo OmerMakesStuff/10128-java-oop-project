@@ -49,7 +49,7 @@ public class Main {
           break;
 
         case MenuOption.ADD_DEPARTMENT:
-          promptForItem(College.ItemType.DEPARTMENT);
+          promptForDepartment();
           break;
 
         case MenuOption.ADD_LECTURER_TO_COMM:
@@ -199,6 +199,29 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
+  private static void promptForDepartment() {
+    College.AddItemStatus addStatus;
+
+    do {
+      System.out.printf(MSG_PROMPT, "department name");
+      String name = s.nextLine();
+      System.out.printf(MSG_PROMPT, "number of students in department");
+      int studentCount = Integer.parseInt(s.nextLine());
+
+      Department newDepartment = new Department(name, studentCount);
+      addStatus = college.addDepartment(newDepartment);
+      switch (addStatus) {
+        case College.AddItemStatus.FAIL_EXISTS:
+          System.err.printf(MSG_FAIL_EXISTS, "Department " + name);
+          System.err.println();
+          break;
+        case College.AddItemStatus.SUCCESS:
+          System.out.printf(MSG_SUCCESS_ADD, "Department");
+          break;
+      }
+    } while (addStatus != College.AddItemStatus.SUCCESS);
+  }
+
   /**
    * Generic prompt for string; Will be removed later.
    */
@@ -213,9 +236,6 @@ public class Main {
       switch (type) {
         case College.ItemType.COMMITTEE:
           addStatus = college.addCommittee(newItem);
-          break;
-        case College.ItemType.DEPARTMENT:
-          addStatus = college.addDepartment(newItem);
           break;
         default:
           System.out.println(
