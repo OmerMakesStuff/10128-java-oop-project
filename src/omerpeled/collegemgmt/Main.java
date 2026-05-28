@@ -223,6 +223,12 @@ public class Main {
   }
 
   private static void promptForCommittee() {
+    if (!college.validCommitteeHeadExists()) {
+      System.err.println(
+          "Cannot add a committee - valid committee head doesn't exist.");
+      return;
+    }
+
     College.AddItemStatus addStatus;
 
     do {
