@@ -48,16 +48,8 @@ public class College {
     return lecturers;
   }
 
-  public Lecturer getLecturerByName(String name) {
-    for (int i = 0; i < lecturers.length; i++) {
-      if (lecturers[i] != null && lecturers[i].getName().equals(name))
-        return lecturers[i];
-    }
-    return null;
-  }
-
   public Lecturer getLecturerById(String id) {
-    for (int i = 0; i < lecturers.length; i++) {
+    for (int i = 0; i < lecturerCount; i++) {
       if (lecturers[i] != null && lecturers[i].getId().equals(id))
         return lecturers[i];
     }
