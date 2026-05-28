@@ -63,7 +63,8 @@ public class Main {
 
           System.out.print("Enter committee name: ");
           String committeeName = s.nextLine();
-          String existingCommittee = college.getCommitteeByName(committeeName);
+          Committee existingCommittee = college
+              .getCommitteeByName(committeeName);
           if (existingCommittee == null) {
             System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
             break;

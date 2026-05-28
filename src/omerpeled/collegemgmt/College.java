@@ -5,9 +5,9 @@ public class College {
 
   private Lecturer[] lecturers;
   private int lecturerCount;
-  // TODO: Use Committee, Department instead of strings
-  private String[] committees;
+  private Committee[] committees;
   private int committeeCount;
+  // TODO: Use Department[] instead of String[]
   private String[] departments;
   private int departmentCount;
 
@@ -33,7 +33,7 @@ public class College {
 
     this.lecturers = new Lecturer[1];
     this.lecturerCount = 0;
-    this.committees = new String[1];
+    this.committees = new Committee[1];
     this.committeeCount = 0;
     this.departments = new String[1];
     this.departmentCount = 0;
@@ -86,21 +86,34 @@ public class College {
   // endregion
 
   // region Committees
-  public String[] getCommittees() {
+  public Committee[] getCommittees() {
     return committees;
   }
 
-  public String getCommitteeByName(String name) {
-    return getItem(committees, name);
+  public Committee getCommitteeByName(String name) {
+    for (int i = 0; i < committeeCount; i++) {
+      if (committees[i] != null && committees[i].getName().equals(name))
+        return committees[i];
+    }
+    return null;
   }
 
   public AddItemStatus addCommittee(String name) {
-    for (int i = 0; i < committees.length; i++) {
-      if (committees[i] != null && committees[i].equals(name))
-        return AddItemStatus.FAIL_EXISTS;
+    boolean exists = getCommitteeByName(name) != null;
+    if (exists)
+      return AddItemStatus.FAIL_EXISTS;
+
+    // Double array size if too small
+    // FIXME: CODE DUPLICATION :( Extract when I can use generics
+    if (committeeCount == committees.length) {
+      Committee[] resizedItems = new Committee[committees.length * 2];
+      for (int i = 0; i < committees.length; i++) {
+        resizedItems[i] = committees[i];
+      }
+      committees = resizedItems;
     }
 
-    committees = addItem(committees, this.committeeCount, name);
+    committees[committeeCount] = new Committee(name, null);
     this.committeeCount++;
     return AddItemStatus.SUCCESS;
   }
