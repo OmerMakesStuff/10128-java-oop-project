@@ -7,8 +7,7 @@ public class College {
   private int lecturerCount;
   private Committee[] committees;
   private int committeeCount;
-  // TODO: Use Department[] instead of String[]
-  private String[] departments;
+  private Department[] departments;
   private int departmentCount;
 
   enum ItemType {
@@ -35,7 +34,7 @@ public class College {
     this.lecturerCount = 0;
     this.committees = new Committee[1];
     this.committeeCount = 0;
-    this.departments = new String[1];
+    this.departments = new Department[1];
     this.departmentCount = 0;
   }
 
@@ -62,7 +61,7 @@ public class College {
       return AddItemStatus.FAIL_EXISTS;
 
     // Double array size if too small
-    // FIXME: CODE DUPLICATION :( Extract when I can use generics
+    // FIXME: CODE DUPLICATION due to different array types :(
     if (lecturerCount == lecturers.length) {
       Lecturer[] resizedItems = new Lecturer[lecturers.length * 2];
       for (int i = 0; i < lecturers.length; i++) {
@@ -96,7 +95,7 @@ public class College {
       return AddItemStatus.FAIL_EXISTS;
 
     // Double array size if too small
-    // FIXME: CODE DUPLICATION :( Extract when I can use generics
+    // FIXME: CODE DUPLICATION due to different array types :(
     if (committeeCount == committees.length) {
       Committee[] resizedItems = new Committee[committees.length * 2];
       for (int i = 0; i < committees.length; i++) {
@@ -112,44 +111,36 @@ public class College {
   // endregion
 
   // region Departments
-  public String[] getDepartments() {
+  public Department[] getDepartments() {
     return departments;
   }
 
-  public AddItemStatus addDepartment(String name) {
-    for (int i = 0; i < this.departments.length; i++) {
-      if (this.departments[i] != null && this.departments[i].equals(name))
-        return AddItemStatus.FAIL_EXISTS;
-    }
-
-    departments = addItem(this.departments, this.departmentCount, name);
-    this.departmentCount++;
-    return AddItemStatus.SUCCESS;
-  }
-  // endregion
-
-  // region Internal utils
-  private static String[] addItem(String[] items, int logicalSize,
-      String newItem) {
-    // If array is too small, double its length and copy existing items
-    if (logicalSize == items.length) {
-      String[] resizedItems = new String[items.length * 2];
-      for (int i = 0; i < items.length; i++) {
-        resizedItems[i] = items[i];
-      }
-      items = resizedItems;
-    }
-
-    items[logicalSize] = newItem;
-    return items;
-  }
-
-  private static String getItem(String[] items, String item) {
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null && items[i].equals(item))
-        return items[i];
+  public Department getDepartmentByName(String name) {
+    for (int i = 0; i < departmentCount; i++) {
+      if (departments[i] != null && departments[i].getName().equals(name))
+        return departments[i];
     }
     return null;
+  }
+
+  public AddItemStatus addDepartment(String name) {
+    boolean exists = getDepartmentByName(name) != null;
+    if (exists)
+      return AddItemStatus.FAIL_EXISTS;
+
+    // Double array size if too small
+    // FIXME: CODE DUPLICATION due to different array types :(
+    if (departmentCount == departments.length) {
+      Department[] resizedItems = new Department[departments.length * 2];
+      for (int i = 0; i < departments.length; i++) {
+        resizedItems[i] = departments[i];
+      }
+      departments = resizedItems;
+    }
+
+    departments[departmentCount] = new Department(name, 0);
+    this.departmentCount++;
+    return AddItemStatus.SUCCESS;
   }
   // endregion
 }
