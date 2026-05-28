@@ -45,7 +45,7 @@ public class Main {
           break;
 
         case MenuOption.ADD_COMMITTEE:
-          promptForItem(College.ItemType.COMMITTEE);
+          promptForCommittee();
           break;
 
         case MenuOption.ADD_DEPARTMENT:
@@ -222,34 +222,22 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
-  /**
-   * Generic prompt for string; Will be removed later.
-   */
-  private static void promptForItem(College.ItemType type) {
-
-    String newItem;
+  private static void promptForCommittee() {
     College.AddItemStatus addStatus;
 
     do {
-      System.out.print("Enter " + type.displayName.toLowerCase() + " name: ");
-      newItem = s.nextLine();
-      switch (type) {
-        case College.ItemType.COMMITTEE:
-          addStatus = college.addCommittee(newItem);
-          break;
-        default:
-          System.out.println(
-              "Invalid item type, or it cannot be used with promptForItem.");
-          return;
-      }
-
+      System.out.printf(MSG_PROMPT, "committee name");
+      String name = s.nextLine();
+      // TODO: Set head of committee
+      Committee newCommittee = new Committee(name, null);
+      addStatus = college.addCommittee(newCommittee);
       switch (addStatus) {
         case College.AddItemStatus.FAIL_EXISTS:
-          System.err
-              .printf(MSG_FAIL_EXISTS, type.displayName + " " + newItem);
+          System.err.printf(MSG_FAIL_EXISTS, "Committee " + name);
+          System.err.println();
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, type.displayName);
+          System.out.printf(MSG_SUCCESS_ADD, "Committee");
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
