@@ -66,7 +66,7 @@ public class College {
 
   public AddItemStatus addLecturer(Lecturer newLecturer) {
     boolean exists = getLecturerById(newLecturer.getId()) != null;
-    if (!exists)
+    if (exists)
       return AddItemStatus.FAIL_EXISTS;
 
     // Double array size if too small
