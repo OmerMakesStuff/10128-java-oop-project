@@ -100,7 +100,7 @@ public class Main {
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
   // endregion
 
-  // region Main menu
+  // region Menus
   public enum MenuOption {
     // TODO: Add missing menu options, make sure to order correctly
     EXIT("Exit"),
@@ -131,9 +131,37 @@ public class Main {
     }
     return menuBuf.toString();
   }
+
+  static final Lecturer.Degree[] DEGREE_OPTIONS = Lecturer.Degree.values();
+
+  private static String buildDegreeMenuString() {
+    StringBuffer buf = new StringBuffer("Choose degree:");
+    for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
+      buf.append("\n").append(i + 1).append(") ")
+          .append(DEGREE_OPTIONS[i].displayName);
+    }
+    return buf.toString();
+  }
+
+  private static final String DEGREE_MENU = buildDegreeMenuString();
   // endregion
 
   // region I/O (printing messages, user input)
+
+  private static Lecturer.Degree promptForDegree() {
+    int choiceIdx;
+    boolean isValid = false;
+    do {
+      System.out.print(DEGREE_MENU + '\n' + MSG_PROMPT.replace("%s", "choice"));
+      choiceIdx = Integer.parseInt(s.nextLine()) - 1;
+      isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
+      if (!isValid)
+        System.err.println("Invalid choice!");
+    } while (!isValid);
+
+    return DEGREE_OPTIONS[choiceIdx];
+  }
+
   private static void promptForLecturer() {
     Lecturer existingLecturer;
     String id;
@@ -148,17 +176,18 @@ public class Main {
 
     System.out.printf(MSG_PROMPT, "lecturer name");
     String name = s.nextLine();
-    
-    // TODO: Prompt for degree (menu)
-    // TODO: Enter department, check if exists, leave empty for null
-    // TODO: Enter other details
+    Lecturer.Degree degree = promptForDegree();
+    System.out.printf(MSG_PROMPT, "degree title");
+    String degreeTitle = s.nextLine();
+    System.out.printf(MSG_PROMPT, "salary");
+    double salary = Double.parseDouble(s.nextLine());
 
     Lecturer newLecturer = new Lecturer(
-        name,
         id,
-        Lecturer.Degree.BSC,
-        "Dummy",
-        1000,
+        name,
+        degree,
+        degreeTitle,
+        salary,
         null);
     College.AddItemStatus addStatus = college.addLecturer(newLecturer);
     switch (addStatus) {
