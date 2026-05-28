@@ -23,7 +23,8 @@ public class Main {
     int choiceIdx;
 
     do {
-      System.out.print(MENU + "\nEnter choice: ");
+      System.out.println(MENU);
+      System.out.printf(MSG_PROMPT, "choice");
       // Avoid \n in buffer after Enter
       choiceIdx = Integer.parseInt(s.nextLine());
       System.out.println();
@@ -123,7 +124,7 @@ public class Main {
   static final MenuOption[] MENU_OPTIONS = MenuOption.values();
 
   private static String buildMenuString() {
-    StringBuffer menuBuf = new StringBuffer(
+    StringBuilder menuBuf = new StringBuilder(
         "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
       menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
@@ -135,7 +136,7 @@ public class Main {
   static final Lecturer.Degree[] DEGREE_OPTIONS = Lecturer.Degree.values();
 
   private static String buildDegreeMenuString() {
-    StringBuffer buf = new StringBuffer("Choose degree:");
+    StringBuilder buf = new StringBuilder("Choose degree:");
     for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
       buf.append("\n").append(i + 1).append(") ")
           .append(DEGREE_OPTIONS[i].displayName);
