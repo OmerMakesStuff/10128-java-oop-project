@@ -123,8 +123,8 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addDepartment(String name) {
-    boolean exists = getDepartmentByName(name) != null;
+  public AddItemStatus addDepartment(Department newDepartment) {
+    boolean exists = getDepartmentByName(newDepartment.getName()) != null;
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
 
@@ -138,7 +138,7 @@ public class College {
       departments = resizedItems;
     }
 
-    departments[departmentCount] = new Department(name, 0);
+    departments[departmentCount] = newDepartment;
     this.departmentCount++;
     return AddItemStatus.SUCCESS;
   }
