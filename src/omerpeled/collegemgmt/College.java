@@ -74,6 +74,14 @@ public class College {
     this.lecturerCount++;
     return AddItemStatus.SUCCESS;
   }
+
+  public boolean validCommitteeHeadExists() {
+    for (int i = 0; i < lecturerCount; i++) {
+      if (lecturers[i].isValidCommitteeHead())
+        return true;
+    }
+    return false;
+  }
   // endregion
 
   // region Committees

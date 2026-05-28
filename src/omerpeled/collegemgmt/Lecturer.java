@@ -57,7 +57,11 @@ public class Lecturer {
     return department;
   }
 
-  // TODO: Setters?
+  public boolean isValidCommitteeHead() {
+    return this.degree == Degree.PHD || this.degree == Degree.PROF;
+  }
+
+  // TODO: Set department - also update relevant dept
 
   public String toString() {
     return name + " (" + id + "), " + degree.displayName + " in " + degreeTitle
