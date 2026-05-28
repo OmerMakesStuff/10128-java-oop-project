@@ -163,41 +163,38 @@ public class Main {
   }
 
   private static void promptForLecturer() {
-    Lecturer existingLecturer;
-    String id;
+    College.AddItemStatus addStatus;
+
     do {
       System.out.printf(MSG_PROMPT, "lecturer ID");
-      id = s.nextLine();
+      String id = s.nextLine();
+      System.out.printf(MSG_PROMPT, "lecturer name");
+      String name = s.nextLine();
+      Lecturer.Degree degree = promptForDegree();
+      System.out.printf(MSG_PROMPT, "degree title");
+      String degreeTitle = s.nextLine();
+      System.out.printf(MSG_PROMPT, "salary");
+      double salary = Double.parseDouble(s.nextLine());
 
-      existingLecturer = college.getLecturerById(id);
-      if (existingLecturer != null)
-        System.err.printf(MSG_FAIL_EXISTS, "Lecturer with ID " + id);
-    } while (existingLecturer != null);
+      Lecturer newLecturer = new Lecturer(
+          id,
+          name,
+          degree,
+          degreeTitle,
+          salary,
+          null); // Unassigned to dept by default
 
-    System.out.printf(MSG_PROMPT, "lecturer name");
-    String name = s.nextLine();
-    Lecturer.Degree degree = promptForDegree();
-    System.out.printf(MSG_PROMPT, "degree title");
-    String degreeTitle = s.nextLine();
-    System.out.printf(MSG_PROMPT, "salary");
-    double salary = Double.parseDouble(s.nextLine());
-
-    Lecturer newLecturer = new Lecturer(
-        id,
-        name,
-        degree,
-        degreeTitle,
-        salary,
-        null);
-    College.AddItemStatus addStatus = college.addLecturer(newLecturer);
-    switch (addStatus) {
-      case College.AddItemStatus.FAIL_EXISTS:
-        System.err.printf(MSG_FAIL_EXISTS, "Lecturer");
-        break;
-      case College.AddItemStatus.SUCCESS:
-        System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
-        break;
-    }
+      addStatus = college.addLecturer(newLecturer);
+      switch (addStatus) {
+        case College.AddItemStatus.FAIL_EXISTS:
+          System.err.printf(MSG_FAIL_EXISTS, "Lecturer with ID " + id);
+          System.err.println();
+          break;
+        case College.AddItemStatus.SUCCESS:
+          System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
+          break;
+      }
+    } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
   /**
