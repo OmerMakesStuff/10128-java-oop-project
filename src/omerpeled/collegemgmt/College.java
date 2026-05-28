@@ -10,18 +10,6 @@ public class College {
   private Department[] departments;
   private int departmentCount;
 
-  enum ItemType {
-    LECTURER("Lecturer"),
-    COMMITTEE("Committee"),
-    DEPARTMENT("Department");
-
-    public final String displayName;
-
-    ItemType(String displayName) {
-      this.displayName = displayName;
-    }
-  }
-
   public enum AddItemStatus {
     SUCCESS,
     FAIL_EXISTS
