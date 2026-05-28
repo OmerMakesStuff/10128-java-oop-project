@@ -89,10 +89,11 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addCommittee(String name) {
-    boolean exists = getCommitteeByName(name) != null;
+  public AddItemStatus addCommittee(Committee newCommittee) {
+    boolean exists = getCommitteeByName(newCommittee.getName()) != null;
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
+    // TODO: Check if committee head is valid
 
     // Double array size if too small
     // FIXME: CODE DUPLICATION due to different array types :(
@@ -104,7 +105,7 @@ public class College {
       committees = resizedItems;
     }
 
-    committees[committeeCount] = new Committee(name, null);
+    committees[committeeCount] = newCommittee;
     this.committeeCount++;
     return AddItemStatus.SUCCESS;
   }
