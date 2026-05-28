@@ -250,7 +250,7 @@ public class Main {
   }
 
   private static void printCommittees() {
-    String[] committees = college.getCommittees();
+    Committee[] committees = college.getCommittees();
     if (committees[0] == null)
       System.err.println("No committees exist.");
     else {
