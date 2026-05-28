@@ -2,12 +2,12 @@ package omerpeled.collegemgmt;
 
 public class Committee {
   private String name;
-  private Lecturer headLecturer;
+  private Lecturer head;
   private Lecturer[] members;
 
-  public Committee(String name, Lecturer headLecturer) {
+  public Committee(String name, Lecturer head) {
     this.name = name;
-    this.headLecturer = headLecturer;
+    this.head = head;
     this.members = new Lecturer[1];
   }
 
@@ -15,8 +15,8 @@ public class Committee {
     return name;
   }
 
-  public Lecturer getHeadLecturer() {
-    return headLecturer;
+  public Lecturer getHead() {
+    return head;
   }
 
   public Lecturer[] getMembers() {
@@ -26,15 +26,15 @@ public class Committee {
   // TODO: Add member - reuse doubling array length
   // TODO: Remove member - move others back in array
 
-  public void setHeadLecturer(Lecturer headLecturer) {
-    // TODO: Require headLecturer to be a PHD or PROF, otherwise return fail
-    // status
-    this.headLecturer = headLecturer;
+  public void setHead(Lecturer head) {
+    // TODO: Require head lecturer to be a PHD or PROF, or return fail status
+    // TODO: Add previous head to members
+    this.head = head;
     // TODO: If in members, remove from members
   }
 
   public String toString() {
     // TODO: toString
-    return super.toString();
+    return this.name; // TEMP
   }
 }
