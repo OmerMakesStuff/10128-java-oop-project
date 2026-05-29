@@ -70,6 +70,15 @@ public class College {
     }
     return false;
   }
+
+  public double getLecturerSalaryAvg() {
+    double salarySum = 0;
+    for (int i = 0; i < lecturerCount; i++) {
+      salarySum = salarySum + lecturers[i].getSalary();
+    }
+
+    return lecturerCount > 0 ? (salarySum / lecturerCount) : 0;
+  }
   // endregion
 
   // region Committees

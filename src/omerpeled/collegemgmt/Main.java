@@ -75,6 +75,10 @@ public class Main {
 
           break;
 
+        case SHOW_LECTURER_SALARY_AVG:
+          printSalaryAvg();
+          break;
+
         case SHOW_LECTURERS:
           System.out.println("ALL LECTURERS");
           printLecturers();
@@ -151,8 +155,7 @@ public class Main {
   private static final String DEGREE_MENU = buildDegreeMenuString();
   // endregion
 
-  // region I/O (printing messages, user input)
-
+  // region User input & data operations
   private static Lecturer.Degree promptForDegree() {
     int choiceIdx;
     boolean isValid = false;
@@ -251,9 +254,14 @@ public class Main {
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
+  // endregion
 
-  // FIXME: CODE DUPLICATION due to different array types :(
-  // Will be unified when I can use generics
+  // region Printing info
+  private static void printSalaryAvg() {
+    double salaryAvg = college.getLecturerSalaryAvg();
+    System.out.println("COLLEGE AVERAGE SALARY: " + salaryAvg + "₪");
+  }
+
   private static void printLecturers() {
     Lecturer[] lecturers = college.getLecturers();
     if (lecturers[0] == null)
