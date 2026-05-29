@@ -58,8 +58,7 @@ public class College {
       lecturers = resizedItems;
     }
 
-    lecturers[lecturerCount] = newLecturer;
-    this.lecturerCount++;
+    lecturers[lecturerCount++] = newLecturer;
     return AddItemStatus.SUCCESS;
   }
 
@@ -110,8 +109,7 @@ public class College {
       committees = resizedItems;
     }
 
-    committees[committeeCount] = newCommittee;
-    this.committeeCount++;
+    committees[committeeCount++] = newCommittee;
     return AddItemStatus.SUCCESS;
   }
   // endregion
@@ -144,8 +142,7 @@ public class College {
       departments = resizedItems;
     }
 
-    departments[departmentCount] = newDepartment;
-    this.departmentCount++;
+    departments[departmentCount++] = newDepartment;
     return AddItemStatus.SUCCESS;
   }
   // endregion
