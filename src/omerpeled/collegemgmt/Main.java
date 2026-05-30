@@ -114,13 +114,17 @@ public class Main {
 
   // region Messages
   private static final String MSG_PROMPT = "Enter %s: ";
-  private static final String MSG_SUCCESS_ADD = "%s added.\n";
-  private static final String MSG_FAIL_EXISTS = "%s already exists!\n";
-  private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
-  private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.\n";
+
+  private static final String MSG_SUCCESS_ADD = "%s added.%n";
+  private static final String MSG_SUCCESS_DEPT_ADDED = "%s has been added to %s.%n";
+  private static final String MSG_SUCCESS_DEPT_REMOVED = "%s has been removed from their department.%n";
+
+  private static final String MSG_FAIL_EXISTS = "%s already exists!%n";
+  private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!%n";
+  private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.%n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
-  private static final String MSG_FAIL_ALREADY_IN_DEPT = "%s is already in %s!\n";
-  private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)\n";
+  private static final String MSG_FAIL_ALREADY_IN_DEPT = "%s is already in %s!%n";
+  private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
 
   private static final String MSG_CHOICE = "choice";
   private static final String MSG_LECTURER = "Lecturer";
@@ -314,8 +318,13 @@ public class Main {
       return;
     }
 
-    boolean addedToDept = lecturer.setDepartment(department);
-    if (!addedToDept && department != null)
+    boolean addSuccess = lecturer.setDepartment(department);
+    if (addSuccess) {
+      if (setNoDept)
+        System.out.printf(MSG_SUCCESS_DEPT_REMOVED, lecturer.getName());
+      else
+        System.out.printf(MSG_SUCCESS_DEPT_ADDED, lecturer.getName(), deptName);
+    } else if (department != null)
       System.err.printf(MSG_FAIL_ALREADY_IN_DEPT, lecturer.getName(),
           department.getName());
   }
