@@ -167,7 +167,7 @@ public class Main {
   private static final String DEGREE_MENU = buildDegreeMenuString();
   // endregion
 
-  // region User input & data operations
+  // region New item creation
   private static Lecturer.Degree promptForDegree() {
     int choiceIdx;
     boolean isValid = false;
