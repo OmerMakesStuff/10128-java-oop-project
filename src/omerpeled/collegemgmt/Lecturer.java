@@ -61,7 +61,18 @@ public class Lecturer {
     return this.degree == Degree.PHD || this.degree == Degree.PROF;
   }
 
-  // TODO: Set department - also update relevant dept
+  public boolean setDepartment(Department department) {
+    if (this.department == department)
+      return false; // Already in this dept
+
+    if (this.department != null)
+      this.department.removeLecturer(this);
+
+    this.department = department;
+    if (department != null)
+      department.addLecturer(this);
+    return true;
+  }
 
   public String toString() {
     return name + " (" + id + "), " + degree.displayName + " in " + degreeTitle
