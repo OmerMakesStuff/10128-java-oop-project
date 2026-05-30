@@ -32,9 +32,12 @@ public class Main {
       }
 
       MenuOption choice = MENU_OPTIONS[choiceIdx];
+      if (choice != MenuOption.EXIT)
+        System.out.println(); // Separate from menu
+
       switch (choice) {
         case EXIT:
-          break; // Just exit - choiceIdx = 0
+          break;
 
         case MenuOption.ADD_LECTURER:
           promptForLecturer();
@@ -42,10 +45,6 @@ public class Main {
 
         case MenuOption.ADD_COMMITTEE:
           promptForCommittee();
-          break;
-
-        case MenuOption.ADD_DEPARTMENT:
-          promptForDepartment();
           break;
 
         case MenuOption.ADD_COMMITTEE_MEMBER:
@@ -68,7 +67,21 @@ public class Main {
           }
 
           // TODO: Rest of implementation
+          System.err.println("NOT IMPLEMENTED YET");
+          break;
 
+        case MenuOption.SET_COMMITTEE_HEAD:
+          // TODO: Set committee head option
+          System.err.println("NOT IMPLEMENTED YET");
+          break;
+
+        case MenuOption.REMOVE_COMMITTEE_MEMBER:
+          // TODO: Remove committee member option
+          System.err.println("NOT IMPLEMENTED YET");
+          break;
+
+        case MenuOption.ADD_DEPARTMENT:
+          promptForDepartment();
           break;
 
         case ADD_DEPARTMENT_LECTURER:
@@ -79,6 +92,11 @@ public class Main {
           printSalaryAvg();
           break;
 
+        case SHOW_LECTURER_SALARY_DEPT_AVG:
+          // TODO: Show lecturer salary for dept option
+          System.err.println("NOT IMPLEMENTED YET");
+          break;
+
         case SHOW_LECTURERS:
           printLecturers();
           break;
@@ -86,13 +104,10 @@ public class Main {
         case SHOW_COMMITTEES:
           printCommittees();
           break;
-
-        default:
-          System.err.println("Not implemented yet.");
-          break;
       }
 
-      System.out.println();
+      if (choice != MenuOption.EXIT)
+        System.out.println(); // Separate from menu
     } while (choiceIdx != 0);
 
     s.close();
