@@ -48,26 +48,7 @@ public class Main {
           break;
 
         case MenuOption.ADD_COMMITTEE_MEMBER:
-          System.out.printf(MSG_PROMPT, MSG_LECTURER.toLowerCase() + " ID");
-          String lecturerId = s.nextLine();
-          boolean lecturerExists = college.getLecturerById(lecturerId) != null;
-          if (!lecturerExists) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS,
-                MSG_LECTURER_WITH_ID + lecturerId);
-            break;
-          }
-
-          System.out.printf(MSG_PROMPT, MSG_COMMITTEE.toLowerCase() + " name");
-          String committeeName = s.nextLine();
-          boolean committeeExists = college
-              .getCommitteeByName(committeeName) != null;
-          if (!committeeExists) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
-            break;
-          }
-
-          // TODO: Rest of implementation
-          System.err.println("NOT IMPLEMENTED YET");
+          promptAddCommitteeMember();
           break;
 
         case MenuOption.SET_COMMITTEE_HEAD:
@@ -284,7 +265,34 @@ public class Main {
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
+  // endregion
 
+  // region Committees
+  private static void promptAddCommitteeMember() {
+    System.out.printf(MSG_PROMPT, MSG_LECTURER.toLowerCase() + " ID");
+    String lecturerId = s.nextLine();
+    boolean lecturerExists = college.getLecturerById(lecturerId) != null;
+    if (!lecturerExists) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS,
+          MSG_LECTURER_WITH_ID + lecturerId);
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_COMMITTEE.toLowerCase() + " name");
+    String committeeName = s.nextLine();
+    boolean committeeExists = college
+        .getCommitteeByName(committeeName) != null;
+    if (!committeeExists) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
+      return;
+    }
+
+    // TODO: Rest of implementation
+    System.err.println("NOT IMPLEMENTED YET");
+  }
+  // endregion
+
+  // region Departments
   private static void promptAddDeptLecturer() {
     boolean lecturersExist = college.getLecturerCount() > 0;
     boolean departmentsExist = college.getDepartmentCount() > 0;
