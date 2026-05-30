@@ -25,6 +25,14 @@ public class Committee {
     return members;
   }
 
+  public boolean hasMember(Lecturer lecturer) {
+    for (int i = 0; i < memberCount; i++) {
+      if (members[i].getId().equals(lecturer.getId()))
+        return true;
+    }
+    return false;
+  }
+
   // TODO: Add member - reuse doubling array length
   // TODO: Remove member - move others back in array
 
