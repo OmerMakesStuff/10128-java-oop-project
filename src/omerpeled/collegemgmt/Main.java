@@ -71,6 +71,10 @@ public class Main {
 
           break;
 
+        case ADD_DEPARTMENT_LECTURER:
+          promptAddDeptLecturer();
+          break;
+
         case SHOW_LECTURER_SALARY_AVG:
           printSalaryAvg();
           break;
@@ -258,6 +262,42 @@ public class Main {
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
+  }
+
+  private static void promptAddDeptLecturer() {
+    boolean lecturersExist = college.getLecturerCount() > 0;
+    boolean departmentsExist = college.getDepartmentCount() > 0;
+    if (!lecturersExist || !departmentsExist) {
+      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_DEPARTMENT;
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, "lecturer ID");
+    String lecturerId = s.nextLine();
+    Lecturer lecturer = college.getLecturerById(lecturerId);
+    if (lecturer == null) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS,
+          MSG_LECTURER_WITH_ID + lecturerId);
+      return;
+    }
+
+    // If left empty, lecturer is removed from their current department and not
+    // assigned to a new one
+    System.out.printf(MSG_PROMPT,
+        "department name (leave empty for no department)");
+    String deptName = s.nextLine();
+    boolean setNoDept = deptName.isEmpty();
+    Department department = setNoDept
+        ? null
+        : college.getDepartmentByName(deptName);
+    if (department == null && !setNoDept) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_DEPARTMENT);
+      return;
+    }
+
+    lecturer.setDepartment(department);
   }
   // endregion
 
