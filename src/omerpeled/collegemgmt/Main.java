@@ -93,8 +93,7 @@ public class Main {
           break;
 
         case SHOW_LECTURER_SALARY_DEPT_AVG:
-          // TODO: Show lecturer salary for dept option
-          System.err.println("NOT IMPLEMENTED YET");
+          printDeptSalaryAvg();
           break;
 
         case SHOW_LECTURERS:
@@ -325,7 +324,27 @@ public class Main {
   // region Printing info
   private static void printSalaryAvg() {
     double salaryAvg = college.getLecturerSalaryAvg();
-    System.out.println("COLLEGE AVERAGE SALARY: " + salaryAvg + "₪");
+    System.out.println("College average salary: " + salaryAvg + "₪");
+  }
+
+  private static void printDeptSalaryAvg() {
+    boolean departmentsExist = college.getDepartmentCount() > 0;
+    if (!departmentsExist) {
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, MSG_DEPARTMENT.toLowerCase()));
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_DEPARTMENT.toLowerCase() + " name");
+    String deptName = s.nextLine();
+    Department department = college.getDepartmentByName(deptName);
+    if (department == null)
+      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_DEPARTMENT);
+    else {
+      double deptSalaryAvg = college.getLecturerSalaryAvg(department);
+      System.out.println("Department average salary for " + deptName + ": "
+          + deptSalaryAvg + "₪");
+    }
   }
 
   // FIXME: CODE DUPLICATION due to different array types :(
