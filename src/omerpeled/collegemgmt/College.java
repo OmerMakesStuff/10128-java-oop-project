@@ -35,6 +35,10 @@ public class College {
     return lecturers;
   }
 
+  public int getLecturerCount() {
+    return lecturerCount;
+  }
+
   public Lecturer getLecturerById(String id) {
     for (int i = 0; i < lecturerCount; i++) {
       if (lecturers[i] != null && lecturers[i].getId().equals(id))
@@ -104,6 +108,10 @@ public class College {
   // region Departments
   public Department[] getDepartments() {
     return departments;
+  }
+
+  public int getDepartmentCount() {
+    return departmentCount;
   }
 
   public Department getDepartmentByName(String name) {
