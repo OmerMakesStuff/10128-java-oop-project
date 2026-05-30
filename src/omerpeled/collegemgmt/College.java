@@ -12,7 +12,9 @@ public class College {
 
   public enum AddItemStatus {
     SUCCESS,
-    FAIL_EXISTS
+    FAIL_EXISTS,
+    FAIL_HEAD_MISSING,
+    FAIL_HEAD_INVALID
   }
 
   public College(String name) {
@@ -95,7 +97,11 @@ public class College {
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
 
-    // TODO: Check if committee head is valid
+    Lecturer committeeHead = newCommittee.getHead();
+    if (committeeHead == null)
+      return AddItemStatus.FAIL_HEAD_MISSING;
+    else if (!committeeHead.isValidCommitteeHead())
+      return AddItemStatus.FAIL_HEAD_INVALID;
 
     if (committeeCount == committees.length)
       committees = Utils.doubleCommitteesSize(committees);
