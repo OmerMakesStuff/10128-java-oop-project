@@ -4,13 +4,13 @@ public class Committee {
   private String name;
   private Lecturer head;
   private Lecturer[] members;
-  private int membersCount;
+  private int memberCount;
 
   public Committee(String name, Lecturer head) {
     this.name = name;
     this.head = head;
     this.members = new Lecturer[1];
-    this.membersCount = 0;
+    this.memberCount = 0;
   }
 
   public String getName() {
@@ -33,7 +33,19 @@ public class Committee {
     return false;
   }
 
-  // TODO: Add member - reuse doubling array length
+  public boolean addMember(Lecturer lecturer) {
+    if (hasMember(lecturer) || this.head == lecturer)
+      return false;
+
+    if (memberCount == members.length)
+      members = Utils.doubleLecturersSize(members);
+
+    members[memberCount++] = lecturer;
+    // TODO: Add committee to lecturer committees array
+
+    return true;
+  }
+
   // TODO: Remove member - move others back in array
 
   public boolean setHead(Lecturer head) {
@@ -54,11 +66,11 @@ public class Committee {
       str.append("head: ").append(this.head.getName());
     str.append("\n");
 
-    if (membersCount < 1)
+    if (memberCount < 1)
       str.append("No members.");
     else {
       str.append("Members:");
-      for (int i = 0; i < membersCount; i++) {
+      for (int i = 0; i < memberCount; i++) {
         str.append("\n\t").append(members[i].getName());
       }
     }
