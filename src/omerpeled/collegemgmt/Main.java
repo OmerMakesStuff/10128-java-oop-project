@@ -272,6 +272,15 @@ public class Main {
 
   // region Committees
   private static void promptAddCommitteeMember() {
+    boolean lecturersExist = college.getLecturerCount() > 0;
+    boolean committeesExist = college.getCommitteeCount() > 0;
+    if (!lecturersExist || !committeesExist) {
+      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_COMMITTEE;
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
+      return;
+    }
+
     System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
     String lecturerId = s.nextLine();
     boolean lecturerExists = college.getLecturerById(lecturerId) != null;
