@@ -36,7 +36,22 @@ public class Committee {
   }
 
   public String toString() {
-    // TODO: toString
-    return this.name; // TEMP
+    StringBuilder str = new StringBuilder(this.name).append(" - ");
+
+    if (this.head == null)
+      str.append("no head");
+    else
+      str.append("head: ").append(this.head.getName());
+    str.append("\n");
+
+    if (membersCount < 1)
+      str.append("No members.");
+    else {
+      str.append("Members:");
+      for (int i = 0; i < membersCount; i++) {
+        str.append("\n\t").append(members[i].getName());
+      }
+    }
+    return str.toString();
   }
 }
