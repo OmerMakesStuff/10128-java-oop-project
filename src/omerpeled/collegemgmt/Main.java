@@ -16,18 +16,14 @@ public class Main {
     System.out.print("Welcome!\nEnter college name: ");
     String collegeName = s.nextLine();
     college = new College(collegeName);
-    System.out.println();
-
-    final String MENU = buildMenuString();
 
     int choiceIdx;
 
     do {
-      System.out.println(MENU);
-      System.out.printf(MSG_PROMPT, "choice");
+      System.out.printf(MAIN_MENU, collegeName);
+      System.out.printf("\n" + MSG_PROMPT, MSG_CHOICE);
       // Avoid \n in buffer after Enter
       choiceIdx = Integer.parseInt(s.nextLine());
-      System.out.println();
 
       // Handle choices not covered by MenuOption enum
       if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
@@ -53,21 +49,21 @@ public class Main {
           break;
 
         case MenuOption.ADD_COMMITTEE_MEMBER:
-          System.out.print("Enter lecturer ID: ");
+          System.out.printf(MSG_PROMPT, MSG_LECTURER.toLowerCase() + " ID");
           String lecturerId = s.nextLine();
           boolean lecturerExists = college.getLecturerById(lecturerId) != null;
           if (!lecturerExists) {
             System.err.printf(MSG_FAIL_NOT_EXISTS,
-                "Lecturer with ID " + lecturerId);
+                MSG_LECTURER_WITH_ID + lecturerId);
             break;
           }
 
-          System.out.print("Enter committee name: ");
+          System.out.printf(MSG_PROMPT, MSG_COMMITTEE.toLowerCase() + " name");
           String committeeName = s.nextLine();
           boolean committeeExists = college
               .getCommitteeByName(committeeName) != null;
           if (!committeeExists) {
-            System.err.printf(MSG_FAIL_NOT_EXISTS, "Committee");
+            System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
             break;
           }
 
@@ -80,12 +76,10 @@ public class Main {
           break;
 
         case SHOW_LECTURERS:
-          System.out.println("ALL LECTURERS");
           printLecturers();
           break;
 
         case SHOW_COMMITTEES:
-          System.out.println("ALL COMMITTEES");
           printCommittees();
           break;
 
@@ -105,6 +99,14 @@ public class Main {
   private static final String MSG_SUCCESS_ADD = "%s added.\n";
   private static final String MSG_FAIL_EXISTS = "%s already exists!\n";
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
+  private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.\n";
+  private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
+
+  private static final String MSG_CHOICE = "choice";
+  private static final String MSG_LECTURER = "Lecturer";
+  private static final String MSG_LECTURER_WITH_ID = MSG_LECTURER + " with ID ";
+  private static final String MSG_COMMITTEE = "Committee";
+  private static final String MSG_DEPARTMENT = "Department";
   // endregion
 
   // region Menus
@@ -131,15 +133,17 @@ public class Main {
 
   static final MenuOption[] MENU_OPTIONS = MenuOption.values();
 
-  private static String buildMenuString() {
-    StringBuilder menuBuf = new StringBuilder(
-        "COLLEGE STAFF MANAGEMENT - " + college.getName() + "\n\n");
+  private static String buildMainMenuString() {
+    StringBuilder str = new StringBuilder(
+        "COLLEGE STAFF MANAGEMENT - %s\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
-      menuBuf.append(MENU_OPTIONS[i].ordinal()).append(") ")
+      str.append(MENU_OPTIONS[i].ordinal()).append(") ")
           .append(MENU_OPTIONS[i].displayText).append("\n");
     }
-    return menuBuf.toString();
+    return str.toString();
   }
+
+  private static final String MAIN_MENU = buildMainMenuString();
 
   static final Lecturer.Degree[] DEGREE_OPTIONS = Lecturer.Degree.values();
 
@@ -160,7 +164,8 @@ public class Main {
     int choiceIdx;
     boolean isValid = false;
     do {
-      System.out.print(DEGREE_MENU + '\n' + MSG_PROMPT.replace("%s", "choice"));
+      System.out
+          .print(DEGREE_MENU + '\n' + String.format(MSG_PROMPT, MSG_CHOICE));
       choiceIdx = Integer.parseInt(s.nextLine()) - 1;
       isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
       if (!isValid)
@@ -195,11 +200,11 @@ public class Main {
       addStatus = college.addLecturer(newLecturer);
       switch (addStatus) {
         case College.AddItemStatus.FAIL_EXISTS:
-          System.err.printf(MSG_FAIL_EXISTS, "Lecturer with ID " + id);
+          System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
           System.err.println();
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, "Lecturer");
+          System.out.printf(MSG_SUCCESS_ADD, MSG_LECTURER);
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
@@ -222,7 +227,7 @@ public class Main {
           System.err.println();
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, "Department");
+          System.out.printf(MSG_SUCCESS_ADD, MSG_DEPARTMENT);
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
@@ -230,8 +235,8 @@ public class Main {
 
   private static void promptForCommittee() {
     if (!college.validCommitteeHeadExists()) {
-      System.err.println(
-          "Cannot add a committee - valid committee head doesn't exist.");
+      System.err.printf(
+          MSG_FAIL_UNAVAILABLE_OPT, "valid committee head doesn't exist.\n");
       return;
     }
 
@@ -249,7 +254,7 @@ public class Main {
           System.err.println();
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, "Committee");
+          System.out.printf(MSG_SUCCESS_ADD, MSG_COMMITTEE);
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
@@ -262,10 +267,13 @@ public class Main {
     System.out.println("COLLEGE AVERAGE SALARY: " + salaryAvg + "₪");
   }
 
+  // FIXME: CODE DUPLICATION due to different array types :(
   private static void printLecturers() {
+    System.out.println("ALL LECTURERS");
+
     Lecturer[] lecturers = college.getLecturers();
     if (lecturers[0] == null)
-      System.err.println("No lecturers exist.");
+      System.err.printf(MSG_FAIL_NONE_EXIST, MSG_LECTURER.toLowerCase());
     else {
       for (int i = 0; i < lecturers.length; i++) {
         if (lecturers[i] != null)
@@ -275,9 +283,11 @@ public class Main {
   }
 
   private static void printCommittees() {
+    System.out.println("ALL COMMITTEES");
+
     Committee[] committees = college.getCommittees();
     if (committees[0] == null)
-      System.err.println("No committees exist.");
+      System.err.printf(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase());
     else {
       for (int i = 0; i < committees.length; i++) {
         if (committees[i] != null)
