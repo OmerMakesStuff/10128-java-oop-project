@@ -96,22 +96,25 @@ public class Main {
   // region Messages
   private static final String MSG_PROMPT = "Enter %s: ";
 
-  private static final String MSG_SUCCESS_ADD = "%s added.%n";
-  private static final String MSG_SUCCESS_DEPT_ADDED = "%s has been added to %s.%n";
-  private static final String MSG_SUCCESS_DEPT_REMOVED = "%s has been removed from their department.%n";
+  private static final String MSG_SUCCESS_CREATED = "%s added.%n";
+  private static final String MSG_SUCCESS_ADDED_TO = "%s has been added to %s.%n";
+  private static final String MSG_SUCCESS_REMOVED_FROM = "%s has been removed from %s.%n";
 
   private static final String MSG_FAIL_EXISTS = "%s already exists!%n";
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!%n";
   private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.%n";
-  private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
-  private static final String MSG_FAIL_ALREADY_IN_DEPT = "%s is already in %s!%n";
+  private static final String MSG_FAIL_ALREADY_ADDED = "%s is already in %s!%n";
   private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
+  private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
 
   private static final String MSG_CHOICE = "choice";
   private static final String MSG_LECTURER = "Lecturer";
+  private static final String MSG_LECTURER_ID = "lecturer ID";
   private static final String MSG_LECTURER_WITH_ID = MSG_LECTURER + " with ID ";
   private static final String MSG_COMMITTEE = "Committee";
+  private static final String MSG_COMMITTE_NAME = "committee name";
   private static final String MSG_DEPARTMENT = "Department";
+  private static final String MSG_DEPARTMENT_NAME = "department name";
   // endregion
 
   // region Menus
@@ -184,9 +187,9 @@ public class Main {
     College.AddItemStatus addStatus;
 
     do {
-      System.out.printf(MSG_PROMPT, "lecturer ID");
+      System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
       String id = s.nextLine();
-      System.out.printf(MSG_PROMPT, "lecturer name");
+      System.out.printf(MSG_PROMPT, MSG_LECTURER + " name");
       String name = s.nextLine();
       Lecturer.Degree degree = promptForDegree();
       System.out.printf(MSG_PROMPT, "degree title");
@@ -205,7 +208,7 @@ public class Main {
       if (addStatus == College.AddItemStatus.FAIL_EXISTS)
         System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
       else
-        System.out.printf(MSG_SUCCESS_ADD, MSG_LECTURER);
+        System.out.printf(MSG_SUCCESS_CREATED, MSG_LECTURER);
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
@@ -213,7 +216,7 @@ public class Main {
     College.AddItemStatus addStatus;
 
     do {
-      System.out.printf(MSG_PROMPT, "department name");
+      System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
       String name = s.nextLine();
       System.out.printf(MSG_PROMPT, "number of students in department");
       int studentCount = Integer.parseInt(s.nextLine());
@@ -222,9 +225,9 @@ public class Main {
       addStatus = college.addDepartment(newDepartment);
 
       if (addStatus == College.AddItemStatus.FAIL_EXISTS)
-        System.err.printf(MSG_FAIL_EXISTS, "Department " + name);
+        System.err.printf(MSG_FAIL_EXISTS, MSG_DEPARTMENT + " " + name);
       else
-        System.out.printf(MSG_SUCCESS_ADD, MSG_DEPARTMENT);
+        System.out.printf(MSG_SUCCESS_CREATED, MSG_DEPARTMENT);
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
@@ -260,7 +263,7 @@ public class Main {
               Lecturer.Degree.PROF.displayName);
           break;
         case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, MSG_COMMITTEE);
+          System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
           break;
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
@@ -269,7 +272,7 @@ public class Main {
 
   // region Committees
   private static void promptAddCommitteeMember() {
-    System.out.printf(MSG_PROMPT, MSG_LECTURER.toLowerCase() + " ID");
+    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
     String lecturerId = s.nextLine();
     boolean lecturerExists = college.getLecturerById(lecturerId) != null;
     if (!lecturerExists) {
@@ -278,7 +281,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_COMMITTEE.toLowerCase() + " name");
+    System.out.printf(MSG_PROMPT, MSG_COMMITTE_NAME);
     String committeeName = s.nextLine();
     boolean committeeExists = college
         .getCommitteeByName(committeeName) != null;
@@ -303,7 +306,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, "lecturer ID");
+    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
     String lecturerId = s.nextLine();
     Lecturer lecturer = college.getLecturerById(lecturerId);
     if (lecturer == null) {
@@ -329,11 +332,12 @@ public class Main {
     boolean addSuccess = lecturer.setDepartment(department);
     if (addSuccess) {
       if (setNoDept)
-        System.out.printf(MSG_SUCCESS_DEPT_REMOVED, lecturer.getName());
+        System.out.printf(MSG_SUCCESS_REMOVED_FROM, lecturer.getName(),
+            "their department");
       else
-        System.out.printf(MSG_SUCCESS_DEPT_ADDED, lecturer.getName(), deptName);
+        System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(), deptName);
     } else if (department != null)
-      System.err.printf(MSG_FAIL_ALREADY_IN_DEPT, lecturer.getName(),
+      System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
           department.getName());
   }
   // endregion
@@ -352,7 +356,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_DEPARTMENT.toLowerCase() + " name");
+    System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
     String deptName = s.nextLine();
     Department department = college.getDepartmentByName(deptName);
     if (department == null)
