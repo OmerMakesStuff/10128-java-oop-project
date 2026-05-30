@@ -2,7 +2,10 @@ package omerpeled.collegemgmt;
 
 public class Lecturer {
   public enum Degree {
-    BSC("BSc"), MSC("MSc"), PHD("PhD"), PROF("Prof.");
+    BSC("BSc"),
+    MSC("MSc"),
+    PHD("PhD"),
+    PROF("Prof.");
 
     final String displayName;
 
