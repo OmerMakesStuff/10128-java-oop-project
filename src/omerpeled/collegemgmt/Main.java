@@ -199,8 +199,7 @@ public class Main {
           name,
           degree,
           degreeTitle,
-          salary,
-          null); // Unassigned to dept by default
+          salary);
 
       addStatus = college.addLecturer(newLecturer);
       if (addStatus == College.AddItemStatus.FAIL_EXISTS)

@@ -23,14 +23,12 @@ public class Lecturer {
       String name,
       Degree degree,
       String degreeTitle,
-      double salary,
-      Department department) {
+      double salary) {
     this.id = id;
     this.name = name;
     this.degree = degree;
     this.degreeTitle = degreeTitle;
     this.salary = salary;
-    this.department = department;
   }
 
   public String getId() {
