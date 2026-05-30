@@ -220,15 +220,11 @@ public class Main {
 
       Department newDepartment = new Department(name, studentCount);
       addStatus = college.addDepartment(newDepartment);
-      switch (addStatus) {
-        case College.AddItemStatus.FAIL_EXISTS:
-          System.err.printf(MSG_FAIL_EXISTS, "Department " + name);
-          System.err.println();
-          break;
-        case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, MSG_DEPARTMENT);
-          break;
-      }
+
+      if (addStatus == College.AddItemStatus.FAIL_EXISTS)
+        System.err.printf(MSG_FAIL_EXISTS, "Department " + name);
+      else
+        System.out.printf(MSG_SUCCESS_ADD, MSG_DEPARTMENT);
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
