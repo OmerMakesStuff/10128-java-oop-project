@@ -202,15 +202,10 @@ public class Main {
           null); // Unassigned to dept by default
 
       addStatus = college.addLecturer(newLecturer);
-      switch (addStatus) {
-        case College.AddItemStatus.FAIL_EXISTS:
-          System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
-          System.err.println();
-          break;
-        case College.AddItemStatus.SUCCESS:
-          System.out.printf(MSG_SUCCESS_ADD, MSG_LECTURER);
-          break;
-      }
+      if (addStatus == College.AddItemStatus.FAIL_EXISTS)
+        System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
+      else
+        System.out.printf(MSG_SUCCESS_ADD, MSG_LECTURER);
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
