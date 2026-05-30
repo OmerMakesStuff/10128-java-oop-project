@@ -92,6 +92,10 @@ public class College {
     return committees;
   }
 
+  public int getCommitteeCount() {
+    return committeeCount;
+  }
+
   public Committee getCommitteeByName(String name) {
     for (int i = 0; i < committeeCount; i++) {
       if (committees[i] != null && committees[i].getName().equals(name))
