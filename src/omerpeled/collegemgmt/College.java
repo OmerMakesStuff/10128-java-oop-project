@@ -70,12 +70,20 @@ public class College {
   }
 
   public double getLecturerSalaryAvg() {
+    return getLecturerSalaryAvg(null);
+  }
+
+  public double getLecturerSalaryAvg(Department department) {
     double salarySum = 0;
+    int deptLecturerCount = 0;
     for (int i = 0; i < lecturerCount; i++) {
-      salarySum = salarySum + lecturers[i].getSalary();
+      if (department == null || department.hasLecturer(lecturers[i])) {
+        salarySum = salarySum + lecturers[i].getSalary();
+        deptLecturerCount++;
+      }
     }
 
-    return lecturerCount > 0 ? (salarySum / lecturerCount) : 0;
+    return deptLecturerCount > 0 ? (salarySum / deptLecturerCount) : 0;
   }
   // endregion
 
