@@ -67,11 +67,18 @@ public class Department {
   }
 
   public String toString() {
-    StringBuilder buf = new StringBuilder(
-        name + " (" + studentCount + " students)\n\t");
-    for (int i = 0; i < lecturers.length; i++) {
-      buf.append("\n\t").append(lecturers[i].toString().split("\n")[0]);
+    StringBuilder str = new StringBuilder(
+        name + " (" + studentCount + " students)");
+    if (lecturerCount < 1)
+      str.append("\n\tNo lecturers.");
+    else {
+      for (int i = 0; i < lecturerCount; i++) {
+        str.append("\n\t").append(lecturers[i].getName()).append(" (")
+            .append(lecturers[i].getId()).append("), ")
+            .append(lecturers[i].getDegree().displayName).append(" in ")
+            .append(lecturers[i].getDegreeTitle());
+      }
     }
-    return buf.toString();
+    return str.toString();
   }
 }
