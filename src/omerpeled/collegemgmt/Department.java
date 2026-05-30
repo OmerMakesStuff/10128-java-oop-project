@@ -4,11 +4,13 @@ public class Department {
   private String name;
   private int studentCount;
   private Lecturer[] lecturers;
+  private int lecturerCount;
 
   public Department(String name, int studentCount) {
     this.name = name;
     this.studentCount = studentCount;
     this.lecturers = new Lecturer[1];
+    this.lecturerCount = 0;
   }
 
   public String getName() {
