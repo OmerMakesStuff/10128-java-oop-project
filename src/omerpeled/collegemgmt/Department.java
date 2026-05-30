@@ -25,7 +25,14 @@ public class Department {
     return lecturers;
   }
 
-  // TODO: Setters for name, student count? Would they ever be used?
+  public boolean hasLecturer(Lecturer lecturer) {
+    for (int i = 0; i < lecturerCount; i++) {
+      if (lecturers[i].getId().equals(lecturer.getId()))
+        return true;
+    }
+    return false;
+  }
+
   // TODO: Add lecturer - reuse doubling array length
   // TODO: Remove lecturer - move others back in array
 
