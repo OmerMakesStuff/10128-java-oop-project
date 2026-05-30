@@ -105,6 +105,7 @@ public class Main {
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!\n";
   private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.\n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
+  private static final String MSG_FAIL_ALREADY_IN_DEPT = "%s is already in %s!\n";
 
   private static final String MSG_CHOICE = "choice";
   private static final String MSG_LECTURER = "Lecturer";
@@ -288,7 +289,10 @@ public class Main {
       return;
     }
 
-    lecturer.setDepartment(department);
+    boolean addedToDept = lecturer.setDepartment(department);
+    if (!addedToDept && department != null)
+      System.err.printf(MSG_FAIL_ALREADY_IN_DEPT, lecturer.getName(),
+          department.getName());
   }
   // endregion
 
