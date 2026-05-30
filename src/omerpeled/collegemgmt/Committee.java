@@ -28,11 +28,13 @@ public class Committee {
   // TODO: Add member - reuse doubling array length
   // TODO: Remove member - move others back in array
 
-  public void setHead(Lecturer head) {
-    // TODO: Require head lecturer to be a PHD or PROF, or return fail status
+  public boolean setHead(Lecturer head) {
+    if (!head.isValidCommitteeHead())
+      return false;
     // TODO: Add previous head to members
     this.head = head;
     // TODO: If in members, remove from members
+    return true;
   }
 
   public String toString() {
