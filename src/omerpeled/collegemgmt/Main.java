@@ -106,6 +106,7 @@ public class Main {
   private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.\n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
   private static final String MSG_FAIL_ALREADY_IN_DEPT = "%s is already in %s!\n";
+  private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)\n";
 
   private static final String MSG_CHOICE = "choice";
   private static final String MSG_LECTURER = "Lecturer";
@@ -240,13 +241,24 @@ public class Main {
     do {
       System.out.printf(MSG_PROMPT, "committee name");
       String name = s.nextLine();
-      // TODO: Set head of committee
-      Committee newCommittee = new Committee(name, null);
+      System.out.printf(MSG_PROMPT, "head lecturer ID");
+      String headId = s.nextLine();
+      Lecturer head = college.getLecturerById(headId);
+
+      Committee newCommittee = new Committee(name, head);
       addStatus = college.addCommittee(newCommittee);
       switch (addStatus) {
         case College.AddItemStatus.FAIL_EXISTS:
-          System.err.printf(MSG_FAIL_EXISTS, "Committee " + name);
-          System.err.println();
+          System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
+          break;
+        case College.AddItemStatus.FAIL_HEAD_MISSING:
+          System.err.printf(MSG_FAIL_NOT_EXISTS,
+              MSG_LECTURER_WITH_ID + name);
+          break;
+        case College.AddItemStatus.FAIL_HEAD_INVALID:
+          System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
+              Lecturer.Degree.PHD.displayName,
+              Lecturer.Degree.PROF.displayName);
           break;
         case College.AddItemStatus.SUCCESS:
           System.out.printf(MSG_SUCCESS_ADD, MSG_COMMITTEE);
