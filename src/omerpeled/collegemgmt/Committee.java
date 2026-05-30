@@ -4,11 +4,13 @@ public class Committee {
   private String name;
   private Lecturer head;
   private Lecturer[] members;
+  private int membersCount;
 
   public Committee(String name, Lecturer head) {
     this.name = name;
     this.head = head;
     this.members = new Lecturer[1];
+    this.membersCount = 0;
   }
 
   public String getName() {
