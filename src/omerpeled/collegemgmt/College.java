@@ -48,15 +48,8 @@ public class College {
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
 
-    // Double array size if too small
-    // FIXME: CODE DUPLICATION due to different array types :(
-    if (lecturerCount == lecturers.length) {
-      Lecturer[] resizedItems = new Lecturer[lecturers.length * 2];
-      for (int i = 0; i < lecturers.length; i++) {
-        resizedItems[i] = lecturers[i];
-      }
-      lecturers = resizedItems;
-    }
+    if (lecturerCount == lecturers.length)
+      lecturers = Utils.doubleLecturersSize(lecturers);
 
     lecturers[lecturerCount++] = newLecturer;
     return AddItemStatus.SUCCESS;
@@ -97,17 +90,11 @@ public class College {
     boolean exists = getCommitteeByName(newCommittee.getName()) != null;
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
+
     // TODO: Check if committee head is valid
 
-    // Double array size if too small
-    // FIXME: CODE DUPLICATION due to different array types :(
-    if (committeeCount == committees.length) {
-      Committee[] resizedItems = new Committee[committees.length * 2];
-      for (int i = 0; i < committees.length; i++) {
-        resizedItems[i] = committees[i];
-      }
-      committees = resizedItems;
-    }
+    if (committeeCount == committees.length)
+      committees = Utils.doubleCommitteesSize(committees);
 
     committees[committeeCount++] = newCommittee;
     return AddItemStatus.SUCCESS;
@@ -132,15 +119,8 @@ public class College {
     if (exists)
       return AddItemStatus.FAIL_EXISTS;
 
-    // Double array size if too small
-    // FIXME: CODE DUPLICATION due to different array types :(
-    if (departmentCount == departments.length) {
-      Department[] resizedItems = new Department[departments.length * 2];
-      for (int i = 0; i < departments.length; i++) {
-        resizedItems[i] = departments[i];
-      }
-      departments = resizedItems;
-    }
+    if (departmentCount == departments.length)
+      departments = Utils.doubleDepartmentsSize(departments);
 
     departments[departmentCount++] = newDepartment;
     return AddItemStatus.SUCCESS;
