@@ -283,8 +283,8 @@ public class Main {
 
     System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
     String lecturerId = s.nextLine();
-    boolean lecturerExists = college.getLecturerById(lecturerId) != null;
-    if (!lecturerExists) {
+    Lecturer lecturer = college.getLecturerById(lecturerId);
+    if (lecturer == null) {
       System.err.printf(MSG_FAIL_NOT_EXISTS,
           MSG_LECTURER_WITH_ID + lecturerId);
       return;
@@ -292,15 +292,19 @@ public class Main {
 
     System.out.printf(MSG_PROMPT, MSG_COMMITTE_NAME);
     String committeeName = s.nextLine();
-    boolean committeeExists = college
-        .getCommitteeByName(committeeName) != null;
-    if (!committeeExists) {
+    Committee committee = college.getCommitteeByName(committeeName);
+    if (committee == null) {
       System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
       return;
     }
 
-    // TODO: Rest of implementation
-    System.err.println("NOT IMPLEMENTED YET");
+    boolean addSuccess = committee.addMember(lecturer);
+    if (addSuccess)
+      System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
+          committee.getName());
+    else
+      System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
+          committee.getName());
   }
   // endregion
 
