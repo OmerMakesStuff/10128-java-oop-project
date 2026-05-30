@@ -33,8 +33,38 @@ public class Department {
     return false;
   }
 
-  // TODO: Add lecturer - reuse doubling array length
-  // TODO: Remove lecturer - move others back in array
+  public boolean addLecturer(Lecturer lecturer) {
+    if (hasLecturer(lecturer))
+      return false;
+
+    if (lecturerCount == lecturers.length)
+      lecturers = Utils.doubleLecturersSize(lecturers);
+
+    lecturers[lecturerCount++] = lecturer;
+    if (lecturer.getDepartment() != this)
+      lecturer.setDepartment(this);
+
+    return true;
+  }
+
+  public boolean removeLecturer(Lecturer lecturer) {
+    if (!hasLecturer(lecturer))
+      return false; // Can't remove lecturer not in dept
+
+    boolean removed = false;
+    for (int i = 0; i < lecturerCount; i++) {
+      if (lecturers[i].getId().equals(lecturer.getId()) && !removed)
+        removed = true;
+      if (removed)
+        lecturers[i] = i < (lecturerCount - 1) ? lecturers[i + 1] : null;
+    }
+
+    if (removed && lecturer.getDepartment() != null) {
+      lecturerCount--;
+      lecturer.setDepartment(null);
+    }
+    return removed;
+  }
 
   public String toString() {
     StringBuilder buf = new StringBuilder(
