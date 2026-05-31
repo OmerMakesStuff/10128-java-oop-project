@@ -97,6 +97,7 @@ public class Main {
   private static final String MSG_SUCCESS_CREATED = "%s added.%n";
   private static final String MSG_SUCCESS_ADDED_TO = "%s has been added to %s.%n";
   private static final String MSG_SUCCESS_REMOVED_FROM = "%s has been removed from %s.%n";
+  private static final String MSG_SUCCESS_COMMITTEE_HEAD_SET = "%s is now the head of %s.%n";
 
   private static final String MSG_FAIL_EXISTS = "%s already exists!%n";
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!%n";
@@ -349,8 +350,37 @@ public class Main {
   }
 
   private static void promptSetCommitteeHead() {
-    // TODO: Set committee head option
-    System.err.println("NOT IMPLEMENTED YET");
+    if (college.getCommitteeCount() < 1) {
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
+    String lecturerId = s.nextLine();
+    Lecturer lecturer = college.getLecturerById(lecturerId);
+    if (lecturer == null) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS,
+          MSG_LECTURER_WITH_ID + lecturerId);
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
+    String committeeName = s.nextLine();
+    Committee committee = college.getCommitteeByName(committeeName);
+    if (committee == null) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
+      return;
+    }
+
+    boolean success = committee.setHead(lecturer);
+    if (success)
+      System.out.printf(MSG_SUCCESS_COMMITTEE_HEAD_SET, lecturer.getName(),
+          committee.getName());
+    else
+      System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, lecturer.getName(),
+          Lecturer.Degree.PHD.displayName,
+          Lecturer.Degree.PROF.displayName);
   }
   // endregion
 
