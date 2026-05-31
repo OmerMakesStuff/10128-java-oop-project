@@ -20,6 +20,8 @@ public class Lecturer {
   private String degreeTitle;
   private double salary;
   private Department department;
+  private Committee[] committees;
+  private int committeeCount;
 
   public Lecturer(
       String id,
@@ -32,6 +34,9 @@ public class Lecturer {
     this.degree = degree;
     this.degreeTitle = degreeTitle;
     this.salary = salary;
+
+    this.committees = new Committee[1];
+    this.committeeCount = 0;
   }
 
   public String getId() {
