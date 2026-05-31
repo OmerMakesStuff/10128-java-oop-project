@@ -70,10 +70,10 @@ public class Department {
     StringBuilder str = new StringBuilder(
         name + " (" + studentCount + " students)");
     if (lecturerCount < 1)
-      str.append("\n\tNo lecturers.");
+      str.append("\n  No lecturers.");
     else {
       for (int i = 0; i < lecturerCount; i++) {
-        str.append("\n\t").append(lecturers[i].getName()).append(" (")
+        str.append("\n  ").append(lecturers[i].getName()).append(" (")
             .append(lecturers[i].getId()).append("), ")
             .append(lecturers[i].getDegree().displayName).append(" in ")
             .append(lecturers[i].getDegreeTitle());
