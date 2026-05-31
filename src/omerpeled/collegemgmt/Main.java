@@ -57,8 +57,7 @@ public class Main {
           break;
 
         case MenuOption.REMOVE_COMMITTEE_MEMBER:
-          // TODO: Remove committee member option
-          System.err.println("NOT IMPLEMENTED YET");
+          promptRemoveCommitteeMember();
           break;
 
         case MenuOption.ADD_DEPARTMENT:
@@ -104,7 +103,9 @@ public class Main {
   private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!%n";
   private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.%n";
   private static final String MSG_FAIL_ALREADY_ADDED = "%s is already in %s!%n";
+  private static final String MSG_FAIL_NOT_ADDED = "%s is not in %s!%n";
   private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
+  private static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.%n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
 
   private static final String MSG_CHOICE = "choice";
@@ -304,6 +305,45 @@ public class Main {
           committee.getName());
     else
       System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
+          committee.getName());
+  }
+
+  private static void promptRemoveCommitteeMember() {
+    boolean lecturersExist = college.getLecturerCount() > 0;
+    boolean committeesExist = college.getCommitteeCount() > 0;
+    if (!lecturersExist || !committeesExist) {
+      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_COMMITTEE;
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
+    String lecturerId = s.nextLine();
+    Lecturer lecturer = college.getLecturerById(lecturerId);
+    if (lecturer == null) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS,
+          MSG_LECTURER_WITH_ID + lecturerId);
+      return;
+    }
+
+    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
+    String committeeName = s.nextLine();
+    Committee committee = college.getCommitteeByName(committeeName);
+    if (committee == null) {
+      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
+      return;
+    }
+
+    boolean removeSuccess = committee.removeMember(lecturer);
+    if (removeSuccess)
+      System.out.printf(MSG_SUCCESS_REMOVED_FROM, lecturer.getName(),
+          committee.getName());
+    else if (committee.getHead() == lecturer)
+      System.err.printf(MSG_FAIL_REMOVE_COMMITTEE_HEAD, lecturer.getName(),
+          committee.getName());
+    else
+      System.err.printf(MSG_FAIL_NOT_ADDED, lecturer.getName(),
           committee.getName());
   }
   // endregion
