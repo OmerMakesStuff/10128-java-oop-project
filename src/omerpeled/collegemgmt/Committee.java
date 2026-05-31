@@ -76,20 +76,22 @@ public class Committee {
   }
 
   public String toString() {
-    StringBuilder str = new StringBuilder(this.name).append(" - ");
+    StringBuilder str = new StringBuilder(this.name).append("\n  ");
 
     if (this.head == null)
-      str.append("no head");
+      str.append("No head");
     else
-      str.append("head: ").append(this.head.getName());
-    str.append("\n");
+      str.append("Head: ").append(this.head.getName());
+    str.append("\n  ");
 
     if (memberCount < 1)
       str.append("No members.");
     else {
-      str.append("Members:");
+      str.append("Members: ");
       for (int i = 0; i < memberCount; i++) {
-        str.append("\n\t").append(members[i].getName());
+        str.append(members[i].getName());
+        if (i < (memberCount - 1))
+          str.append(", ");
       }
     }
     return str.toString();
