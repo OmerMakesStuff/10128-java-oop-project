@@ -13,7 +13,6 @@ public class College {
   public enum AddItemStatus {
     SUCCESS,
     FAIL_EXISTS,
-    FAIL_HEAD_MISSING,
     FAIL_HEAD_INVALID
   }
 
@@ -110,9 +109,7 @@ public class College {
       return AddItemStatus.FAIL_EXISTS;
 
     Lecturer committeeHead = newCommittee.getHead();
-    if (committeeHead == null)
-      return AddItemStatus.FAIL_HEAD_MISSING;
-    else if (!committeeHead.isValidCommitteeHead())
+    if (!committeeHead.isValidCommitteeHead())
       return AddItemStatus.FAIL_HEAD_INVALID;
 
     if (committeeCount == committees.length)
