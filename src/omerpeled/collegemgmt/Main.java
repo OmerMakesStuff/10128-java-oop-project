@@ -95,7 +95,7 @@ public class Main {
   private static final String MSG_FAIL_NO_VALID_COMMITTEE_HEAD = "valid committee head doesn't exist.\n";
   private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
   private static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.%n";
-  private static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!";
+  private static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
 
   private static final String MSG_CHOICE = "choice";
