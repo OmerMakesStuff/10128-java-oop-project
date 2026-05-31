@@ -8,9 +8,11 @@ public class Committee {
 
   public Committee(String name, Lecturer head) {
     this.name = name;
-    this.head = head;
     this.members = new Lecturer[1];
     this.memberCount = 0;
+
+    this.head = head;
+    head.addCommittee(this);
   }
 
   public String getName() {
@@ -41,7 +43,7 @@ public class Committee {
       members = Utils.doubleLecturersSize(members);
 
     members[memberCount++] = lecturer;
-    // TODO: Add committee to lecturer committees array
+    lecturer.addCommittee(this);
 
     return true;
   }
@@ -61,7 +63,7 @@ public class Committee {
 
     if (removed) {
       memberCount--;
-      // TODO: Remove from lecturers committees
+      lecturer.removeCommittee(this);
     }
     return removed;
   }
@@ -79,6 +81,7 @@ public class Committee {
       removeMember(head);
 
     this.head = head;
+    head.addCommittee(this);
     return true;
   }
 
