@@ -63,10 +63,6 @@ public class Lecturer {
     return department;
   }
 
-  public boolean isValidCommitteeHead() {
-    return this.degree == Degree.PHD || this.degree == Degree.PROF;
-  }
-
   public boolean setDepartment(Department department) {
     if (this.department == department)
       return false; // Already in this dept
@@ -78,6 +74,48 @@ public class Lecturer {
     if (department != null)
       department.addLecturer(this);
     return true;
+  }
+
+  public boolean isValidCommitteeHead() {
+    return this.degree == Degree.PHD || this.degree == Degree.PROF;
+  }
+
+  public boolean hasCommittee(Committee committee) {
+    for (int i = 0; i < committeeCount; i++) {
+      if (committees[i] == committee)
+        return true;
+    }
+    return false;
+  }
+
+  public boolean addCommittee(Committee committee) {
+    if (hasCommittee(committee))
+      return false;
+
+    if (committeeCount == committees.length)
+      committees = Utils.doubleCommitteesSize(committees);
+
+    committees[committeeCount++] = committee;
+    return true;
+  }
+
+  public boolean removeCommittee(Committee committee) {
+    if (!hasCommittee(committee))
+      // To remove the head, a new head must be set first
+      return false;
+
+    boolean removed = false;
+    for (int i = 0; i < committeeCount; i++) {
+      if (committees[i] == committee && !removed)
+        removed = true;
+      if (removed)
+        committees[i] = i < (committeeCount - 1) ? committees[i + 1] : null;
+    }
+
+    if (removed)
+      committeeCount--;
+
+    return removed;
   }
 
   public String toString() {
