@@ -77,7 +77,7 @@ public class Lecturer {
 
   public String toString() {
     return name + " (" + id + "), " + degree.displayName + " in " + degreeTitle
-        + "\n\t" +
+        + "\n  " +
         "Department: " + (department == null ? "None" : department.getName())
         + " | Salary: " + salary + "₪";
   }
