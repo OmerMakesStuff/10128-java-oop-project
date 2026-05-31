@@ -283,12 +283,9 @@ public class Main {
 
   // region Committees
   private static void addCommitteeMember() {
-    boolean lecturersExist = college.getLecturerCount() > 0;
-    boolean committeesExist = college.getCommitteeCount() > 0;
-    if (!lecturersExist || !committeesExist) {
-      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_COMMITTEE;
+    if (college.getCommitteeCount() < 1) {
       System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
-          String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
+          String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
       return;
     }
 
@@ -319,12 +316,9 @@ public class Main {
   }
 
   private static void removeCommitteeMember() {
-    boolean lecturersExist = college.getLecturerCount() > 0;
-    boolean committeesExist = college.getCommitteeCount() > 0;
-    if (!lecturersExist || !committeesExist) {
-      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_COMMITTEE;
+    if (college.getCommitteeCount() < 1) {
       System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
-          String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
+          String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
       return;
     }
 
