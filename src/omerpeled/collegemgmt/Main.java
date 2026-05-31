@@ -196,6 +196,7 @@ public class Main {
     return promptForLecturer(MSG_LECTURER_ID);
   }
 
+  // FIXME: CODE DUPLICATION due to different types :(
   private static Lecturer promptForLecturer(String promptMsg) {
     String lecturerId;
     Lecturer lecturer;
@@ -226,6 +227,22 @@ public class Main {
     } while (committee == null);
 
     return committee;
+  }
+
+  private static Department promptForDepartment() {
+    String departmentName;
+    Department department;
+
+    do {
+      System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
+      departmentName = s.nextLine();
+      department = college.getDepartmentByName(departmentName);
+      if (department == null)
+        System.err.printf(MSG_FAIL_NOT_EXISTS,
+            MSG_DEPARTMENT + " " + departmentName);
+    } while (department == null);
+
+    return department;
   }
   // endregion
 
@@ -387,28 +404,13 @@ public class Main {
 
     Lecturer lecturer = promptForLecturer();
 
-    // If left empty, lecturer is removed from their current department and not
-    // assigned to a new one
-    System.out.printf(MSG_PROMPT,
-        MSG_DEPARTMENT_NAME + " (leave empty for no department)");
-    String deptName = s.nextLine();
-    boolean setNoDept = deptName.isEmpty();
-    Department department = setNoDept
-        ? null
-        : college.getDepartmentByName(deptName);
-    if (department == null && !setNoDept) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_DEPARTMENT);
-      return;
-    }
+    Department department = promptForDepartment();
 
     boolean addSuccess = lecturer.setDepartment(department);
-    if (addSuccess) {
-      if (setNoDept)
-        System.out.printf(MSG_SUCCESS_REMOVED_FROM, lecturer.getName(),
-            "their department");
-      else
-        System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(), deptName);
-    } else if (department != null)
+    if (addSuccess)
+      System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
+          department.getName());
+    else
       System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
           department.getName());
   }
@@ -428,16 +430,11 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
-    String deptName = s.nextLine();
-    Department department = college.getDepartmentByName(deptName);
-    if (department == null)
-      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_DEPARTMENT);
-    else {
-      double deptSalaryAvg = college.getLecturerSalaryAvg(department);
-      System.out.println("Department average salary for " + deptName + ": "
-          + deptSalaryAvg + "₪");
-    }
+    Department department = promptForDepartment();
+    double deptSalaryAvg = college.getLecturerSalaryAvg(department);
+    System.out
+        .println("Department average salary for " + department.getName() + ": "
+            + deptSalaryAvg + "₪");
   }
 
   // FIXME: CODE DUPLICATION due to different array types :(
