@@ -46,7 +46,25 @@ public class Committee {
     return true;
   }
 
-  // TODO: Remove member - move others back in array
+  public boolean removeMember(Lecturer lecturer) {
+    if (!hasMember(lecturer) || this.head == lecturer)
+      // To remove the head, a new head must be set first
+      return false;
+
+    boolean removed = false;
+    for (int i = 0; i < memberCount; i++) {
+      if (members[i].getId().equals(lecturer.getId()) && !removed)
+        removed = true;
+      if (removed)
+        members[i] = i < (memberCount - 1) ? members[i + 1] : null;
+    }
+
+    if (removed) {
+      memberCount--;
+      // TODO: Remove from lecturers committees
+    }
+    return removed;
+  }
 
   public boolean setHead(Lecturer head) {
     if (!head.isValidCommitteeHead())
