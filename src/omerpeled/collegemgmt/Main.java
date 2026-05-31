@@ -27,7 +27,7 @@ public class Main {
 
       // Handle choices not covered by MenuOption enum
       if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
-        System.err.println("Invalid choice!");
+        System.err.println(MSG_FAIL_INVALID_CHOICE);
         continue;
       }
 
@@ -103,8 +103,10 @@ public class Main {
   private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.%n";
   private static final String MSG_FAIL_ALREADY_ADDED = "%s is already in %s!%n";
   private static final String MSG_FAIL_NOT_ADDED = "%s is not in %s!%n";
+  private static final String MSG_FAIL_NO_VALID_COMMITTEE_HEAD = "valid committee head doesn't exist.\n";
   private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
   private static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.%n";
+  private static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
 
   private static final String MSG_CHOICE = "choice";
@@ -177,7 +179,7 @@ public class Main {
       choiceIdx = Integer.parseInt(s.nextLine()) - 1;
       isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
       if (!isValid)
-        System.err.println("Invalid choice!");
+        System.err.println(MSG_FAIL_INVALID_CHOICE);
     } while (!isValid);
 
     return DEGREE_OPTIONS[choiceIdx];
@@ -234,7 +236,7 @@ public class Main {
   private static void promptForCommittee() {
     if (!college.validCommitteeHeadExists()) {
       System.err.printf(
-          MSG_FAIL_UNAVAILABLE_OPT, "valid committee head doesn't exist.\n");
+          MSG_FAIL_UNAVAILABLE_OPT, MSG_FAIL_NO_VALID_COMMITTEE_HEAD);
       return;
     }
 
