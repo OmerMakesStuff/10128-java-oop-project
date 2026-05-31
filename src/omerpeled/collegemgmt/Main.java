@@ -211,6 +211,22 @@ public class Main {
 
     return lecturer;
   }
+
+  private static Committee promptForCommittee() {
+    String committeeName;
+    Committee committee;
+
+    do {
+      System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
+      committeeName = s.nextLine();
+      committee = college.getCommitteeByName(committeeName);
+      if (committee == null)
+        System.err.printf(MSG_FAIL_NOT_EXISTS,
+            MSG_COMMITTEE + " " + committeeName);
+    } while (committee == null);
+
+    return committee;
+  }
   // endregion
 
   // region New item creation
@@ -304,14 +320,7 @@ public class Main {
     }
 
     Lecturer lecturer = promptForLecturer();
-
-    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
-    String committeeName = s.nextLine();
-    Committee committee = college.getCommitteeByName(committeeName);
-    if (committee == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
-      return;
-    }
+    Committee committee = promptForCommittee();
 
     boolean addSuccess = committee.addMember(lecturer);
     if (addSuccess)
@@ -330,14 +339,7 @@ public class Main {
     }
 
     Lecturer lecturer = promptForLecturer();
-
-    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
-    String committeeName = s.nextLine();
-    Committee committee = college.getCommitteeByName(committeeName);
-    if (committee == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
-      return;
-    }
+    Committee committee = promptForCommittee();
 
     boolean removeSuccess = committee.removeMember(lecturer);
     if (removeSuccess)
@@ -359,14 +361,7 @@ public class Main {
     }
 
     Lecturer lecturer = promptForLecturer();
-
-    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
-    String committeeName = s.nextLine();
-    Committee committee = college.getCommitteeByName(committeeName);
-    if (committee == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS, MSG_COMMITTEE);
-      return;
-    }
+    Committee committee = promptForCommittee();
 
     boolean success = committee.setHead(lecturer);
     if (success)
