@@ -28,47 +28,47 @@ public class Main {
           break;
 
         case ADD_LECTURER:
-          promptForLecturer();
+          addLecturer();
           break;
 
         case ADD_COMMITTEE:
-          promptForCommittee();
+          addCommittee();
           break;
 
         case ADD_COMMITTEE_MEMBER:
-          promptAddCommitteeMember();
+          addCommitteeMember();
           break;
 
         case SET_COMMITTEE_HEAD:
-          promptSetCommitteeHead();
+          setCommitteeHead();
           break;
 
         case REMOVE_COMMITTEE_MEMBER:
-          promptRemoveCommitteeMember();
+          removeCommitteeMember();
           break;
 
         case ADD_DEPARTMENT:
-          promptForDepartment();
+          addDepartment();
           break;
 
         case ADD_DEPARTMENT_LECTURER:
-          promptAddDeptLecturer();
+          addDeptLecturer();
           break;
 
         case SHOW_LECTURER_SALARY_AVG:
-          printSalaryAvg();
+          showSalaryAvg();
           break;
 
         case SHOW_LECTURER_SALARY_DEPT_AVG:
-          printDeptSalaryAvg();
+          showDeptSalaryAvg();
           break;
 
         case SHOW_LECTURERS:
-          printLecturers();
+          showLecturers();
           break;
 
         case SHOW_COMMITTEES:
-          printCommittees();
+          showCommittees();
           break;
       }
 
@@ -194,7 +194,7 @@ public class Main {
   // endregion
 
   // region New item creation
-  private static void promptForLecturer() {
+  private static void addLecturer() {
     College.AddItemStatus addStatus;
 
     do {
@@ -223,7 +223,7 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
-  private static void promptForDepartment() {
+  private static void addDepartment() {
     College.AddItemStatus addStatus;
 
     do {
@@ -242,7 +242,7 @@ public class Main {
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
 
-  private static void promptForCommittee() {
+  private static void addCommittee() {
     if (!college.validCommitteeHeadExists()) {
       System.err.printf(
           MSG_FAIL_UNAVAILABLE_OPT, MSG_FAIL_NO_VALID_COMMITTEE_HEAD);
@@ -282,7 +282,7 @@ public class Main {
   // endregion
 
   // region Committees
-  private static void promptAddCommitteeMember() {
+  private static void addCommitteeMember() {
     boolean lecturersExist = college.getLecturerCount() > 0;
     boolean committeesExist = college.getCommitteeCount() > 0;
     if (!lecturersExist || !committeesExist) {
@@ -318,7 +318,7 @@ public class Main {
           committee.getName());
   }
 
-  private static void promptRemoveCommitteeMember() {
+  private static void removeCommitteeMember() {
     boolean lecturersExist = college.getLecturerCount() > 0;
     boolean committeesExist = college.getCommitteeCount() > 0;
     if (!lecturersExist || !committeesExist) {
@@ -357,7 +357,7 @@ public class Main {
           committee.getName());
   }
 
-  private static void promptSetCommitteeHead() {
+  private static void setCommitteeHead() {
     if (college.getCommitteeCount() < 1) {
       System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
@@ -393,7 +393,7 @@ public class Main {
   // endregion
 
   // region Departments
-  private static void promptAddDeptLecturer() {
+  private static void addDeptLecturer() {
     boolean lecturersExist = college.getLecturerCount() > 0;
     boolean departmentsExist = college.getDepartmentCount() > 0;
     if (!lecturersExist || !departmentsExist) {
@@ -440,12 +440,12 @@ public class Main {
   // endregion
 
   // region Printing info
-  private static void printSalaryAvg() {
+  private static void showSalaryAvg() {
     double salaryAvg = college.getLecturerSalaryAvg();
     System.out.println("College average salary: " + salaryAvg + "₪");
   }
 
-  private static void printDeptSalaryAvg() {
+  private static void showDeptSalaryAvg() {
     boolean departmentsExist = college.getDepartmentCount() > 0;
     if (!departmentsExist) {
       System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
@@ -466,7 +466,7 @@ public class Main {
   }
 
   // FIXME: CODE DUPLICATION due to different array types :(
-  private static void printLecturers() {
+  private static void showLecturers() {
     System.out.println("ALL LECTURERS");
 
     Lecturer[] lecturers = college.getLecturers();
@@ -480,7 +480,7 @@ public class Main {
     }
   }
 
-  private static void printCommittees() {
+  private static void showCommittees() {
     System.out.println("ALL COMMITTEES");
 
     Committee[] committees = college.getCommittees();
