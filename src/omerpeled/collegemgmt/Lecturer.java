@@ -76,9 +76,13 @@ public class Lecturer {
   }
 
   public String toString() {
-    return name + " (" + id + "), " + degree.displayName + " in " + degreeTitle
-        + "\n  " +
-        "Department: " + (department == null ? "None" : department.getName())
-        + " | Salary: " + salary + "₪";
+    return String.format(
+        "%s (%s), %s in %s%n  Department: %s | Salary: %s₪",
+        name,
+        id,
+        degree.displayName,
+        degreeTitle,
+        department == null ? "None" : department.getName(),
+        salary);
   }
 }
