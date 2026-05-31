@@ -389,7 +389,7 @@ public class Main {
     if (lecturers[0] == null)
       System.err.printf(MSG_FAIL_NONE_EXIST, MSG_LECTURER.toLowerCase());
     else {
-      for (int i = 0; i < lecturers.length; i++) {
+      for (int i = 0; i < college.getLecturerCount(); i++) {
         if (lecturers[i] != null)
           System.out.println(lecturers[i]);
       }
@@ -403,7 +403,7 @@ public class Main {
     if (committees[0] == null)
       System.err.printf(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase());
     else {
-      for (int i = 0; i < committees.length; i++) {
+      for (int i = 0; i < college.getCommitteeCount(); i++) {
         if (committees[i] != null)
           System.out.println(committees[i]);
       }
