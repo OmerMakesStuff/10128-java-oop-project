@@ -52,8 +52,7 @@ public class Main {
           break;
 
         case MenuOption.SET_COMMITTEE_HEAD:
-          // TODO: Set committee head option
-          System.err.println("NOT IMPLEMENTED YET");
+          promptSetCommitteeHead();
           break;
 
         case MenuOption.REMOVE_COMMITTEE_MEMBER:
@@ -345,6 +344,11 @@ public class Main {
     else
       System.err.printf(MSG_FAIL_NOT_ADDED, lecturer.getName(),
           committee.getName());
+  }
+
+  private static void promptSetCommitteeHead() {
+    // TODO: Set committee head option
+    System.err.println("NOT IMPLEMENTED YET");
   }
   // endregion
 
