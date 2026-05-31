@@ -1,0 +1,28 @@
+# ------------ COLLEGE NAME -----------
+College of Test
+# ------------- LECTURERS -------------
+# (1)
+1
+123
+Not prof
+1
+something
+1000
+# (2)
+1
+456
+Doc
+3
+many things
+5000
+# (3)
+1
+789
+Prof
+4
+everything
+100000
+# ------------ DEPARTMENTS ------------
+6
+d1
+12345
