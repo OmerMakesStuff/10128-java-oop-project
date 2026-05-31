@@ -191,6 +191,26 @@ public class Main {
 
     return DEGREE_OPTIONS[choiceIdx];
   }
+
+  private static Lecturer promptForLecturer() {
+    return promptForLecturer(MSG_LECTURER_ID);
+  }
+
+  private static Lecturer promptForLecturer(String promptMsg) {
+    String lecturerId;
+    Lecturer lecturer;
+
+    do {
+      System.out.printf(MSG_PROMPT, promptMsg);
+      lecturerId = s.nextLine();
+      lecturer = college.getLecturerById(lecturerId);
+      if (lecturer == null)
+        System.err.printf(MSG_FAIL_NOT_EXISTS,
+            MSG_LECTURER_WITH_ID + lecturerId);
+    } while (lecturer == null);
+
+    return lecturer;
+  }
   // endregion
 
   // region New item creation
@@ -254,26 +274,20 @@ public class Main {
     do {
       System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
       String name = s.nextLine();
-      System.out.printf(MSG_PROMPT, "head lecturer ID");
-      String headId = s.nextLine();
-      Lecturer head = college.getLecturerById(headId);
+      Lecturer head = promptForLecturer("head lecturer ID");
 
       Committee newCommittee = new Committee(name, head);
       addStatus = college.addCommittee(newCommittee);
       switch (addStatus) {
-        case College.AddItemStatus.FAIL_EXISTS:
+        case FAIL_EXISTS:
           System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
           break;
-        case College.AddItemStatus.FAIL_HEAD_MISSING:
-          System.err.printf(MSG_FAIL_NOT_EXISTS,
-              MSG_LECTURER_WITH_ID + name);
-          break;
-        case College.AddItemStatus.FAIL_HEAD_INVALID:
+        case FAIL_HEAD_INVALID:
           System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
               Lecturer.Degree.PHD.displayName,
               Lecturer.Degree.PROF.displayName);
           break;
-        case College.AddItemStatus.SUCCESS:
+        case SUCCESS:
           System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
           break;
       }
@@ -289,14 +303,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
-    String lecturerId = s.nextLine();
-    Lecturer lecturer = college.getLecturerById(lecturerId);
-    if (lecturer == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS,
-          MSG_LECTURER_WITH_ID + lecturerId);
-      return;
-    }
+    Lecturer lecturer = promptForLecturer();
 
     System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
     String committeeName = s.nextLine();
@@ -322,14 +329,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
-    String lecturerId = s.nextLine();
-    Lecturer lecturer = college.getLecturerById(lecturerId);
-    if (lecturer == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS,
-          MSG_LECTURER_WITH_ID + lecturerId);
-      return;
-    }
+    Lecturer lecturer = promptForLecturer();
 
     System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
     String committeeName = s.nextLine();
@@ -358,14 +358,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
-    String lecturerId = s.nextLine();
-    Lecturer lecturer = college.getLecturerById(lecturerId);
-    if (lecturer == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS,
-          MSG_LECTURER_WITH_ID + lecturerId);
-      return;
-    }
+    Lecturer lecturer = promptForLecturer();
 
     System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
     String committeeName = s.nextLine();
@@ -397,14 +390,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
-    String lecturerId = s.nextLine();
-    Lecturer lecturer = college.getLecturerById(lecturerId);
-    if (lecturer == null) {
-      System.err.printf(MSG_FAIL_NOT_EXISTS,
-          MSG_LECTURER_WITH_ID + lecturerId);
-      return;
-    }
+    Lecturer lecturer = promptForLecturer();
 
     // If left empty, lecturer is removed from their current department and not
     // assigned to a new one
