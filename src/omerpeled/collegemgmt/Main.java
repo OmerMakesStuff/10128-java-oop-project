@@ -112,7 +112,7 @@ public class Main {
   private static final String MSG_LECTURER_ID = "lecturer ID";
   private static final String MSG_LECTURER_WITH_ID = MSG_LECTURER + " with ID ";
   private static final String MSG_COMMITTEE = "Committee";
-  private static final String MSG_COMMITTE_NAME = "committee name";
+  private static final String MSG_COMMITTEE_NAME = "committee name";
   private static final String MSG_DEPARTMENT = "Department";
   private static final String MSG_DEPARTMENT_NAME = "department name";
   // endregion
@@ -241,7 +241,7 @@ public class Main {
     College.AddItemStatus addStatus;
 
     do {
-      System.out.printf(MSG_PROMPT, "committee name");
+      System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
       String name = s.nextLine();
       System.out.printf(MSG_PROMPT, "head lecturer ID");
       String headId = s.nextLine();
@@ -290,7 +290,7 @@ public class Main {
       return;
     }
 
-    System.out.printf(MSG_PROMPT, MSG_COMMITTE_NAME);
+    System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
     String committeeName = s.nextLine();
     Committee committee = college.getCommitteeByName(committeeName);
     if (committee == null) {
@@ -331,7 +331,7 @@ public class Main {
     // If left empty, lecturer is removed from their current department and not
     // assigned to a new one
     System.out.printf(MSG_PROMPT,
-        "department name (leave empty for no department)");
+        MSG_DEPARTMENT_NAME + " (leave empty for no department)");
     String deptName = s.nextLine();
     boolean setNoDept = deptName.isEmpty();
     Department department = setNoDept
