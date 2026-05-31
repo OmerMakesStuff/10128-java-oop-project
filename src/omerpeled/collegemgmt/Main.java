@@ -17,21 +17,9 @@ public class Main {
     String collegeName = s.nextLine();
     college = new College(collegeName);
 
-    int choiceIdx;
-
+    MenuOption choice;
     do {
-      System.out.printf(MAIN_MENU, collegeName);
-      System.out.printf("\n" + MSG_PROMPT, MSG_CHOICE);
-      // Avoid \n in buffer after Enter
-      choiceIdx = Integer.parseInt(s.nextLine());
-
-      // Handle choices not covered by MenuOption enum
-      if (choiceIdx < 0 || choiceIdx >= MENU_OPTIONS.length) {
-        System.err.println(MSG_FAIL_INVALID_CHOICE);
-        continue;
-      }
-
-      MenuOption choice = MENU_OPTIONS[choiceIdx];
+      choice = promptForMenuOption();
       if (choice != MenuOption.EXIT)
         System.out.println(); // Separate from menu
 
@@ -39,27 +27,27 @@ public class Main {
         case EXIT:
           break;
 
-        case MenuOption.ADD_LECTURER:
+        case ADD_LECTURER:
           promptForLecturer();
           break;
 
-        case MenuOption.ADD_COMMITTEE:
+        case ADD_COMMITTEE:
           promptForCommittee();
           break;
 
-        case MenuOption.ADD_COMMITTEE_MEMBER:
+        case ADD_COMMITTEE_MEMBER:
           promptAddCommitteeMember();
           break;
 
-        case MenuOption.SET_COMMITTEE_HEAD:
+        case SET_COMMITTEE_HEAD:
           promptSetCommitteeHead();
           break;
 
-        case MenuOption.REMOVE_COMMITTEE_MEMBER:
+        case REMOVE_COMMITTEE_MEMBER:
           promptRemoveCommitteeMember();
           break;
 
-        case MenuOption.ADD_DEPARTMENT:
+        case ADD_DEPARTMENT:
           promptForDepartment();
           break;
 
@@ -86,7 +74,7 @@ public class Main {
 
       if (choice != MenuOption.EXIT)
         System.out.println(); // Separate from menu
-    } while (choiceIdx != 0);
+    } while (choice != MenuOption.EXIT);
 
     s.close();
   }
@@ -170,7 +158,25 @@ public class Main {
   private static final String DEGREE_MENU = buildDegreeMenuString();
   // endregion
 
-  // region New item creation
+  // region Prompt for types
+  private static MenuOption promptForMenuOption() {
+    int choiceIdx;
+    boolean isValid = false;
+    do {
+      System.out.printf(MAIN_MENU, college.getName());
+      System.out.printf("\n" + MSG_PROMPT, MSG_CHOICE);
+      // Avoid \n in buffer after Enter
+      choiceIdx = Integer.parseInt(s.nextLine());
+
+      // Handle choices not covered by MenuOption enum
+      isValid = choiceIdx >= 0 && choiceIdx < MENU_OPTIONS.length;
+      if (!isValid)
+        System.err.println(MSG_FAIL_INVALID_CHOICE);
+    } while (!isValid);
+
+    return MENU_OPTIONS[choiceIdx];
+  }
+
   private static Lecturer.Degree promptForDegree() {
     int choiceIdx;
     boolean isValid = false;
@@ -185,7 +191,9 @@ public class Main {
 
     return DEGREE_OPTIONS[choiceIdx];
   }
+  // endregion
 
+  // region New item creation
   private static void promptForLecturer() {
     College.AddItemStatus addStatus;
 
