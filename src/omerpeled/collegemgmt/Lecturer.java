@@ -81,13 +81,26 @@ public class Lecturer {
   }
 
   public String toString() {
-    return String.format(
-        "%s (%s), %s in %s%n  Department: %s | Salary: %s₪",
-        name,
-        id,
-        degree.displayName,
-        degreeTitle,
-        department == null ? "None" : department.getName(),
-        salary);
+    StringBuilder str = new StringBuilder(
+        String.format("%s (%s), %s in %s%n  Department: %s | Salary: %s₪%n  ",
+            name,
+            id,
+            degree.displayName,
+            degreeTitle,
+            department == null ? "None" : department.getName(),
+            salary));
+
+    if (committeeCount < 1)
+      str.append("No commiteees.");
+    else {
+      str.append("Committees: ");
+      for (int i = 0; i < committeeCount; i++) {
+        str.append(committees[i].getName());
+        if (i < (committeeCount - 1))
+          str.append(", ");
+      }
+    }
+
+    return str.toString();
   }
 }
