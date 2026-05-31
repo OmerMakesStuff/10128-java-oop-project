@@ -69,9 +69,16 @@ public class Committee {
   public boolean setHead(Lecturer head) {
     if (!head.isValidCommitteeHead())
       return false;
-    // TODO: Add previous head to members
+
+    Lecturer prevHead = this.head;
+    this.head = null;
+    // Previous head stays in the committee as a member
+    addMember(prevHead);
+
+    if (hasMember(head))
+      removeMember(head);
+
     this.head = head;
-    // TODO: If in members, remove from members
     return true;
   }
 
