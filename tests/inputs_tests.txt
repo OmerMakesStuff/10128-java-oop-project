@@ -8,8 +8,11 @@ d1
 456
 d1
 # ------------ COMMITTEES -------------
-# New committee, Doc as head
+# New committee, Not prof as head (should fail)
 3
+c1
+123
+# Retry new committee (not choosing option again), Doc as head
 c1
 456
 # Add Not prof to c1
