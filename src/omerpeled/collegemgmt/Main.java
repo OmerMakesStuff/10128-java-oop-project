@@ -175,13 +175,18 @@ public class Main {
 
   // region Prompt for types
   private static MenuOption promptForMenuOption() {
-    int choiceIdx;
+    int choiceIdx = -1;
     boolean isValid = false;
     do {
       System.out.printf(MAIN_MENU, college.getName());
       System.out.printf("\n" + MSG_PROMPT, MSG_CHOICE);
-      // Avoid \n in buffer after Enter
-      choiceIdx = Integer.parseInt(s.nextLine());
+      try {
+        // Avoid \n in buffer after Enter
+        choiceIdx = Integer.parseInt(s.nextLine());
+      } catch (NumberFormatException _) {
+        System.err.println(MSG_FAIL_INVALID_CHOICE);
+        continue;
+      }
 
       // Handle choices not covered by MenuOption enum
       isValid = choiceIdx >= 0 && choiceIdx < MENU_OPTIONS.length;
