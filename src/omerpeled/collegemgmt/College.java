@@ -108,10 +108,6 @@ public class College {
       throw new ItemExistsException(
           Messages.MSG_COMMITTEE + ' ' + newCommittee.getName());
 
-    Lecturer committeeHead = newCommittee.getHead();
-    if (!committeeHead.isValidCommitteeHead())
-      throw new InvalidCommitteeHeadException(committeeHead);
-
     if (committeeCount == committees.length)
       committees = doubleCommitteesSize(committees);
 
