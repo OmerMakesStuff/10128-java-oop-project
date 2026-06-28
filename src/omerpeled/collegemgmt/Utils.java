@@ -1,6 +1,11 @@
 package omerpeled.collegemgmt;
 
 public class Utils {
+  private Utils() {
+    throw new UnsupportedOperationException(
+        "Utility class cannot be instantiated");
+  }
+
   // FIXME: CODE DUPLICATION due to different array types :(
 
   public static Lecturer[] doubleLecturersSize(Lecturer[] original) {
