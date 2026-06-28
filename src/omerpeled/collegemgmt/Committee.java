@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
+
 public class Committee implements Cloneable {
   private String name;
   private Lecturer head;
@@ -11,9 +13,9 @@ public class Committee implements Cloneable {
     this.members = new Lecturer[1];
     this.memberCount = 0;
 
-    // BUG: Lecturer added as head even if invalid
-    // THIS BUG HAS BEEN HERE IN V2 OF THE PROJECT AND WASN'T FOUND! LOL
-    // TODO: Throw InvalidCommitteeHeadException
+    if (!head.isValidCommitteeHead()) // TODO: use instanceof something
+      throw new InvalidCommitteeHeadException(head);
+
     this.head = head;
     head.addCommittee(this);
   }
