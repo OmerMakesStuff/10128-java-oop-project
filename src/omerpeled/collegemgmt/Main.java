@@ -48,6 +48,10 @@ public class Main {
             removeCommitteeMember();
             break;
 
+          case DUPLICATE_COMMITTEE:
+            duplicateCommittee();
+            break;
+
           case ADD_DEPARTMENT:
             addDepartment();
             break;
@@ -91,6 +95,7 @@ public class Main {
   private static final String MSG_PROMPT = "Enter %s: ";
 
   private static final String MSG_SUCCESS_CREATED = "%s added.%n";
+  private static final String MSG_SUCCESS_DUPLICATED = "%s duplicated as %s.%n";
   private static final String MSG_SUCCESS_ADDED_TO = "%s has been added to %s.%n";
   private static final String MSG_SUCCESS_REMOVED_FROM = "%s has been removed from %s.%n";
   private static final String MSG_SUCCESS_COMMITTEE_HEAD_SET = "%s is now the head of %s.%n";
@@ -418,6 +423,33 @@ public class Main {
       System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, lecturer.getName(),
           Lecturer.Degree.PHD.displayName,
           Lecturer.Degree.PROF.displayName);
+  }
+
+  private static void duplicateCommittee() throws CloneNotSupportedException {
+    if (college.getCommitteeCount() < 1) {
+      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+          String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
+      return; // TODO: Throw exception here
+    }
+
+    Committee committee = promptForCommittee();
+    // Already adds members, committee will be added anyway
+    Committee dupCommittee = committee.clone();
+    dupCommittee.setName(committee.getName() + "-new");
+
+    int newCount = 1;
+    College.AddItemStatus addStatus;
+    do {
+      addStatus = college.addCommittee(dupCommittee);
+      // TODO: Handle exception
+      if (addStatus == College.AddItemStatus.FAIL_EXISTS) {
+        // Rename to "-new2", "-new3", etc, and retry adding with new name
+        dupCommittee.setName(committee.getName() + "-new" + (++newCount));
+      }
+    } while (addStatus != College.AddItemStatus.SUCCESS);
+
+    System.out.printf(MSG_SUCCESS_DUPLICATED, MSG_COMMITTEE,
+        dupCommittee.getName());
   }
   // endregion
 
