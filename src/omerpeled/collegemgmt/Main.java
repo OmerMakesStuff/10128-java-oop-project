@@ -387,14 +387,13 @@ public class Main {
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
 
-    boolean success = committee.setHead(lecturer);
-    if (success)
+    try {
+      committee.setHead(lecturer);
       System.out.printf(MSG_SUCCESS_COMMITTEE_HEAD_SET, lecturer.getName(),
           committee.getName());
-    else
-      System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, lecturer.getName(),
-          Lecturer.Degree.PHD.displayName,
-          Lecturer.Degree.PROF.displayName);
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
   }
 
   private static void duplicateCommittee() throws CloneNotSupportedException {

@@ -77,10 +77,9 @@ public class Committee implements Cloneable {
     return removed;
   }
 
-  public boolean setHead(Lecturer head) {
-    // TODO: Throw InvalidCommitteeHeadException, instead of the below
+  public void setHead(Lecturer head) {
     if (!head.isValidCommitteeHead())
-      return false;
+      throw new InvalidCommitteeHeadException(head);
 
     Lecturer prevHead = this.head;
     this.head = null;
@@ -92,7 +91,6 @@ public class Committee implements Cloneable {
 
     this.head = head;
     head.addCommittee(this);
-    return true;
   }
 
   public String toString() {
