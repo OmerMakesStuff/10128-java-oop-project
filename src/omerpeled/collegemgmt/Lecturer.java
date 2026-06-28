@@ -12,6 +12,10 @@ public class Lecturer {
     Degree(String displayName) {
       this.displayName = displayName;
     }
+
+    public String getDisplayName() {
+      return displayName;
+    }
   }
 
   private String id;
@@ -123,7 +127,7 @@ public class Lecturer {
         String.format("%s (%s), %s in %s%n  Department: %s | Salary: %s₪%n  ",
             name,
             id,
-            degree.displayName,
+            degree.getDisplayName(),
             degreeTitle,
             department == null ? "None" : department.getName(),
             salary));

@@ -97,8 +97,10 @@ public class Main {
     EXIT("Exit"),
     /* LECTURERS */
     ADD_LECTURER("Add lecturer"),
-    COMPARE_LECTURERS(String.format("Compare lecturers (%s/%s)",
-        Lecturer.Degree.PHD.displayName, Lecturer.Degree.PROF.displayName)),
+    COMPARE_LECTURERS(String.format(
+        "Compare lecturers (%s/%s)",
+        Lecturer.Degree.PHD.getDisplayName(),
+        Lecturer.Degree.PROF.getDisplayName())),
 
     /* COMMITTEES */
     ADD_COMMITTEE("Add committee"),
@@ -145,7 +147,7 @@ public class Main {
     StringBuilder buf = new StringBuilder("Choose degree:");
     for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
       buf.append("\n").append(i + 1).append(") ")
-          .append(DEGREE_OPTIONS[i].displayName);
+          .append(DEGREE_OPTIONS[i].getDisplayName());
     }
     return buf.toString();
   }
@@ -322,8 +324,8 @@ public class Main {
           break;
         case FAIL_HEAD_INVALID:
           System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
-              Lecturer.Degree.PHD.displayName,
-              Lecturer.Degree.PROF.displayName);
+              Lecturer.Degree.PHD.getDisplayName(),
+              Lecturer.Degree.PROF.getDisplayName());
           break;
         case SUCCESS:
           System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
