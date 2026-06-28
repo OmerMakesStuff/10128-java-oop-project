@@ -13,14 +13,16 @@
       "type": "shell",
       "command": "(grep -h -v -E '^\\s*#' ${workspaceFolder}/tests/inputs_data.txt; cat -) | java -cp ${workspaceFolder}/bin omerpeled.collegemgmt.Main",
       "problemMatcher": [],
-      "group": { "kind": "test" }
+      "group": { "kind": "test" },
+      "detail": "Not supported on Windows (CMD/Powershell)!"
     },
     {
       "label": "Run program with preset data & tests input",
       "type": "shell",
       "command": "(grep -h -v -E '^\\s*#' ${workspaceFolder}/tests/inputs_data.txt ${workspaceFolder}/tests/inputs_tests.txt; cat -) | java -cp ${workspaceFolder}/bin omerpeled.collegemgmt.Main",
       "problemMatcher": [],
-      "group": { "kind": "test" }
+      "group": { "kind": "test" },
+      "detail": "Not supported on Windows (CMD/Powershell)!"
     }
   ]
 }
