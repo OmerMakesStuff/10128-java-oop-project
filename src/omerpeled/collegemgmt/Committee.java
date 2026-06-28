@@ -11,6 +11,9 @@ public class Committee implements Cloneable {
     this.members = new Lecturer[1];
     this.memberCount = 0;
 
+    // BUG: Lecturer added as head even if invalid
+    // THIS BUG HAS BEEN HERE IN V2 OF THE PROJECT AND WASN'T FOUND! LOL
+    // TODO: Throw InvalidCommitteeHeadException
     this.head = head;
     head.addCommittee(this);
   }
@@ -73,6 +76,7 @@ public class Committee implements Cloneable {
   }
 
   public boolean setHead(Lecturer head) {
+    // TODO: Throw InvalidCommitteeHeadException, instead of the below
     if (!head.isValidCommitteeHead())
       return false;
 
