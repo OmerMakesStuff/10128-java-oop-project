@@ -27,6 +27,10 @@ public class Committee implements Cloneable {
     return members;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public boolean hasMember(Lecturer lecturer) {
     for (int i = 0; i < memberCount; i++) {
       if (members[i].getId().equals(lecturer.getId()))
