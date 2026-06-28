@@ -308,28 +308,33 @@ public class Main {
       return;
     }
 
-    College.AddItemStatus addStatus;
+    // TODO: Replace with success boolean
+    College.AddItemStatus addStatus = null;
 
     do {
       System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
       String name = s.nextLine();
       Lecturer head = promptForLecturer("head lecturer ID");
 
-      Committee newCommittee = new Committee(name, head);
-      addStatus = college.addCommittee(newCommittee);
-      switch (addStatus) {
-        // TODO: Handle exceptions
-        case FAIL_EXISTS:
-          System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
-          break;
-        case FAIL_HEAD_INVALID:
-          System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
-              Lecturer.Degree.PHD.getDisplayName(),
-              Lecturer.Degree.PROF.getDisplayName());
-          break;
-        case SUCCESS:
-          System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
-          break;
+      try {
+        Committee newCommittee = new Committee(name, head);
+        addStatus = college.addCommittee(newCommittee);
+        switch (addStatus) {
+          // TODO: Handle exceptions
+          case FAIL_EXISTS:
+            System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
+            break;
+          case FAIL_HEAD_INVALID:
+            System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
+                Lecturer.Degree.PHD.getDisplayName(),
+                Lecturer.Degree.PROF.getDisplayName());
+            break;
+          case SUCCESS:
+            System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
+            break;
+        }
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
       }
     } while (addStatus != College.AddItemStatus.SUCCESS);
   }
