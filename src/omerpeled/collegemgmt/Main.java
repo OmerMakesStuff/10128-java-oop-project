@@ -284,6 +284,7 @@ public class Main {
       System.out.printf(MSG_PROMPT, "degree title");
       String degreeTitle = s.nextLine();
       System.out.printf(MSG_PROMPT, "salary");
+      // TODO: Handle NumberFormatException
       double salary = Double.parseDouble(s.nextLine());
 
       Lecturer newLecturer = new Lecturer(
@@ -293,6 +294,7 @@ public class Main {
           degreeTitle,
           salary);
 
+      // TODO: Handle exception
       addStatus = college.addLecturer(newLecturer);
       if (addStatus == College.AddItemStatus.FAIL_EXISTS)
         System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
@@ -308,11 +310,13 @@ public class Main {
       System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
       String name = s.nextLine();
       System.out.printf(MSG_PROMPT, "number of students in department");
+      // TODO: Handle NumberFormatException
       int studentCount = Integer.parseInt(s.nextLine());
 
       Department newDepartment = new Department(name, studentCount);
       addStatus = college.addDepartment(newDepartment);
 
+      // TODO: Handle exception
       if (addStatus == College.AddItemStatus.FAIL_EXISTS)
         System.err.printf(MSG_FAIL_EXISTS, MSG_DEPARTMENT + " " + name);
       else
@@ -337,6 +341,7 @@ public class Main {
       Committee newCommittee = new Committee(name, head);
       addStatus = college.addCommittee(newCommittee);
       switch (addStatus) {
+        // TODO: Handle exceptions
         case FAIL_EXISTS:
           System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
           break;
