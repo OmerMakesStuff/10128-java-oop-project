@@ -70,6 +70,10 @@ public class Main {
         case SHOW_COMMITTEES:
           showCommittees();
           break;
+
+        default:
+          System.err.println("Not implemented yet.");
+          break;
       }
 
       if (choice != MenuOption.EXIT)
@@ -111,15 +115,26 @@ public class Main {
   // region Menus
   public enum MenuOption {
     EXIT("Exit"),
+    /* LECTURERS */
     ADD_LECTURER("Add lecturer"),
+    COMPARE_LECTURERS(String.format("Compare lecturers (%s/%s)",
+        Lecturer.Degree.PHD.displayName, Lecturer.Degree.PROF.displayName)),
+
+    /* COMMITTEES */
     ADD_COMMITTEE("Add committee"),
     ADD_COMMITTEE_MEMBER("Add lecturer to committee"),
     SET_COMMITTEE_HEAD("Set committee head"),
     REMOVE_COMMITTEE_MEMBER("Remove lecturer from committee"),
+    DUPLICATE_COMMITTEE("Duplicate committee"),
+    COMPARE_COMMITTEES("Compare committees"),
+
+    /* DEPARTMENTS */
     ADD_DEPARTMENT("Add department"),
     ADD_DEPARTMENT_LECTURER("Add lecturer to department"),
     SHOW_LECTURER_SALARY_AVG("Show lecturer salary average"),
     SHOW_LECTURER_SALARY_DEPT_AVG("Show lecturer salary average in department"),
+
+    /* DISPLAY DATA */
     SHOW_LECTURERS("Show all lecturer details"),
     SHOW_COMMITTEES("Show all committee details");
 
