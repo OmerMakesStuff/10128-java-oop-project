@@ -23,57 +23,61 @@ public class Main {
       if (choice != MenuOption.EXIT)
         System.out.println(); // Separate from menu
 
-      switch (choice) {
-        case EXIT:
-          break;
+      try {
+        switch (choice) {
+          case EXIT:
+            break;
 
-        case ADD_LECTURER:
-          addLecturer();
-          break;
+          case ADD_LECTURER:
+            addLecturer();
+            break;
 
-        case ADD_COMMITTEE:
-          addCommittee();
-          break;
+          case ADD_COMMITTEE:
+            addCommittee();
+            break;
 
-        case ADD_COMMITTEE_MEMBER:
-          addCommitteeMember();
-          break;
+          case ADD_COMMITTEE_MEMBER:
+            addCommitteeMember();
+            break;
 
-        case SET_COMMITTEE_HEAD:
-          setCommitteeHead();
-          break;
+          case SET_COMMITTEE_HEAD:
+            setCommitteeHead();
+            break;
 
-        case REMOVE_COMMITTEE_MEMBER:
-          removeCommitteeMember();
-          break;
+          case REMOVE_COMMITTEE_MEMBER:
+            removeCommitteeMember();
+            break;
 
-        case ADD_DEPARTMENT:
-          addDepartment();
-          break;
+          case ADD_DEPARTMENT:
+            addDepartment();
+            break;
 
-        case ADD_DEPARTMENT_LECTURER:
-          addDeptLecturer();
-          break;
+          case ADD_DEPARTMENT_LECTURER:
+            addDeptLecturer();
+            break;
 
-        case SHOW_LECTURER_SALARY_AVG:
-          showSalaryAvg();
-          break;
+          case SHOW_LECTURER_SALARY_AVG:
+            showSalaryAvg();
+            break;
 
-        case SHOW_LECTURER_SALARY_DEPT_AVG:
-          showDeptSalaryAvg();
-          break;
+          case SHOW_LECTURER_SALARY_DEPT_AVG:
+            showDeptSalaryAvg();
+            break;
 
-        case SHOW_LECTURERS:
-          showLecturers();
-          break;
+          case SHOW_LECTURERS:
+            showLecturers();
+            break;
 
-        case SHOW_COMMITTEES:
-          showCommittees();
-          break;
+          case SHOW_COMMITTEES:
+            showCommittees();
+            break;
 
-        default:
-          System.err.println("Not implemented yet.");
-          break;
+          default:
+            System.err.println("Not implemented yet.");
+            break;
+        }
+      } catch (Exception e) {
+        System.err.printf(MSG_FAIL_EXCEPTION, e);
       }
 
       if (choice != MenuOption.EXIT)
@@ -101,6 +105,7 @@ public class Main {
   private static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.%n";
   private static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
   private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
+  private static final String MSG_FAIL_EXCEPTION = "Error: %s%n";
 
   private static final String MSG_CHOICE = "choice";
   private static final String MSG_LECTURER = "Lecturer";
