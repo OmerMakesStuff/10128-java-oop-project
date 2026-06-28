@@ -5,6 +5,7 @@
 package omerpeled.collegemgmt;
 
 import java.util.Scanner;
+import static omerpeled.collegemgmt.Messages.*;
 
 public class Main {
   static Scanner s;
@@ -90,37 +91,6 @@ public class Main {
 
     s.close();
   }
-
-  // region Messages
-  private static final String MSG_PROMPT = "Enter %s: ";
-
-  private static final String MSG_SUCCESS_CREATED = "%s added.%n";
-  private static final String MSG_SUCCESS_DUPLICATED = "%s duplicated as %s.%n";
-  private static final String MSG_SUCCESS_ADDED_TO = "%s has been added to %s.%n";
-  private static final String MSG_SUCCESS_REMOVED_FROM = "%s has been removed from %s.%n";
-  private static final String MSG_SUCCESS_COMMITTEE_HEAD_SET = "%s is now the head of %s.%n";
-
-  private static final String MSG_FAIL_EXISTS = "%s already exists!%n";
-  private static final String MSG_FAIL_NOT_EXISTS = "%s doesn't exist!%n";
-  private static final String MSG_FAIL_NONE_EXIST = "No %ss exist.%n";
-  private static final String MSG_FAIL_ALREADY_ADDED = "%s is already in %s!%n";
-  private static final String MSG_FAIL_NOT_ADDED = "%s is not in %s!%n";
-  private static final String MSG_FAIL_NO_VALID_COMMITTEE_HEAD = "valid committee head doesn't exist.\n";
-  private static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)%n";
-  private static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.%n";
-  private static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
-  private static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
-  private static final String MSG_FAIL_EXCEPTION = "Error: %s%n";
-
-  private static final String MSG_CHOICE = "choice";
-  private static final String MSG_LECTURER = "Lecturer";
-  private static final String MSG_LECTURER_ID = "lecturer ID";
-  private static final String MSG_LECTURER_WITH_ID = MSG_LECTURER + " with ID ";
-  private static final String MSG_COMMITTEE = "Committee";
-  private static final String MSG_COMMITTEE_NAME = "committee name";
-  private static final String MSG_DEPARTMENT = "Department";
-  private static final String MSG_DEPARTMENT_NAME = "department name";
-  // endregion
 
   // region Menus
   public enum MenuOption {
