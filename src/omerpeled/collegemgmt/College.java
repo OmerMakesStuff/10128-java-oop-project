@@ -1,5 +1,10 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.Utils.*;
+
+import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
+import omerpeled.collegemgmt.exceptions.ItemExistsException;
+
 public class College {
   private final String name;
 
@@ -9,12 +14,6 @@ public class College {
   private int committeeCount;
   private Department[] departments;
   private int departmentCount;
-
-  public enum AddItemStatus {
-    SUCCESS,
-    FAIL_EXISTS,
-    FAIL_HEAD_INVALID
-  }
 
   public College(String name) {
     this.name = name;
@@ -48,16 +47,16 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addLecturer(Lecturer newLecturer) {
+  public void addLecturer(Lecturer newLecturer) {
     boolean exists = getLecturerById(newLecturer.getId()) != null;
     if (exists)
-      return AddItemStatus.FAIL_EXISTS;
+      throw new ItemExistsException(
+          Messages.MSG_LECTURER_WITH_ID + newLecturer.getId());
 
     if (lecturerCount == lecturers.length)
-      lecturers = Utils.doubleLecturersSize(lecturers);
+      lecturers = doubleLecturersSize(lecturers);
 
     lecturers[lecturerCount++] = newLecturer;
-    return AddItemStatus.SUCCESS;
   }
 
   public boolean validCommitteeHeadExists() {
@@ -103,20 +102,20 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addCommittee(Committee newCommittee) {
+  public void addCommittee(Committee newCommittee) {
     boolean exists = getCommitteeByName(newCommittee.getName()) != null;
     if (exists)
-      return AddItemStatus.FAIL_EXISTS;
+      throw new ItemExistsException(
+          Messages.MSG_COMMITTEE + ' ' + newCommittee.getName());
 
     Lecturer committeeHead = newCommittee.getHead();
     if (!committeeHead.isValidCommitteeHead())
-      return AddItemStatus.FAIL_HEAD_INVALID;
+      throw new InvalidCommitteeHeadException(committeeHead);
 
     if (committeeCount == committees.length)
-      committees = Utils.doubleCommitteesSize(committees);
+      committees = doubleCommitteesSize(committees);
 
     committees[committeeCount++] = newCommittee;
-    return AddItemStatus.SUCCESS;
   }
   // endregion
 
@@ -137,16 +136,16 @@ public class College {
     return null;
   }
 
-  public AddItemStatus addDepartment(Department newDepartment) {
+  public void addDepartment(Department newDepartment) {
     boolean exists = getDepartmentByName(newDepartment.getName()) != null;
     if (exists)
-      return AddItemStatus.FAIL_EXISTS;
+      throw new ItemExistsException(
+          Messages.MSG_DEPARTMENT + ' ' + newDepartment.getName());
 
     if (departmentCount == departments.length)
-      departments = Utils.doubleDepartmentsSize(departments);
+      departments = doubleDepartmentsSize(departments);
 
     departments[departmentCount++] = newDepartment;
-    return AddItemStatus.SUCCESS;
   }
   // endregion
 }

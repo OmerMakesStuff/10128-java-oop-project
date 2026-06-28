@@ -5,6 +5,8 @@
 package omerpeled.collegemgmt;
 
 import java.util.Scanner;
+
+import omerpeled.collegemgmt.exceptions.ItemExistsException;
 import static omerpeled.collegemgmt.Messages.*;
 
 public class Main {
@@ -250,7 +252,7 @@ public class Main {
 
   // region New item creation
   private static void addLecturer() {
-    College.AddItemStatus addStatus;
+    boolean addSuccess = false;
 
     do {
       System.out.printf(MSG_PROMPT, MSG_LECTURER_ID);
@@ -271,17 +273,19 @@ public class Main {
           degreeTitle,
           salary);
 
-      // TODO: Handle exception
-      addStatus = college.addLecturer(newLecturer);
-      if (addStatus == College.AddItemStatus.FAIL_EXISTS)
-        System.err.printf(MSG_FAIL_EXISTS, MSG_LECTURER_WITH_ID + id);
-      else
-        System.out.printf(MSG_SUCCESS_CREATED, MSG_LECTURER);
-    } while (addStatus != College.AddItemStatus.SUCCESS);
+      try {
+        college.addLecturer(newLecturer);
+        addSuccess = true;
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
+      }
+    } while (!addSuccess);
+
+    System.out.printf(MSG_SUCCESS_CREATED, MSG_LECTURER);
   }
 
   private static void addDepartment() {
-    College.AddItemStatus addStatus;
+    boolean addSuccess = false;
 
     do {
       System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
@@ -291,14 +295,15 @@ public class Main {
       int studentCount = Integer.parseInt(s.nextLine());
 
       Department newDepartment = new Department(name, studentCount);
-      addStatus = college.addDepartment(newDepartment);
+      try {
+        college.addDepartment(newDepartment);
+        addSuccess = true;
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
+      }
+    } while (!addSuccess);
 
-      // TODO: Handle exception
-      if (addStatus == College.AddItemStatus.FAIL_EXISTS)
-        System.err.printf(MSG_FAIL_EXISTS, MSG_DEPARTMENT + " " + name);
-      else
-        System.out.printf(MSG_SUCCESS_CREATED, MSG_DEPARTMENT);
-    } while (addStatus != College.AddItemStatus.SUCCESS);
+    System.out.printf(MSG_SUCCESS_CREATED, MSG_DEPARTMENT);
   }
 
   private static void addCommittee() {
@@ -308,8 +313,7 @@ public class Main {
       return;
     }
 
-    // TODO: Replace with success boolean
-    College.AddItemStatus addStatus = null;
+    boolean addSuccess = false;
 
     do {
       System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
@@ -318,25 +322,14 @@ public class Main {
 
       try {
         Committee newCommittee = new Committee(name, head);
-        addStatus = college.addCommittee(newCommittee);
-        switch (addStatus) {
-          // TODO: Handle exceptions
-          case FAIL_EXISTS:
-            System.err.printf(MSG_FAIL_EXISTS, MSG_COMMITTEE + " " + name);
-            break;
-          case FAIL_HEAD_INVALID:
-            System.out.printf(MSG_FAIL_INVALID_COMMITTEE_HEAD, head.getName(),
-                Lecturer.Degree.PHD.getDisplayName(),
-                Lecturer.Degree.PROF.getDisplayName());
-            break;
-          case SUCCESS:
-            System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
-            break;
-        }
+        college.addCommittee(newCommittee);
+        addSuccess = true;
       } catch (Exception e) {
         System.err.println(e.getMessage());
       }
-    } while (addStatus != College.AddItemStatus.SUCCESS);
+    } while (!addSuccess);
+
+    System.out.printf(MSG_SUCCESS_CREATED, MSG_COMMITTEE);
   }
   // endregion
 
@@ -414,15 +407,16 @@ public class Main {
     dupCommittee.setName(committee.getName() + "-new");
 
     int newCount = 1;
-    College.AddItemStatus addStatus;
+    boolean addSuccess = false;
     do {
-      addStatus = college.addCommittee(dupCommittee);
-      // TODO: Handle exception
-      if (addStatus == College.AddItemStatus.FAIL_EXISTS) {
+      try {
+        college.addCommittee(dupCommittee);
+        addSuccess = true;
+      } catch (ItemExistsException _) {
         // Rename to "-new2", "-new3", etc, and retry adding with new name
         dupCommittee.setName(committee.getName() + "-new" + (++newCount));
       }
-    } while (addStatus != College.AddItemStatus.SUCCESS);
+    } while (!addSuccess);
 
     System.out.printf(MSG_SUCCESS_DUPLICATED, MSG_COMMITTEE,
         dupCommittee.getName());
