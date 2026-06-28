@@ -51,7 +51,7 @@ public class College {
     boolean exists = getLecturerById(newLecturer.getId()) != null;
     if (exists)
       throw new ItemExistsException(
-          Messages.MSG_LECTURER_WITH_ID + newLecturer.getId());
+          String.format(Messages.MSG_LECTURER_WITH_ID, newLecturer.getId()));
 
     if (lecturerCount == lecturers.length)
       lecturers = doubleLecturersSize(lecturers);

@@ -211,7 +211,7 @@ public class Main {
       lecturer = college.getLecturerById(lecturerId);
       if (lecturer == null)
         System.err.printf(MSG_FAIL_NOT_EXISTS,
-            MSG_LECTURER_WITH_ID + lecturerId);
+            String.format(MSG_LECTURER_WITH_ID, lecturerId));
     } while (lecturer == null);
 
     return lecturer;
