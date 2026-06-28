@@ -23,6 +23,6 @@ Prof
 everything
 100000
 # ------------ DEPARTMENTS ------------
-6
+9
 d1
 12345
