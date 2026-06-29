@@ -35,6 +35,11 @@ public class Lecturer {
       Degree degree,
       String degreeTitle,
       double salary) {
+    if (salary < 0)
+      throw new IllegalArgumentException(String.format(
+          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM,
+          Messages.MSG_SALARY));
+
     this.id = id;
     this.name = name;
     this.degree = degree;
