@@ -133,7 +133,7 @@ public class Lecturer {
             salary));
 
     if (committeeCount < 1)
-      str.append("No commiteees.");
+      str.append("No committees.");
     else {
       str.append("Committees: ");
       for (int i = 0; i < committeeCount; i++) {
