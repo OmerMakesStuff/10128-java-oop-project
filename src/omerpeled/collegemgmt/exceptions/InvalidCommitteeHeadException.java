@@ -7,7 +7,7 @@ import omerpeled.collegemgmt.Messages;
  * Thrown when attempting to set a lecturer as a committee head, but they're not
  * a valid committee head (PhD/Prof).
  */
-public class InvalidCommitteeHeadException extends IllegalArgumentException {
+public class InvalidCommitteeHeadException extends CollegeException {
   public InvalidCommitteeHeadException(Lecturer lecturer) {
     super(String.format(
         Messages.MSG_FAIL_INVALID_COMMITTEE_HEAD,

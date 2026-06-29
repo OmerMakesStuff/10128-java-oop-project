@@ -7,7 +7,7 @@ import omerpeled.collegemgmt.Messages;
  * yet. For example, adding a lecturer to a department when no departments
  * exist.
  */
-public class OptionUnavailableException extends RuntimeException {
+public class OptionUnavailableException extends CollegeException {
   public OptionUnavailableException(String detail) {
     super(String.format(Messages.MSG_FAIL_UNAVAILABLE_OPT, detail));
   }

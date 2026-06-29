@@ -7,6 +7,7 @@ package omerpeled.collegemgmt;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
+import omerpeled.collegemgmt.exceptions.CollegeException;
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 import omerpeled.collegemgmt.exceptions.OptionUnavailableException;
 import static omerpeled.collegemgmt.Messages.*;
@@ -85,7 +86,7 @@ public class Main {
             System.err.println("Not implemented yet.");
             break;
         }
-      } catch (OptionUnavailableException | AlreadyAddedException e) {
+      } catch (CollegeException e) {
         // Errors from this app, only message is needed
         System.err.println(e.getMessage());
       } catch (Exception e) {
@@ -215,6 +216,7 @@ public class Main {
       lecturerId = s.nextLine();
       lecturer = college.getLecturerById(lecturerId);
       if (lecturer == null)
+        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS,
             String.format(MSG_LECTURER_WITH_ID, lecturerId));
     } while (lecturer == null);
@@ -231,6 +233,7 @@ public class Main {
       committeeName = s.nextLine();
       committee = college.getCommitteeByName(committeeName);
       if (committee == null)
+        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS,
             MSG_COMMITTEE + " " + committeeName);
     } while (committee == null);
@@ -247,6 +250,7 @@ public class Main {
       departmentName = s.nextLine();
       department = college.getDepartmentByName(departmentName);
       if (department == null)
+        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS,
             MSG_DEPARTMENT + " " + departmentName);
     } while (department == null);
