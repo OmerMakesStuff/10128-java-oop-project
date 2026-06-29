@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import omerpeled.collegemgmt.Messages;
+import static omerpeled.collegemgmt.Messages.MSG_FAIL_UNAVAILABLE_OPT;
 
 /**
  * Thrown when attempting to use functionality in the app that cannot be used
@@ -9,6 +9,6 @@ import omerpeled.collegemgmt.Messages;
  */
 public class OptionUnavailableException extends CollegeException {
   public OptionUnavailableException(String detail) {
-    super(String.format(Messages.MSG_FAIL_UNAVAILABLE_OPT, detail));
+    super(String.format(MSG_FAIL_UNAVAILABLE_OPT, detail));
   }
 }

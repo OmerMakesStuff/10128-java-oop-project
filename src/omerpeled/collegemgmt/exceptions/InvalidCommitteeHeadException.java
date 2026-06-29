@@ -1,7 +1,8 @@
 package omerpeled.collegemgmt.exceptions;
 
+import static omerpeled.collegemgmt.Messages.MSG_FAIL_INVALID_COMMITTEE_HEAD;
+
 import omerpeled.collegemgmt.Lecturer;
-import omerpeled.collegemgmt.Messages;
 
 /**
  * Thrown when attempting to set a lecturer as a committee head, but they're not
@@ -10,7 +11,7 @@ import omerpeled.collegemgmt.Messages;
 public class InvalidCommitteeHeadException extends CollegeException {
   public InvalidCommitteeHeadException(Lecturer lecturer) {
     super(String.format(
-        Messages.MSG_FAIL_INVALID_COMMITTEE_HEAD,
+        MSG_FAIL_INVALID_COMMITTEE_HEAD,
         lecturer.getName(),
         Lecturer.Degree.PHD.getDisplayName(),
         Lecturer.Degree.PROF.getDisplayName()));
