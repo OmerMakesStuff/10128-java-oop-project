@@ -1,5 +1,8 @@
 package omerpeled.collegemgmt;
 
+import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
+import omerpeled.collegemgmt.exceptions.NotAddedException;
+
 public class Department {
   private String name;
   private int studentCount;
@@ -33,9 +36,9 @@ public class Department {
     return false;
   }
 
-  public boolean addLecturer(Lecturer lecturer) {
+  public void addLecturer(Lecturer lecturer) {
     if (hasLecturer(lecturer))
-      return false;
+      throw new AlreadyAddedException(lecturer.getName(), this.name);
 
     if (lecturerCount == lecturers.length)
       lecturers = Utils.doubleLecturersSize(lecturers);
@@ -43,13 +46,11 @@ public class Department {
     lecturers[lecturerCount++] = lecturer;
     if (lecturer.getDepartment() != this)
       lecturer.setDepartment(this);
-
-    return true;
   }
 
-  public boolean removeLecturer(Lecturer lecturer) {
+  public void removeLecturer(Lecturer lecturer) {
     if (!hasLecturer(lecturer))
-      return false; // Can't remove lecturer not in dept
+      throw new NotAddedException(lecturer.getName(), this.name);
 
     boolean removed = false;
     for (int i = 0; i < lecturerCount; i++) {
@@ -63,7 +64,6 @@ public class Department {
       lecturerCount--;
       lecturer.setDepartment(null);
     }
-    return removed;
   }
 
   public String toString() {
