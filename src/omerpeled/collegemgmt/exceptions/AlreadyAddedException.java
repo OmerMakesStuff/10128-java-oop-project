@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import omerpeled.collegemgmt.Messages;
+import static omerpeled.collegemgmt.Messages.MSG_FAIL_ALREADY_ADDED;
 
 /**
  * Thrown when attempting to add an item to an object, but that item has already
@@ -8,6 +8,6 @@ import omerpeled.collegemgmt.Messages;
  */
 public class AlreadyAddedException extends CollegeException {
   public AlreadyAddedException(String addedItem, String addedTo) {
-    super(String.format(Messages.MSG_FAIL_ALREADY_ADDED, addedItem, addedTo));
+    super(String.format(MSG_FAIL_ALREADY_ADDED, addedItem, addedTo));
   }
 }
