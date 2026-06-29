@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
+
 public class Lecturer {
   public enum Degree {
     BSC("BSc"),
@@ -67,9 +69,9 @@ public class Lecturer {
     return department;
   }
 
-  public boolean setDepartment(Department department) {
+  public void setDepartment(Department department) {
     if (this.department == department)
-      return false; // Already in this dept
+      throw new AlreadyAddedException(this.name, department.getName());
 
     if (this.department != null)
       this.department.removeLecturer(this);
@@ -77,7 +79,6 @@ public class Lecturer {
     this.department = department;
     if (department != null)
       department.addLecturer(this);
-    return true;
   }
 
   public boolean isValidCommitteeHead() {
@@ -92,21 +93,22 @@ public class Lecturer {
     return false;
   }
 
-  public boolean addCommittee(Committee committee) {
+  public void addCommittee(Committee committee) {
     if (hasCommittee(committee))
-      return false;
+      throw new AlreadyAddedException(this.name, committee.getName());
 
     if (committeeCount == committees.length)
       committees = Utils.doubleCommitteesSize(committees);
 
     committees[committeeCount++] = committee;
-    return true;
   }
 
-  public boolean removeCommittee(Committee committee) {
+  public void removeCommittee(Committee committee) {
     if (!hasCommittee(committee))
       // To remove the head, a new head must be set first
-      return false;
+      throw new UnsupportedOperationException(
+          String.format(Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD, this.name,
+              committee.getName()));
 
     boolean removed = false;
     for (int i = 0; i < committeeCount; i++) {
@@ -118,8 +120,6 @@ public class Lecturer {
 
     if (removed)
       committeeCount--;
-
-    return removed;
   }
 
   public String toString() {

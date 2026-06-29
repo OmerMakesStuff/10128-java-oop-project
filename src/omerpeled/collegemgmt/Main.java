@@ -6,6 +6,7 @@ package omerpeled.collegemgmt;
 
 import java.util.Scanner;
 
+import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 import omerpeled.collegemgmt.exceptions.OptionUnavailableException;
 import static omerpeled.collegemgmt.Messages.*;
@@ -84,7 +85,8 @@ public class Main {
             System.err.println("Not implemented yet.");
             break;
         }
-      } catch (OptionUnavailableException e) {
+      } catch (OptionUnavailableException | AlreadyAddedException e) {
+        // Errors from this app, only message is needed
         System.err.println(e.getMessage());
       } catch (Exception e) {
         System.err.printf(MSG_FAIL_EXCEPTION, e);
@@ -428,13 +430,9 @@ public class Main {
 
     Department department = promptForDepartment();
 
-    boolean addSuccess = lecturer.setDepartment(department);
-    if (addSuccess)
-      System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
-          department.getName());
-    else
-      System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
-          department.getName());
+    lecturer.setDepartment(department);
+    System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
+        department.getName());
   }
   // endregion
 
