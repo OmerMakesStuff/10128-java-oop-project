@@ -23,6 +23,8 @@ public class Messages {
   public static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)";
   public static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.";
   public static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
+  public static final String MSG_FAIL_INPUT_NOT_POSITIVE_NUM = "%s must be a positive number!";
+  public static final String MSG_FAIL_INPUT_NOT_POSITIVE_INT = "%s must be a positive integer!";
   public static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
   public static final String MSG_FAIL_EXCEPTION = "Error: %s%n";
 
@@ -35,4 +37,6 @@ public class Messages {
   public static final String MSG_COMMITTEE_NAME = "committee name";
   public static final String MSG_DEPARTMENT = "Department";
   public static final String MSG_DEPARTMENT_NAME = "department name";
+  public static final String MSG_SALARY = "Salary";
+  public static final String MSG_STUDENT_COUNT = "Number of students";
 }

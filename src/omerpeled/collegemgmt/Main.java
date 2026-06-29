@@ -6,10 +6,7 @@ package omerpeled.collegemgmt;
 
 import java.util.Scanner;
 
-import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
-import omerpeled.collegemgmt.exceptions.CollegeException;
-import omerpeled.collegemgmt.exceptions.ItemExistsException;
-import omerpeled.collegemgmt.exceptions.OptionUnavailableException;
+import omerpeled.collegemgmt.exceptions.*;
 import static omerpeled.collegemgmt.Messages.*;
 
 public class Main {
@@ -188,15 +185,19 @@ public class Main {
   }
 
   private static Lecturer.Degree promptForDegree() {
-    int choiceIdx;
+    int choiceIdx = -1;
     boolean isValid = false;
     do {
       System.out
           .print(DEGREE_MENU + '\n' + String.format(MSG_PROMPT, MSG_CHOICE));
-      choiceIdx = Integer.parseInt(s.nextLine()) - 1;
-      isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
-      if (!isValid)
+      try {
+        choiceIdx = Integer.parseInt(s.nextLine()) - 1;
+        isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
+        if (!isValid)
+          System.err.println(MSG_FAIL_INVALID_CHOICE);
+      } catch (NumberFormatException _) {
         System.err.println(MSG_FAIL_INVALID_CHOICE);
+      }
     } while (!isValid);
 
     return DEGREE_OPTIONS[choiceIdx];
@@ -271,22 +272,22 @@ public class Main {
       Lecturer.Degree degree = promptForDegree();
       System.out.printf(MSG_PROMPT, "degree title");
       String degreeTitle = s.nextLine();
-      System.out.printf(MSG_PROMPT, "salary");
-      // TODO: Handle NumberFormatException
-      double salary = Double.parseDouble(s.nextLine());
-
-      Lecturer newLecturer = new Lecturer(
-          id,
-          name,
-          degree,
-          degreeTitle,
-          salary);
-
+      System.out.printf(MSG_PROMPT, MSG_SALARY.toLowerCase());
       try {
+        double salary = Double.parseDouble(s.nextLine());
+
+        Lecturer newLecturer = new Lecturer(
+            id,
+            name,
+            degree,
+            degreeTitle,
+            salary);
         college.addLecturer(newLecturer);
         addSuccess = true;
+      } catch (NumberFormatException _) {
+        System.err.printf(MSG_FAIL_INPUT_NOT_POSITIVE_NUM + "%n", MSG_SALARY);
       } catch (Exception e) {
-        System.err.println(e.getMessage());
+        System.err.println(e.getMessage()); // and retry
       }
     } while (!addSuccess);
 
@@ -300,15 +301,17 @@ public class Main {
       System.out.printf(MSG_PROMPT, MSG_DEPARTMENT_NAME);
       String name = s.nextLine();
       System.out.printf(MSG_PROMPT, "number of students in department");
-      // TODO: Handle NumberFormatException
-      int studentCount = Integer.parseInt(s.nextLine());
-
-      Department newDepartment = new Department(name, studentCount);
       try {
+        int studentCount = Integer.parseInt(s.nextLine());
+
+        Department newDepartment = new Department(name, studentCount);
         college.addDepartment(newDepartment);
         addSuccess = true;
+      } catch (NumberFormatException _) {
+        System.err.printf(MSG_FAIL_INPUT_NOT_POSITIVE_INT + "%n",
+            MSG_STUDENT_COUNT);
       } catch (Exception e) {
-        System.err.println(e.getMessage());
+        System.err.println(e.getMessage()); // and retry
       }
     } while (!addSuccess);
 
