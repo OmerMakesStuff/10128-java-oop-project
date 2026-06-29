@@ -7,6 +7,7 @@ package omerpeled.collegemgmt;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
+import omerpeled.collegemgmt.exceptions.OptionUnavailableException;
 import static omerpeled.collegemgmt.Messages.*;
 
 public class Main {
@@ -83,6 +84,8 @@ public class Main {
             System.err.println("Not implemented yet.");
             break;
         }
+      } catch (OptionUnavailableException e) {
+        System.err.println(e.getMessage());
       } catch (Exception e) {
         System.err.printf(MSG_FAIL_EXCEPTION, e);
       }
@@ -307,14 +310,10 @@ public class Main {
   }
 
   private static void addCommittee() {
-    if (!college.validCommitteeHeadExists()) {
-      System.err.printf(
-          MSG_FAIL_UNAVAILABLE_OPT, MSG_FAIL_NO_VALID_COMMITTEE_HEAD);
-      return;
-    }
+    if (!college.validCommitteeHeadExists())
+      throw new OptionUnavailableException(MSG_FAIL_NO_VALID_COMMITTEE_HEAD);
 
     boolean addSuccess = false;
-
     do {
       System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
       String name = s.nextLine();
@@ -335,11 +334,9 @@ public class Main {
 
   // region Committees
   private static void addCommitteeMember() {
-    if (college.getCommitteeCount() < 1) {
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+    if (college.getCommitteeCount() < 1)
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
-      return;
-    }
 
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
@@ -354,11 +351,9 @@ public class Main {
   }
 
   private static void removeCommitteeMember() {
-    if (college.getCommitteeCount() < 1) {
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+    if (college.getCommitteeCount() < 1)
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
-      return;
-    }
 
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
@@ -376,11 +371,9 @@ public class Main {
   }
 
   private static void setCommitteeHead() {
-    if (college.getCommitteeCount() < 1) {
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+    if (college.getCommitteeCount() < 1)
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
-      return;
-    }
 
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
@@ -395,11 +388,9 @@ public class Main {
   }
 
   private static void duplicateCommittee() throws CloneNotSupportedException {
-    if (college.getCommitteeCount() < 1) {
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+    if (college.getCommitteeCount() < 1)
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
-      return; // TODO: Throw exception here
-    }
 
     Committee committee = promptForCommittee();
     // Already adds members, committee will be added anyway
@@ -429,9 +420,8 @@ public class Main {
     boolean departmentsExist = college.getDepartmentCount() > 0;
     if (!lecturersExist || !departmentsExist) {
       String msgReason = !lecturersExist ? MSG_LECTURER : MSG_DEPARTMENT;
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
-      return;
     }
 
     Lecturer lecturer = promptForLecturer();
@@ -456,11 +446,9 @@ public class Main {
 
   private static void showDeptSalaryAvg() {
     boolean departmentsExist = college.getDepartmentCount() > 0;
-    if (!departmentsExist) {
-      System.err.printf(MSG_FAIL_UNAVAILABLE_OPT,
+    if (!departmentsExist)
+      throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_DEPARTMENT.toLowerCase()));
-      return;
-    }
 
     Department department = promptForDepartment();
     double deptSalaryAvg = college.getLecturerSalaryAvg(department);
