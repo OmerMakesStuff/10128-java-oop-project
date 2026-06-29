@@ -3,6 +3,7 @@ package omerpeled.collegemgmt;
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
+import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 
 public class Committee implements Cloneable {
   private String name;
@@ -62,9 +63,7 @@ public class Committee implements Cloneable {
       throw new NotAddedException(lecturer.getName(), this.name);
     else if (this.head == lecturer)
       // To remove the head, a new head must be set first
-      throw new IllegalStateException(
-          String.format(Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD,
-              lecturer.getName(), this.name));
+      throw new RemoveCommitteeHeadException(lecturer, this);
 
     boolean removed = false;
     for (int i = 0; i < memberCount; i++) {
