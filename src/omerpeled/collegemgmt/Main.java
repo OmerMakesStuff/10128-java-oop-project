@@ -6,8 +6,9 @@ package omerpeled.collegemgmt;
 
 import java.util.Scanner;
 
-import omerpeled.collegemgmt.exceptions.*;
 import static omerpeled.collegemgmt.Messages.*;
+
+import omerpeled.collegemgmt.exceptions.*;
 
 public class Main {
   static Scanner s;
