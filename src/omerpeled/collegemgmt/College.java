@@ -2,7 +2,6 @@ package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.Utils.*;
 
-import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 
 public class College {
