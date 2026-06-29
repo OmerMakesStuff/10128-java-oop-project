@@ -86,14 +86,15 @@ public class Committee implements Cloneable {
 
     Lecturer prevHead = this.head;
     this.head = null;
-    // Previous head stays in the committee as a member
-    addMember(prevHead);
+    prevHead.removeCommittee(this);
 
     if (hasMember(head))
       removeMember(head);
-
     this.head = head;
     head.addCommittee(this);
+
+    // Previous head stays in the committee as a member
+    addMember(prevHead);
   }
 
   public String toString() {
