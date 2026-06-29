@@ -1,8 +1,9 @@
 {
   "[java]": {
-    "editor.detectIndentation": false,
-    "editor.defaultFormatter": "redhat.java"
+    "editor.defaultFormatter": "redhat.java",
+    "editor.detectIndentation": false
   },
+  "cSpell.words": ["Afeka", "collegemgmt", "omerpeled", "Peled"],
   "java.format.settings.url": ".vscode/java-formatter.xml",
   "java.project.outputPath": "bin",
   "java.project.referencedLibraries": ["lib/**/*.jar"],
