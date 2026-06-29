@@ -10,6 +10,11 @@ public class Department {
   private int lecturerCount;
 
   public Department(String name, int studentCount) {
+    if (studentCount < 0)
+      throw new IllegalArgumentException(String.format(
+          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT,
+          Messages.MSG_STUDENT_COUNT));
+
     this.name = name;
     this.studentCount = studentCount;
     this.lecturers = new Lecturer[1];
