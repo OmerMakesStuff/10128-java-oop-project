@@ -347,13 +347,9 @@ public class Main {
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
 
-    boolean addSuccess = committee.addMember(lecturer);
-    if (addSuccess)
-      System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
-          committee.getName());
-    else
-      System.err.printf(MSG_FAIL_ALREADY_ADDED, lecturer.getName(),
-          committee.getName());
+    committee.addMember(lecturer);
+    System.out.printf(MSG_SUCCESS_ADDED_TO, lecturer.getName(),
+        committee.getName());
   }
 
   private static void removeCommitteeMember() {
@@ -364,16 +360,9 @@ public class Main {
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
 
-    boolean removeSuccess = committee.removeMember(lecturer);
-    if (removeSuccess)
-      System.out.printf(MSG_SUCCESS_REMOVED_FROM, lecturer.getName(),
-          committee.getName());
-    else if (committee.getHead() == lecturer)
-      System.err.printf(MSG_FAIL_REMOVE_COMMITTEE_HEAD, lecturer.getName(),
-          committee.getName());
-    else
-      System.err.printf(MSG_FAIL_NOT_ADDED, lecturer.getName(),
-          committee.getName());
+    committee.removeMember(lecturer);
+    System.out.printf(MSG_SUCCESS_REMOVED_FROM, lecturer.getName(),
+        committee.getName());
   }
 
   private static void setCommitteeHead() {

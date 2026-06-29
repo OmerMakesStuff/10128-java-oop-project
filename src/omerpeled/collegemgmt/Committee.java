@@ -1,6 +1,8 @@
 package omerpeled.collegemgmt;
 
+import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
+import omerpeled.collegemgmt.exceptions.NotAddedException;
 
 public class Committee implements Cloneable {
   private String name;
@@ -13,7 +15,7 @@ public class Committee implements Cloneable {
     this.members = new Lecturer[1];
     this.memberCount = 0;
 
-    if (!head.isValidCommitteeHead()) // TODO: use instanceof something
+    if (!head.isValidCommitteeHead()) // TODO: use instanceof ValidCommitteeHead
       throw new InvalidCommitteeHeadException(head);
 
     this.head = head;
@@ -44,23 +46,25 @@ public class Committee implements Cloneable {
     return false;
   }
 
-  public boolean addMember(Lecturer lecturer) {
+  public void addMember(Lecturer lecturer) {
     if (hasMember(lecturer) || this.head == lecturer)
-      return false;
+      throw new AlreadyAddedException(lecturer.getName(), this.name);
 
     if (memberCount == members.length)
       members = Utils.doubleLecturersSize(members);
 
     members[memberCount++] = lecturer;
     lecturer.addCommittee(this);
-
-    return true;
   }
 
-  public boolean removeMember(Lecturer lecturer) {
-    if (!hasMember(lecturer) || this.head == lecturer)
+  public void removeMember(Lecturer lecturer) {
+    if (!hasMember(lecturer) && this.head != lecturer)
+      throw new NotAddedException(lecturer.getName(), this.name);
+    else if (this.head == lecturer)
       // To remove the head, a new head must be set first
-      return false;
+      throw new IllegalStateException(
+          String.format(Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD,
+              lecturer.getName(), this.name));
 
     boolean removed = false;
     for (int i = 0; i < memberCount; i++) {
@@ -74,7 +78,6 @@ public class Committee implements Cloneable {
       memberCount--;
       lecturer.removeCommittee(this);
     }
-    return removed;
   }
 
   public void setHead(Lecturer head) {
