@@ -123,18 +123,20 @@ public class Lecturer {
       committeeCount--;
   }
 
-  public String toString() {
+  protected StringBuilder toStringBuilder() {
     StringBuilder str = new StringBuilder(
-        String.format("%s (%s), %s in %s%n  Department: %s | Salary: %s₪%n  ",
+        String.format("%s (%s), %s in %s%n  %s: %s | %s: %s₪%n  ",
             name,
             id,
             degree.getDisplayName(),
             degreeTitle,
+            Messages.MSG_DEPARTMENT,
             department == null ? "None" : department.getName(),
+            Messages.MSG_SALARY,
             salary));
 
     if (committeeCount < 1)
-      str.append("No committees.");
+      str.append("No committees");
     else {
       str.append("Committees: ");
       for (int i = 0; i < committeeCount; i++) {
@@ -144,6 +146,10 @@ public class Lecturer {
       }
     }
 
-    return str.toString();
+    return str;
+  }
+
+  public String toString() {
+    return this.toStringBuilder().toString();
   }
 }
