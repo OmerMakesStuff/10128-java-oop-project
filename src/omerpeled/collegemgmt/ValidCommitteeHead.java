@@ -35,8 +35,16 @@ public abstract class ValidCommitteeHead extends Lecturer {
   }
 
   @Override
+  protected StringBuilder toStringBuilder() {
+    StringBuilder str = super.toStringBuilder().append("\n  Published ")
+        .append(this.articleCount < 1 ? "no" : articleCount).append(" article");
+    if (this.articleCount != 1)
+      str.append("s");
+    return str;
+  }
+
+  @Override
   public String toString() {
-    // TODO: Article count in toString
-    return super.toString();
+    return this.toStringBuilder().toString();
   }
 }

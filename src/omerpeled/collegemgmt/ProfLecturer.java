@@ -21,8 +21,13 @@ public class ProfLecturer extends ValidCommitteeHead {
   }
 
   @Override
+  public StringBuilder toStringBuilder() {
+    return super.toStringBuilder().append("\n  Prof. title awarded by ")
+        .append(this.awardingBodyName);
+  }
+
+  @Override
   public String toString() {
-    // TODO: Awarding body name in toString
-    return super.toString();
+    return this.toStringBuilder().toString();
   }
 }
