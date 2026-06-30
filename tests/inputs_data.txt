@@ -1,27 +1,30 @@
 # ------------ COLLEGE NAME -----------
 College of Test
 # ------------- LECTURERS -------------
-# (1)
+# 1. Not prof - BsC
 1
 123
 Not prof
 1
 something
 1000
-# (2)
+# 2. Doc - PhD
 1
 456
 Doc
 3
 many things
 5000
-# (3)
+2
+# 3. Prof - Prof
 1
 789
 Prof
 4
 everything
 100000
+10
+FAKE PROF FOR FREE!!!1!1
 # ------------ DEPARTMENTS ------------
 9
 d1
