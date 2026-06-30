@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.ArrayUtils.doubleCommitteesSize;
+
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 
 public class Lecturer {
@@ -99,7 +101,7 @@ public class Lecturer {
       throw new AlreadyAddedException(this.name, committee.getName());
 
     if (committeeCount == committees.length)
-      committees = Utils.doubleCommitteesSize(committees);
+      committees = doubleCommitteesSize(committees);
 
     committees[committeeCount++] = committee;
   }

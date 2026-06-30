@@ -1,7 +1,11 @@
-package omerpeled.collegemgmt;
+package omerpeled.collegemgmt.utils;
 
-public class Utils {
-  private Utils() {
+import omerpeled.collegemgmt.Committee;
+import omerpeled.collegemgmt.Department;
+import omerpeled.collegemgmt.Lecturer;
+
+public class ArrayUtils {
+  private ArrayUtils() {
     throw new UnsupportedOperationException(
         "Utility class cannot be instantiated");
   }

@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
+
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
 
@@ -46,7 +48,7 @@ public class Department {
       throw new AlreadyAddedException(lecturer.getName(), this.name);
 
     if (lecturerCount == lecturers.length)
-      lecturers = Utils.doubleLecturersSize(lecturers);
+      lecturers = doubleLecturersSize(lecturers);
 
     lecturers[lecturerCount++] = lecturer;
     if (lecturer.getDepartment() != this)

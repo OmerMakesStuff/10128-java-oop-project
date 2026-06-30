@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.Utils.*;
+import static omerpeled.collegemgmt.utils.ArrayUtils.*;
 
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 

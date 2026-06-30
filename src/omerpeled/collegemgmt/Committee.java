@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
+
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
@@ -52,7 +54,7 @@ public class Committee implements Cloneable {
       throw new AlreadyAddedException(lecturer.getName(), this.name);
 
     if (memberCount == members.length)
-      members = Utils.doubleLecturersSize(members);
+      members = doubleLecturersSize(members);
 
     members[memberCount++] = lecturer;
     lecturer.addCommittee(this);
