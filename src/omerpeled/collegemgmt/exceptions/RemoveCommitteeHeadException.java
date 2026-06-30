@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD;
 
 import omerpeled.collegemgmt.Committee;
 import omerpeled.collegemgmt.Lecturer;

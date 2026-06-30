@@ -1,6 +1,8 @@
 package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_STUDENT_COUNT;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
@@ -14,8 +16,8 @@ public class Department {
   public Department(String name, int studentCount) {
     if (studentCount < 0)
       throw new IllegalArgumentException(String.format(
-          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT,
-          Messages.MSG_STUDENT_COUNT));
+          MSG_FAIL_INPUT_NOT_POSITIVE_INT,
+          MSG_STUDENT_COUNT));
 
     this.name = name;
     this.studentCount = studentCount;

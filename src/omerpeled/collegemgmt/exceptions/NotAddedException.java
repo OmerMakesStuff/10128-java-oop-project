@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_NOT_ADDED;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_NOT_ADDED;
 
 /**
  * Thrown when attempting to remove an item from an object, but that item wasn't

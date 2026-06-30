@@ -1,5 +1,9 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.Messages.MSG_ARTICLE_COUNT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INVALID_DEGREE;
+
 public abstract class ValidCommitteeHead extends Lecturer {
   private int articleCount;
 
@@ -17,12 +21,12 @@ public abstract class ValidCommitteeHead extends Lecturer {
       Degree validDegree) {
     if (articleCount < 0)
       throw new IllegalArgumentException(String.format(
-          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT,
-          Messages.MSG_ARTICLE_COUNT));
+          MSG_FAIL_INPUT_NOT_POSITIVE_INT,
+          MSG_ARTICLE_COUNT));
 
     if (degree != validDegree)
       throw new IllegalArgumentException(String.format(
-          Messages.MSG_FAIL_INVALID_DEGREE,
+          MSG_FAIL_INVALID_DEGREE,
           validDegree.displayName));
 
     super(id, name, degree, degreeTitle, salary);
@@ -34,8 +38,8 @@ public abstract class ValidCommitteeHead extends Lecturer {
       Degree validDegree) {
     if (articleCount < 0)
       throw new IllegalArgumentException(String.format(
-          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT,
-          Messages.MSG_ARTICLE_COUNT));
+          MSG_FAIL_INPUT_NOT_POSITIVE_INT,
+          MSG_ARTICLE_COUNT));
 
     this(
         base.getId(),

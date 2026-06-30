@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_UNAVAILABLE_OPT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_UNAVAILABLE_OPT;
 
 /**
  * Thrown when attempting to use functionality in the app that cannot be used

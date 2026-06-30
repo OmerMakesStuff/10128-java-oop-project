@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_ALREADY_ADDED;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_ALREADY_ADDED;
 
 /**
  * Thrown when attempting to add an item to an object, but that item has already

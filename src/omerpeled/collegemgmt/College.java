@@ -1,6 +1,9 @@
 package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.ArrayUtils.*;
+import static omerpeled.collegemgmt.utils.Messages.MSG_COMMITTEE;
+import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_LECTURER_WITH_ID;
 
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 
@@ -50,7 +53,7 @@ public class College {
     boolean exists = getLecturerById(newLecturer.getId()) != null;
     if (exists)
       throw new ItemExistsException(
-          String.format(Messages.MSG_LECTURER_WITH_ID, newLecturer.getId()));
+          String.format(MSG_LECTURER_WITH_ID, newLecturer.getId()));
 
     if (lecturerCount == lecturers.length)
       lecturers = doubleLecturersSize(lecturers);
@@ -105,7 +108,7 @@ public class College {
     boolean exists = getCommitteeByName(newCommittee.getName()) != null;
     if (exists)
       throw new ItemExistsException(
-          Messages.MSG_COMMITTEE + ' ' + newCommittee.getName());
+          MSG_COMMITTEE + ' ' + newCommittee.getName());
 
     if (committeeCount == committees.length)
       committees = doubleCommitteesSize(committees);
@@ -135,7 +138,7 @@ public class College {
     boolean exists = getDepartmentByName(newDepartment.getName()) != null;
     if (exists)
       throw new ItemExistsException(
-          Messages.MSG_DEPARTMENT + ' ' + newDepartment.getName());
+          MSG_DEPARTMENT + ' ' + newDepartment.getName());
 
     if (departmentCount == departments.length)
       departments = doubleDepartmentsSize(departments);

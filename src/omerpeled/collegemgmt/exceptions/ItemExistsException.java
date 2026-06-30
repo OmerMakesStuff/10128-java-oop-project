@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_EXISTS;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_EXISTS;
 
 /**
  * Thrown when attempting to create a new item with an identifier (name/ID) that

@@ -1,4 +1,4 @@
-package omerpeled.collegemgmt;
+package omerpeled.collegemgmt.utils;
 
 public class Messages {
   private Messages() {

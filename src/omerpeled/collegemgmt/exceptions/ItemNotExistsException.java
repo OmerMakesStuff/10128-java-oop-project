@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_NOT_EXISTS;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_NOT_EXISTS;
 
 /**
  * Thrown when attempting to find an existing item, but an item with that

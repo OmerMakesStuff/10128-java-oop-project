@@ -4,9 +4,9 @@
 
 package omerpeled.collegemgmt;
 
-import java.util.Scanner;
+import static omerpeled.collegemgmt.utils.Messages.*;
 
-import static omerpeled.collegemgmt.Messages.*;
+import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.*;
 

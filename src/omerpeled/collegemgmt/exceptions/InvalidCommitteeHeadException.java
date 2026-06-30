@@ -1,6 +1,6 @@
 package omerpeled.collegemgmt.exceptions;
 
-import static omerpeled.collegemgmt.Messages.MSG_FAIL_INVALID_COMMITTEE_HEAD;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INVALID_COMMITTEE_HEAD;
 
 import omerpeled.collegemgmt.Lecturer;
 

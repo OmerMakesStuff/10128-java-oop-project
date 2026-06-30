@@ -1,6 +1,10 @@
 package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.ArrayUtils.doubleCommitteesSize;
+import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD;
+import static omerpeled.collegemgmt.utils.Messages.MSG_SALARY;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 
@@ -39,8 +43,8 @@ public class Lecturer {
       double salary) {
     if (salary < 0)
       throw new IllegalArgumentException(String.format(
-          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM,
-          Messages.MSG_SALARY));
+          MSG_FAIL_INPUT_NOT_POSITIVE_NUM,
+          MSG_SALARY));
 
     this.id = id;
     this.name = name;
@@ -110,7 +114,7 @@ public class Lecturer {
     if (!hasCommittee(committee))
       // To remove the head, a new head must be set first
       throw new UnsupportedOperationException(
-          String.format(Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD, this.name,
+          String.format(MSG_FAIL_REMOVE_COMMITTEE_HEAD, this.name,
               committee.getName()));
 
     boolean removed = false;
@@ -132,9 +136,9 @@ public class Lecturer {
             id,
             degree.getDisplayName(),
             degreeTitle,
-            Messages.MSG_DEPARTMENT,
+            MSG_DEPARTMENT,
             department == null ? "None" : department.getName(),
-            Messages.MSG_SALARY,
+            MSG_SALARY,
             salary));
 
     if (committeeCount < 1)
