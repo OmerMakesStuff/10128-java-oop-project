@@ -39,6 +39,6 @@ public class Messages {
   public static final String MSG_DEPARTMENT = "Department";
   public static final String MSG_DEPARTMENT_NAME = "department name";
   public static final String MSG_SALARY = "Salary";
-  public static final String MSG_ARTICLE_COUNT = "Number of articles";
+  public static final String MSG_ARTICLE_COUNT = "Number of articles published";
   public static final String MSG_STUDENT_COUNT = "Number of students";
 }
