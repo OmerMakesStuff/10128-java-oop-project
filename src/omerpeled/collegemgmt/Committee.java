@@ -16,7 +16,7 @@ public class Committee implements Cloneable {
     this.members = new Lecturer[1];
     this.memberCount = 0;
 
-    if (!head.isValidCommitteeHead()) // TODO: use instanceof ValidCommitteeHead
+    if (!(head instanceof ValidCommitteeHead))
       throw new InvalidCommitteeHeadException(head);
 
     this.head = head;
@@ -80,7 +80,7 @@ public class Committee implements Cloneable {
   }
 
   public void setHead(Lecturer head) {
-    if (!head.isValidCommitteeHead())
+    if (!(head instanceof ValidCommitteeHead))
       throw new InvalidCommitteeHeadException(head);
 
     Lecturer prevHead = this.head;

@@ -60,7 +60,7 @@ public class College {
 
   public boolean validCommitteeHeadExists() {
     for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i].isValidCommitteeHead())
+      if (lecturers[i] instanceof ValidCommitteeHead)
         return true;
     }
     return false;

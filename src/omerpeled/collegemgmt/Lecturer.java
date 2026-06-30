@@ -86,10 +86,6 @@ public class Lecturer {
       department.addLecturer(this);
   }
 
-  public boolean isValidCommitteeHead() {
-    return this.degree == Degree.PHD || this.degree == Degree.PROF;
-  }
-
   public boolean hasCommittee(Committee committee) {
     for (int i = 0; i < committeeCount; i++) {
       if (committees[i] == committee)
