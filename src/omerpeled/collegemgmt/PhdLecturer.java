@@ -10,4 +10,13 @@ public class PhdLecturer extends ValidCommitteeHead {
       int articleCount) {
     super(id, name, degree, degreeTitle, salary, articleCount, Degree.PHD);
   }
+
+  protected PhdLecturer(Lecturer base, int articleCount) {
+    this(base.getId(),
+        base.getName(),
+        base.getDegree(),
+        base.getDegreeTitle(),
+        base.getSalary(),
+        articleCount);
+  }
 }

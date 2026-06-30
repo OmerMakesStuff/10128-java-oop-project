@@ -30,6 +30,23 @@ public abstract class ValidCommitteeHead extends Lecturer {
     this.articleCount = articleCount;
   }
 
+  protected ValidCommitteeHead(Lecturer base, int articleCount,
+      Degree validDegree) {
+    if (articleCount < 0)
+      throw new IllegalArgumentException(String.format(
+          Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT,
+          Messages.MSG_ARTICLE_COUNT));
+
+    this(
+        base.getId(),
+        base.getName(),
+        base.getDegree(),
+        base.getDegreeTitle(),
+        base.getSalary(),
+        articleCount,
+        validDegree);
+  }
+
   public int getArticleCount() {
     return articleCount;
   }

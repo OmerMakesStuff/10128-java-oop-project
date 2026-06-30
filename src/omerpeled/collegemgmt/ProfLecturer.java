@@ -16,6 +16,17 @@ public class ProfLecturer extends ValidCommitteeHead {
     this.awardingBodyName = awardingBodyName;
   }
 
+  public ProfLecturer(Lecturer base, int articleCount,
+      String awardingBodyName) {
+    this(base.getId(),
+        base.getName(),
+        base.getDegree(),
+        base.getDegreeTitle(),
+        base.getSalary(),
+        articleCount,
+        awardingBodyName);
+  }
+
   public String getAwardingBodyName() {
     return awardingBodyName;
   }

@@ -277,32 +277,25 @@ public class Main {
       try {
         double salary = Double.parseDouble(s.nextLine());
 
-        Lecturer newLecturer;
-        if (degree == Lecturer.Degree.PHD) {
-          // TODO: Get articles
-          newLecturer = new PhdLecturer(
-              id,
-              name,
-              degree,
-              degreeTitle,
-              salary,
-              0 /* TEMP DUMMY VALUE */);
-        } else if (degree == Lecturer.Degree.PROF) {
-          // TODO: Get articles & awarding body name
-          newLecturer = new ProfLecturer(
-              id,
-              name,
-              degree,
-              degreeTitle,
-              salary,
-              0, "DUMMY" /* TEMP DUMMY VALUES */);
-        } else
-          newLecturer = new Lecturer(
-              id,
-              name,
-              degree,
-              degreeTitle,
-              salary);
+        Lecturer newLecturer = new Lecturer(
+            id,
+            name,
+            degree,
+            degreeTitle,
+            salary);
+        if (degree == Lecturer.Degree.PHD || degree == Lecturer.Degree.PROF) {
+          System.out.printf(MSG_PROMPT, MSG_ARTICLE_COUNT.toLowerCase());
+          int articleCount = Integer.parseInt(s.nextLine());
+
+          if (degree == Lecturer.Degree.PROF) {
+            System.out.printf(MSG_PROMPT, "Prof. awarding body");
+            String awardingBodyName = s.nextLine();
+
+            newLecturer = new ProfLecturer(newLecturer, articleCount,
+                awardingBodyName);
+          } else
+            newLecturer = new PhdLecturer(newLecturer, articleCount);
+        }
 
         college.addLecturer(newLecturer);
         addSuccess = true;
