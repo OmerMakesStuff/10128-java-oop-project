@@ -25,6 +25,7 @@ public class Messages {
   public static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
   public static final String MSG_FAIL_INPUT_NOT_POSITIVE_NUM = "%s must be a positive number!";
   public static final String MSG_FAIL_INPUT_NOT_POSITIVE_INT = "%s must be a positive integer!";
+  public static final String MSG_FAIL_INVALID_DEGREE = "Degree must be %s for this lecturer";
   public static final String MSG_FAIL_UNAVAILABLE_OPT = "Option unavailable - %s";
   public static final String MSG_FAIL_EXCEPTION = "Error: %s%n";
 
@@ -38,5 +39,6 @@ public class Messages {
   public static final String MSG_DEPARTMENT = "Department";
   public static final String MSG_DEPARTMENT_NAME = "department name";
   public static final String MSG_SALARY = "Salary";
+  public static final String MSG_ARTICLE_COUNT = "Number of articles";
   public static final String MSG_STUDENT_COUNT = "Number of students";
 }
