@@ -277,12 +277,33 @@ public class Main {
       try {
         double salary = Double.parseDouble(s.nextLine());
 
-        Lecturer newLecturer = new Lecturer(
-            id,
-            name,
-            degree,
-            degreeTitle,
-            salary);
+        Lecturer newLecturer;
+        if (degree == Lecturer.Degree.PHD) {
+          // TODO: Get articles
+          newLecturer = new PhdLecturer(
+              id,
+              name,
+              degree,
+              degreeTitle,
+              salary,
+              0 /* TEMP DUMMY VALUE */);
+        } else if (degree == Lecturer.Degree.PROF) {
+          // TODO: Get articles & awarding body name
+          newLecturer = new ProfLecturer(
+              id,
+              name,
+              degree,
+              degreeTitle,
+              salary,
+              0, "DUMMY" /* TEMP DUMMY VALUES */);
+        } else
+          newLecturer = new Lecturer(
+              id,
+              name,
+              degree,
+              degreeTitle,
+              salary);
+
         college.addLecturer(newLecturer);
         addSuccess = true;
       } catch (NumberFormatException _) {
