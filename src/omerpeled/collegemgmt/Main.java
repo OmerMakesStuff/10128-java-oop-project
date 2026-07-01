@@ -192,7 +192,7 @@ public class Main {
   private static String buildCommitteeSortMenuString() {
     StringBuilder buf = new StringBuilder(
         String.format(MSG_PROMPT_ENUM,
-            String.format("how to sort %s", MSG_COMMITTEE)));
+            String.format("how to sort %ss", MSG_COMMITTEE.toLowerCase())));
     for (int i = 0; i < COMMITTEE_SORT_OPTIONS.length; i++) {
       buf.append("\n").append(i + 1).append(") ")
           .append(COMMITTEE_SORT_OPTIONS[i].getDisplayText());
