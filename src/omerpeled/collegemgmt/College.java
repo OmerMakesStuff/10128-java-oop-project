@@ -49,6 +49,24 @@ public class College {
     return null;
   }
 
+  public ValidCommitteeHead[] getValidCommitteeHeads() {
+    int count = 0;
+    for (int i = 0; i < lecturerCount; i++) {
+      if (lecturers[i] instanceof ValidCommitteeHead)
+        count++;
+    }
+
+    // Avoid returning an array too long with null items
+    int nextIdx = 0;
+    ValidCommitteeHead[] result = new ValidCommitteeHead[count];
+    for (int i = 0; i < lecturerCount; i++) {
+      if (lecturers[i] instanceof ValidCommitteeHead validCommitteeHead)
+        result[nextIdx++] = validCommitteeHead;
+    }
+
+    return result;
+  }
+
   public void addLecturer(Lecturer newLecturer) {
     boolean exists = getLecturerById(newLecturer.getId()) != null;
     if (exists)
