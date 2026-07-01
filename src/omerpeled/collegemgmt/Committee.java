@@ -98,6 +98,21 @@ public class Committee implements Cloneable {
     addMember(prevHead);
   }
 
+  @Override
+  public Committee clone() throws CloneNotSupportedException {
+    Committee cloned = (Committee) super.clone();
+    this.head.addCommittee(cloned);
+
+    cloned.memberCount = 0; // Re-add all members
+    cloned.members = new Lecturer[this.members.length];
+    for (int i = 0; i < this.memberCount; i++) {
+      cloned.addMember(this.members[i]);
+    }
+
+    return cloned;
+  }
+
+  @Override
   public String toString() {
     StringBuilder str = new StringBuilder(this.name).append("\n  ");
 
@@ -118,19 +133,5 @@ public class Committee implements Cloneable {
       }
     }
     return str.toString();
-  }
-
-  @Override
-  public Committee clone() throws CloneNotSupportedException {
-    Committee cloned = (Committee) super.clone();
-    this.head.addCommittee(cloned);
-
-    cloned.memberCount = 0; // Re-add all members
-    cloned.members = new Lecturer[this.members.length];
-    for (int i = 0; i < this.memberCount; i++) {
-      cloned.addMember(this.members[i]);
-    }
-
-    return cloned;
   }
 }
