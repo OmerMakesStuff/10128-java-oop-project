@@ -19,4 +19,12 @@ public class PhdLecturer extends ValidCommitteeHead {
         base.getSalary(),
         articleCount);
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(this instanceof PhdLecturer))
+      return false;
+
+    return super.equals(obj);
+  }
 }

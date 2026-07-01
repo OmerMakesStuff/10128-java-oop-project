@@ -68,4 +68,13 @@ public abstract class ValidCommitteeHead extends Lecturer {
   public String toString() {
     return this.toStringBuilder().toString();
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(this instanceof ValidCommitteeHead lect) ||
+        this.articleCount != lect.articleCount)
+      return false;
+
+    return super.equals(obj);
+  }
 }

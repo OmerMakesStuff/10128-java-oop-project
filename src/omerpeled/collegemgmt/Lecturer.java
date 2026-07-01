@@ -155,7 +155,29 @@ public class Lecturer {
     return str;
   }
 
+  @Override
   public String toString() {
     return this.toStringBuilder().toString();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Lecturer lect) ||
+        !(this.id.equals(lect.id)) ||
+        !(this.name.equals(lect.name)) ||
+        this.degree != lect.degree ||
+        !(this.degreeTitle.equals(lect.degreeTitle)) ||
+        this.salary != lect.salary ||
+        !(this.department.equals(lect.department)) ||
+        this.committeeCount != lect.committeeCount)
+      return false;
+
+    for (int i = 0; i < committeeCount; i++) {
+      // By reference, using committee.equals() could cause infinite recursion
+      if (committees[i] != lect.committees[i])
+        return false;
+    }
+
+    return true;
   }
 }
