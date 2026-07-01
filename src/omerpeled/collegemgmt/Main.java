@@ -6,6 +6,7 @@ package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.Messages.*;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.*;
@@ -74,6 +75,10 @@ public class Main {
 
           case SHOW_LECTURERS:
             showLecturers();
+            break;
+
+          case COMPARE_LECTURERS:
+            compareLecturers();
             break;
 
           case SHOW_COMMITTEES:
@@ -496,6 +501,23 @@ public class Main {
       for (int i = 0; i < college.getCommitteeCount(); i++) {
         if (committees[i] != null)
           System.out.println(committees[i]);
+      }
+    }
+  }
+
+  private static void compareLecturers() {
+    System.out.println("LECTURERS BY ARTICLES PUBLISHED");
+
+    ValidCommitteeHead[] filtered = college.getValidCommitteeHeads();
+    Arrays.sort(filtered, new LecturerArticleCountComparator());
+    if (filtered.length < 1)
+      System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
+          String.format(MSG_VALID, MSG_LECTURER.toLowerCase()));
+    else {
+      // Print in descending order
+      for (int i = filtered.length - 1; i >= 0; i--) {
+        System.out.printf("%s - %s articles published%n",
+            filtered[i].getName(), filtered[i].getArticleCount());
       }
     }
   }

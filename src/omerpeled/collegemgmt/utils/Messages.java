@@ -30,6 +30,7 @@ public class Messages {
   public static final String MSG_FAIL_EXCEPTION = "Error: %s%n";
 
   public static final String MSG_CHOICE = "choice";
+  public static final String MSG_VALID = "valid %s";
   public static final String MSG_LECTURER = "Lecturer";
   public static final String MSG_LECTURER_ID = "lecturer ID";
   public static final String MSG_LECTURER_WITH_ID = MSG_LECTURER
