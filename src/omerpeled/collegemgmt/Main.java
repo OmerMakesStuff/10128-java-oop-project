@@ -159,7 +159,8 @@ public class Main {
   static final Lecturer.Degree[] DEGREE_OPTIONS = Lecturer.Degree.values();
 
   private static String buildDegreeMenuString() {
-    StringBuilder buf = new StringBuilder("Choose degree:");
+    StringBuilder buf = new StringBuilder(
+        String.format(MSG_PROMPT_ENUM, MSG_DEGREE.toLowerCase()));
     for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
       buf.append("\n").append(i + 1).append(") ")
           .append(DEGREE_OPTIONS[i].getDisplayName());
@@ -516,8 +517,9 @@ public class Main {
     else {
       // Print in descending order
       for (int i = filtered.length - 1; i >= 0; i--) {
-        System.out.printf("%s - %s articles published%n",
-            filtered[i].getName(), filtered[i].getArticleCount());
+        System.out.printf("%s - %s %s%n",
+            filtered[i].getName(), filtered[i].getArticleCount(),
+            MSG_ARTICLE_COUNT_SHORT);
       }
     }
   }
