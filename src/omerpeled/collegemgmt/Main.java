@@ -7,6 +7,7 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.Messages.*;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.*;
@@ -85,8 +86,8 @@ public class Main {
             showCommittees();
             break;
 
-          default:
-            System.err.println("Not implemented yet.");
+          case COMPARE_COMMITTEES:
+            compareCommittees();
             break;
         }
       } catch (CollegeException e) {
@@ -169,6 +170,37 @@ public class Main {
   }
 
   private static final String DEGREE_MENU = buildDegreeMenuString();
+
+  private enum CommitteeSortType {
+    MEMBER_COUNT("By number of members"),
+    ARTICLE_COUNT("By total number of articles published");
+
+    private String displayText;
+
+    CommitteeSortType(String displayText) {
+      this.displayText = displayText;
+    }
+
+    public String getDisplayText() {
+      return displayText;
+    }
+  }
+
+  static final CommitteeSortType[] COMMITTEE_SORT_OPTIONS = CommitteeSortType
+      .values();
+
+  private static String buildCommitteeSortMenuString() {
+    StringBuilder buf = new StringBuilder(
+        String.format(MSG_PROMPT_ENUM,
+            String.format("how to sort %s", MSG_COMMITTEE)));
+    for (int i = 0; i < COMMITTEE_SORT_OPTIONS.length; i++) {
+      buf.append("\n").append(i + 1).append(") ")
+          .append(COMMITTEE_SORT_OPTIONS[i].getDisplayText());
+    }
+    return buf.toString();
+  }
+
+  private static final String COMMITTEE_SORT_MENU = buildCommitteeSortMenuString();
   // endregion
 
   // region Prompt for types
@@ -212,6 +244,26 @@ public class Main {
     } while (!isValid);
 
     return DEGREE_OPTIONS[choiceIdx];
+  }
+
+  private static CommitteeSortType promptForCommitteeSortType() {
+    int choiceIdx = -1;
+    boolean isValid = false;
+    do {
+      System.out
+          .print(COMMITTEE_SORT_MENU + '\n'
+              + String.format(MSG_PROMPT, MSG_CHOICE));
+      try {
+        choiceIdx = Integer.parseInt(s.nextLine()) - 1;
+        isValid = choiceIdx >= 0 && choiceIdx < COMMITTEE_SORT_OPTIONS.length;
+        if (!isValid)
+          System.err.println(MSG_FAIL_INVALID_CHOICE);
+      } catch (NumberFormatException _) {
+        System.err.println(MSG_FAIL_INVALID_CHOICE);
+      }
+    } while (!isValid);
+
+    return COMMITTEE_SORT_OPTIONS[choiceIdx];
   }
 
   private static Lecturer promptForLecturer() {
@@ -521,6 +573,48 @@ public class Main {
             filtered[i].getName(), filtered[i].getArticleCount(),
             MSG_ARTICLE_COUNT_SHORT);
       }
+    }
+  }
+
+  private static void compareCommittees() {
+    Committee[] committees = college.getCommittees();
+    if (committees[0] == null)
+      System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
+          MSG_COMMITTEE.toLowerCase());
+
+    // Clone array, so original is not modified
+    Committee[] sorted = new Committee[college.getCommitteeCount()];
+    for (int i = 0; i < COMMITTEE_SORT_OPTIONS.length; i++) {
+      sorted[i] = committees[i];
+    }
+
+    CommitteeSortType sortType = promptForCommitteeSortType();
+    System.out.println();
+
+    Comparator<Committee> comparator = null;
+    String rowSuffix = null;
+
+    switch (sortType) {
+      case MEMBER_COUNT:
+        comparator = new CommitteeMemberCountComparator();
+        rowSuffix = "member(s)";
+        break;
+      case ARTICLE_COUNT:
+        comparator = new CommitteeArticleCountComparator();
+        rowSuffix = MSG_ARTICLE_COUNT_SHORT;
+        break;
+    }
+
+    Arrays.sort(sorted, comparator);
+    // Print in descending order
+    for (int i = sorted.length - 1; i >= 0; i--) {
+      System.out.printf(
+          "%s - %s %s%n",
+          sorted[i].getName(),
+          sortType == CommitteeSortType.MEMBER_COUNT
+              ? sorted[i].getMemberCount()
+              : sorted[i].getTotalArticleCount(),
+          rowSuffix);
     }
   }
   // endregion
