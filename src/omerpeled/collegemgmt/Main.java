@@ -126,10 +126,14 @@ public class Main {
     SHOW_LECTURERS("Show all lecturer details"),
     SHOW_COMMITTEES("Show all committee details");
 
-    public final String displayText;
+    private final String displayText;
 
     MenuOption(String displayText) {
       this.displayText = displayText;
+    }
+
+    public String getDisplayText() {
+      return displayText;
     }
   }
 
@@ -140,7 +144,7 @@ public class Main {
         "COLLEGE STAFF MANAGEMENT - %s\n\n");
     for (int i = 0; i < MENU_OPTIONS.length; i++) {
       str.append(MENU_OPTIONS[i].ordinal()).append(") ")
-          .append(MENU_OPTIONS[i].displayText).append("\n");
+          .append(MENU_OPTIONS[i].getDisplayText()).append("\n");
     }
     return str.toString();
   }
