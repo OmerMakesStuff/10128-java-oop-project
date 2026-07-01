@@ -108,10 +108,6 @@ public class Main {
     EXIT("Exit"),
     /* LECTURERS */
     ADD_LECTURER("Add lecturer"),
-    COMPARE_LECTURERS(String.format(
-        "Compare lecturers (%s/%s)",
-        Lecturer.Degree.PHD.getDisplayName(),
-        Lecturer.Degree.PROF.getDisplayName())),
 
     /* COMMITTEES */
     ADD_COMMITTEE("Add committee"),
@@ -119,7 +115,6 @@ public class Main {
     SET_COMMITTEE_HEAD("Set committee head"),
     REMOVE_COMMITTEE_MEMBER("Remove lecturer from committee"),
     DUPLICATE_COMMITTEE("Duplicate committee"),
-    COMPARE_COMMITTEES("Compare committees"),
 
     /* DEPARTMENTS */
     ADD_DEPARTMENT("Add department"),
@@ -129,7 +124,12 @@ public class Main {
 
     /* DISPLAY DATA */
     SHOW_LECTURERS("Show all lecturer details"),
-    SHOW_COMMITTEES("Show all committee details");
+    COMPARE_LECTURERS(String.format(
+        "Compare lecturers (%s/%s)",
+        Lecturer.Degree.PHD.getDisplayName(),
+        Lecturer.Degree.PROF.getDisplayName())),
+    SHOW_COMMITTEES("Show all committee details"),
+    COMPARE_COMMITTEES("Compare committees");
 
     private final String displayText;
 
