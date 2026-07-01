@@ -9,7 +9,7 @@ import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 
 public class Committee implements Cloneable {
   private String name;
-  private Lecturer head;
+  private ValidCommitteeHead head;
   private Lecturer[] members;
   private int memberCount;
 
@@ -18,10 +18,10 @@ public class Committee implements Cloneable {
     this.members = new Lecturer[1];
     this.memberCount = 0;
 
-    if (!(head instanceof ValidCommitteeHead))
+    if (!(head instanceof ValidCommitteeHead validHead))
       throw new InvalidCommitteeHeadException(head);
 
-    this.head = head;
+    this.head = validHead;
     head.addCommittee(this);
   }
 
@@ -82,7 +82,7 @@ public class Committee implements Cloneable {
   }
 
   public void setHead(Lecturer head) {
-    if (!(head instanceof ValidCommitteeHead))
+    if (!(head instanceof ValidCommitteeHead validHead))
       throw new InvalidCommitteeHeadException(head);
 
     Lecturer prevHead = this.head;
@@ -91,7 +91,7 @@ public class Committee implements Cloneable {
 
     if (hasMember(head))
       removeMember(head);
-    this.head = head;
+    this.head = validHead;
     head.addCommittee(this);
 
     // Previous head stays in the committee as a member
