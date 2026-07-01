@@ -37,6 +37,10 @@ public class Committee implements Cloneable {
     return members;
   }
 
+  public int getMemberCount() {
+    return memberCount;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
