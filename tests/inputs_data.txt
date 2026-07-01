@@ -25,6 +25,21 @@ everything
 100000
 10
 FAKE PROF FOR FREE!!!1!1
+# 4. Other Doc - PhD
+1
+ABC
+Other Doc
+3
+many other things
+5000
+4
+# 5. Better Not prof - MsC
+1
+DEF
+Better Not prof
+2
+something but better
+1000
 # ------------ DEPARTMENTS ------------
 9
 d1
