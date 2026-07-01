@@ -41,6 +41,16 @@ public class Committee implements Cloneable {
     return memberCount;
   }
 
+  public int getTotalArticleCount() {
+    int result = head.getArticleCount();
+    for (int i = 0; i < memberCount; i++) {
+      if (this.members[i] instanceof ValidCommitteeHead member)
+        result += member.getArticleCount();
+    }
+
+    return result;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
