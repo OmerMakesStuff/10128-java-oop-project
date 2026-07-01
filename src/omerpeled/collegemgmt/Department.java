@@ -85,7 +85,7 @@ public class Department {
       for (int i = 0; i < lecturerCount; i++) {
         str.append("\n  ").append(lecturers[i].getName()).append(" (")
             .append(lecturers[i].getId()).append("), ")
-            .append(lecturers[i].getDegree().displayName).append(" in ")
+            .append(lecturers[i].getDegree().getDisplayName()).append(" in ")
             .append(lecturers[i].getDegreeTitle());
       }
     }

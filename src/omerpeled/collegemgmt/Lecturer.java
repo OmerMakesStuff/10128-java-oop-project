@@ -15,7 +15,7 @@ public class Lecturer {
     PHD("PhD"),
     PROF("Prof.");
 
-    final String displayName;
+    private final String displayName;
 
     Degree(String displayName) {
       this.displayName = displayName;

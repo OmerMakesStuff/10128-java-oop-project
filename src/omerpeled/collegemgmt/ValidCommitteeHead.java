@@ -27,7 +27,7 @@ public abstract class ValidCommitteeHead extends Lecturer {
     if (degree != validDegree)
       throw new IllegalArgumentException(String.format(
           MSG_FAIL_INVALID_DEGREE,
-          validDegree.displayName));
+          validDegree.getDisplayName()));
 
     super(id, name, degree, degreeTitle, salary);
 
