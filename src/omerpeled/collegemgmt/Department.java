@@ -75,6 +75,7 @@ public class Department {
     }
   }
 
+  @Override
   public String toString() {
     StringBuilder str = new StringBuilder(
         name + " (" + studentCount + " students)");
@@ -89,5 +90,22 @@ public class Department {
       }
     }
     return str.toString();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Department dept) ||
+        !(this.name.equals(dept.name)) ||
+        this.studentCount != dept.studentCount ||
+        this.lecturerCount != dept.lecturerCount)
+      return false;
+
+    for (int i = 0; i < lecturerCount; i++) {
+      // By reference, using lecturer.equals() could cause infinite recursion
+      if (lecturers[i] != dept.lecturers[i])
+        return false;
+    }
+
+    return true;
   }
 }
