@@ -134,4 +134,21 @@ public class Committee implements Cloneable {
     }
     return str.toString();
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Committee comm) ||
+        !(this.name.equals(comm.name)) ||
+        !(this.head.equals(comm.head)) ||
+        this.memberCount != comm.memberCount)
+      return false;
+
+    for (int i = 0; i < memberCount; i++) {
+      // By reference, using lecturer.equals() could cause infinite recursion
+      if (members[i] != comm.members[i])
+        return false;
+    }
+
+    return true;
+  }
 }
