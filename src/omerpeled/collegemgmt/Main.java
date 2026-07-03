@@ -280,7 +280,6 @@ public class Main {
       lecturerId = s.nextLine();
       lecturer = college.getLecturerById(lecturerId);
       if (lecturer == null)
-        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS + "%n",
             String.format(MSG_LECTURER_WITH_ID, lecturerId));
     } while (lecturer == null);
@@ -297,7 +296,6 @@ public class Main {
       committeeName = s.nextLine();
       committee = college.getCommitteeByName(committeeName);
       if (committee == null)
-        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS + "%n",
             MSG_COMMITTEE + " " + committeeName);
     } while (committee == null);
@@ -314,7 +312,6 @@ public class Main {
       departmentName = s.nextLine();
       department = college.getDepartmentByName(departmentName);
       if (department == null)
-        // TODO: Throw ItemNotExistsException
         System.err.printf(MSG_FAIL_NOT_EXISTS + "%n",
             MSG_DEPARTMENT + " " + departmentName);
     } while (department == null);
