@@ -39,3 +39,13 @@ c2
 3
 DEF
 c2
+# Duplicate c2 as c2-new
+6
+c2
+# Duplicate c2 again, should be named c2-new2
+6
+c2
+# Remove Not Prof from c2-new2
+5
+123
+c2-new2
