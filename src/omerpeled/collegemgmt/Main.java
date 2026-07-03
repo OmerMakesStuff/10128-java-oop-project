@@ -575,13 +575,14 @@ public class Main {
 
   private static void compareCommittees() {
     Committee[] committees = college.getCommittees();
-    if (committees[0] == null)
+    int committeeCount = college.getCommitteeCount();
+    if (committeeCount < 1)
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
           MSG_COMMITTEE.toLowerCase());
 
     // Clone array, so original is not modified
-    Committee[] sorted = new Committee[college.getCommitteeCount()];
-    for (int i = 0; i < COMMITTEE_SORT_OPTIONS.length; i++) {
+    Committee[] sorted = new Committee[committeeCount];
+    for (int i = 0; i < committeeCount; i++) {
       sorted[i] = committees[i];
     }
 
