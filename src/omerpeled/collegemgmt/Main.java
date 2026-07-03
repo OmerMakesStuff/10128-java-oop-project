@@ -172,8 +172,8 @@ public class Main {
   private static final String DEGREE_MENU = buildDegreeMenuString();
 
   private enum CommitteeSortType {
-    MEMBER_COUNT("By number of members"),
-    ARTICLE_COUNT("By total number of articles published");
+    MEMBER_COUNT("By number of members (not including head)"),
+    ARTICLE_COUNT("By total number of articles published (incl. by head)");
 
     private String displayText;
 
