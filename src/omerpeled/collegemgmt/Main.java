@@ -343,17 +343,20 @@ public class Main {
             degreeTitle,
             salary);
         if (degree == Lecturer.Degree.PHD || degree == Lecturer.Degree.PROF) {
-          System.out.printf(MSG_PROMPT, MSG_ARTICLE_COUNT.toLowerCase());
-          int articleCount = Integer.parseInt(s.nextLine());
+          // TODO: Replace with prompt for article titles
+          System.out.print("DUMMY NUMBER SO I DON'T MESS UP THE TESTS!! ");
+          Integer.parseInt(s.nextLine());
+
+          String[] tempArticles = new String[1]; // TEMP!
 
           if (degree == Lecturer.Degree.PROF) {
             System.out.printf(MSG_PROMPT, "Prof. awarding body");
             String awardingBodyName = s.nextLine();
 
-            newLecturer = new ProfLecturer(newLecturer, articleCount,
+            newLecturer = new ProfLecturer(newLecturer, tempArticles,
                 awardingBodyName);
           } else
-            newLecturer = new PhdLecturer(newLecturer, articleCount);
+            newLecturer = new PhdLecturer(newLecturer, tempArticles);
         }
 
         college.addLecturer(newLecturer);

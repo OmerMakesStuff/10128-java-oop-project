@@ -1,11 +1,9 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.Messages.MSG_ARTICLE_COUNT;
-import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INVALID_DEGREE;
 
 public abstract class ValidCommitteeHead extends Lecturer {
-  private int articleCount;
+  private String[] articles;
 
   protected ValidCommitteeHead(
       String id,
@@ -13,17 +11,12 @@ public abstract class ValidCommitteeHead extends Lecturer {
       Degree degree,
       String degreeTitle,
       double salary,
-      int articleCount,
+      String[] articles,
       /**
        * Only valid degree for this lecturer. Subclasses should pass a constant
        * here and NOT allow passing in their own constructor.
        */
       Degree validDegree) {
-    if (articleCount < 0)
-      throw new IllegalArgumentException(String.format(
-          MSG_FAIL_INPUT_NOT_POSITIVE_INT,
-          MSG_ARTICLE_COUNT));
-
     if (degree != validDegree)
       throw new IllegalArgumentException(String.format(
           MSG_FAIL_INVALID_DEGREE,
@@ -31,35 +24,36 @@ public abstract class ValidCommitteeHead extends Lecturer {
 
     super(id, name, degree, degreeTitle, salary);
 
-    this.articleCount = articleCount;
+    this.articles = articles;
   }
 
-  protected ValidCommitteeHead(Lecturer base, int articleCount,
+  protected ValidCommitteeHead(Lecturer base, String[] articles,
       Degree validDegree) {
-    if (articleCount < 0)
-      throw new IllegalArgumentException(String.format(
-          MSG_FAIL_INPUT_NOT_POSITIVE_INT,
-          MSG_ARTICLE_COUNT));
-
     this(
         base.getId(),
         base.getName(),
         base.getDegree(),
         base.getDegreeTitle(),
         base.getSalary(),
-        articleCount,
+        articles,
         validDegree);
   }
 
   public int getArticleCount() {
-    return articleCount;
+    int result = 0;
+    for (int i = 0; i < articles.length; i++) {
+      if (this.articles[i] != null)
+        result++;
+    }
+    return result;
   }
 
   @Override
   protected StringBuilder toStringBuilder() {
+    int articleCount = this.getArticleCount();
     StringBuilder str = super.toStringBuilder().append("\n  Published ")
-        .append(this.articleCount < 1 ? "no" : articleCount).append(" article");
-    if (this.articleCount != 1)
+        .append(articleCount < 1 ? "no" : articleCount).append(" article");
+    if (articleCount != 1)
       str.append("s");
     return str;
   }
@@ -72,8 +66,13 @@ public abstract class ValidCommitteeHead extends Lecturer {
   @Override
   public boolean equals(Object obj) {
     if (!(this instanceof ValidCommitteeHead lect) ||
-        this.articleCount != lect.articleCount)
+        this.getArticleCount() != lect.getArticleCount())
       return false;
+
+    for (int i = 0; i < articles.length; i++) {
+      if (!(this.articles[i].equals(lect.articles[i])))
+        return false;
+    }
 
     return super.equals(obj);
   }

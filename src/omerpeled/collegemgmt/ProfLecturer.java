@@ -9,21 +9,21 @@ public class ProfLecturer extends ValidCommitteeHead {
       Degree degree,
       String degreeTitle,
       double salary,
-      int articleCount,
+      String[] articles,
       String awardingBodyName) {
-    super(id, name, degree, degreeTitle, salary, articleCount, Degree.PROF);
+    super(id, name, degree, degreeTitle, salary, articles, Degree.PROF);
 
     this.awardingBodyName = awardingBodyName;
   }
 
-  public ProfLecturer(Lecturer base, int articleCount,
+  public ProfLecturer(Lecturer base, String[] articles,
       String awardingBodyName) {
     this(base.getId(),
         base.getName(),
         base.getDegree(),
         base.getDegreeTitle(),
         base.getSalary(),
-        articleCount,
+        articles,
         awardingBodyName);
   }
 

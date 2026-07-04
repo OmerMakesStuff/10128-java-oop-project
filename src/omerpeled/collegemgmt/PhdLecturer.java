@@ -7,17 +7,17 @@ public class PhdLecturer extends ValidCommitteeHead {
       Degree degree,
       String degreeTitle,
       double salary,
-      int articleCount) {
-    super(id, name, degree, degreeTitle, salary, articleCount, Degree.PHD);
+      String[] articles) {
+    super(id, name, degree, degreeTitle, salary, articles, Degree.PHD);
   }
 
-  protected PhdLecturer(Lecturer base, int articleCount) {
+  protected PhdLecturer(Lecturer base, String[] articles) {
     this(base.getId(),
         base.getName(),
         base.getDegree(),
         base.getDegreeTitle(),
         base.getSalary(),
-        articleCount);
+        articles);
   }
 
   @Override
