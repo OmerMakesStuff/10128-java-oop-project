@@ -41,4 +41,13 @@ public class ProfLecturer extends ValidCommitteeHead {
   public String toString() {
     return this.toStringBuilder().toString();
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(this instanceof ProfLecturer lect) ||
+        !(this.awardingBodyName.equals(lect.awardingBodyName)))
+      return false;
+
+    return super.equals(obj);
+  }
 }
