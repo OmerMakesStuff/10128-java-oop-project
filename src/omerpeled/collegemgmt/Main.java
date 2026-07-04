@@ -4,6 +4,7 @@
 
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.ArrayUtils.doubleStringsSize;
 import static omerpeled.collegemgmt.utils.Messages.*;
 
 import java.util.Arrays;
@@ -318,6 +319,26 @@ public class Main {
 
     return department;
   }
+
+  private static String[] promptForArticles() {
+    String[] result = new String[1];
+    int count = 0;
+
+    String lastItem;
+    do {
+      System.out.printf(MSG_PROMPT, MSG_ARTICLE_NAME + " (" + (count + 1) + ")"
+          + MSG_PROMPT_EMPTY_TO_FINISH);
+      lastItem = s.nextLine();
+
+      if (!(lastItem.isBlank())) {
+        result[count++] = lastItem;
+        if (count == result.length)
+          result = doubleStringsSize(result);
+      }
+    } while (!(lastItem.isBlank()));
+
+    return result;
+  }
   // endregion
 
   // region New item creation
@@ -343,20 +364,16 @@ public class Main {
             degreeTitle,
             salary);
         if (degree == Lecturer.Degree.PHD || degree == Lecturer.Degree.PROF) {
-          // TODO: Replace with prompt for article titles
-          System.out.print("DUMMY NUMBER SO I DON'T MESS UP THE TESTS!! ");
-          Integer.parseInt(s.nextLine());
-
-          String[] tempArticles = new String[1]; // TEMP!
+          String[] articles = promptForArticles();
 
           if (degree == Lecturer.Degree.PROF) {
             System.out.printf(MSG_PROMPT, "Prof. awarding body");
             String awardingBodyName = s.nextLine();
 
-            newLecturer = new ProfLecturer(newLecturer, tempArticles,
+            newLecturer = new ProfLecturer(newLecturer, articles,
                 awardingBodyName);
           } else
-            newLecturer = new PhdLecturer(newLecturer, tempArticles);
+            newLecturer = new PhdLecturer(newLecturer, articles);
         }
 
         college.addLecturer(newLecturer);

@@ -8,6 +8,7 @@ public class Messages {
 
   public static final String MSG_PROMPT = "Enter %s: ";
   public static final String MSG_PROMPT_ENUM = "Choose %s: ";
+  public static final String MSG_PROMPT_EMPTY_TO_FINISH = ", or leave empty to finish";
 
   public static final String MSG_SUCCESS_CREATED = "%s added.%n";
   public static final String MSG_SUCCESS_DUPLICATED = "%s duplicated as %s.%n";
@@ -43,6 +44,7 @@ public class Messages {
   public static final String MSG_DEGREE = "Degree";
   public static final String MSG_SALARY = "Salary";
   public static final String MSG_ARTICLE_COUNT = "Number of articles published";
+  public static final String MSG_ARTICLE_NAME = "name of an article published";
   public static final String MSG_ARTICLE_COUNT_SHORT = "article(s) published";
   public static final String MSG_STUDENT_COUNT = "Number of students";
 }

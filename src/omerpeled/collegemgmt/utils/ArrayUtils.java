@@ -12,6 +12,14 @@ public class ArrayUtils {
 
   // FIXME: CODE DUPLICATION due to different array types :(
 
+  public static String[] doubleStringsSize(String[] original) {
+    String[] resized = new String[original.length * 2];
+    for (int i = 0; i < original.length; i++) {
+      resized[i] = original[i];
+    }
+    return resized;
+  }
+
   public static Lecturer[] doubleLecturersSize(Lecturer[] original) {
     Lecturer[] resized = new Lecturer[original.length * 2];
     for (int i = 0; i < original.length; i++) {
