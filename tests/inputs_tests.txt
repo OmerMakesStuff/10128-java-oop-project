@@ -49,3 +49,11 @@ c2
 5
 123
 c2-new2
+# Make Other Doc head of c2-new2
+4
+ABC
+c2-new2
+# Remove Doc from c2-new2
+5
+456
+c2-new2
