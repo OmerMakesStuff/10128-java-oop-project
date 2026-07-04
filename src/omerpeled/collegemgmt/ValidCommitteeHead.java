@@ -55,6 +55,14 @@ public abstract class ValidCommitteeHead extends Lecturer {
         .append(articleCount < 1 ? "no" : articleCount).append(" article");
     if (articleCount != 1)
       str.append("s");
+    if (articleCount > 0) {
+      str.append(": ");
+      for (int i = 0; i < articleCount; i++) {
+        str.append(this.articles[i]);
+        if (i < (articleCount - 1))
+          str.append(", ");
+      }
+    }
     return str;
   }
 
