@@ -380,7 +380,7 @@ public class Main {
         addSuccess = true;
       } catch (NumberFormatException _) {
         System.err.printf(MSG_FAIL_INPUT_NOT_POSITIVE_NUM + "%n", MSG_SALARY);
-      } catch (Exception e) {
+      } catch (IllegalArgumentException e) {
         System.err.println(e.getMessage()); // and retry
       }
     } while (!addSuccess);
@@ -404,7 +404,7 @@ public class Main {
       } catch (NumberFormatException _) {
         System.err.printf(MSG_FAIL_INPUT_NOT_POSITIVE_INT + "%n",
             MSG_STUDENT_COUNT);
-      } catch (Exception e) {
+      } catch (IllegalArgumentException e) {
         System.err.println(e.getMessage()); // and retry
       }
     } while (!addSuccess);
@@ -426,8 +426,8 @@ public class Main {
         Committee newCommittee = new Committee(name, head);
         college.addCommittee(newCommittee);
         addSuccess = true;
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
+      } catch (InvalidCommitteeHeadException e) {
+        System.err.println(e.getMessage()); // and retry
       }
     } while (!addSuccess);
 
@@ -470,13 +470,9 @@ public class Main {
     Lecturer lecturer = promptForLecturer();
     Committee committee = promptForCommittee();
 
-    try {
-      committee.setHead(lecturer);
-      System.out.printf(MSG_SUCCESS_COMMITTEE_HEAD_SET, lecturer.getName(),
-          committee.getName());
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
+    committee.setHead(lecturer);
+    System.out.printf(MSG_SUCCESS_COMMITTEE_HEAD_SET, lecturer.getName(),
+        committee.getName());
   }
 
   private static void duplicateCommittee() throws CloneNotSupportedException {
