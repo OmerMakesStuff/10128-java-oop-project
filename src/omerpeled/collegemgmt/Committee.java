@@ -3,6 +3,7 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
+import omerpeled.collegemgmt.exceptions.AlreadyHeadException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
@@ -98,6 +99,9 @@ public class Committee implements Cloneable {
   public void setHead(Lecturer head) {
     if (!(head instanceof ValidCommitteeHead validHead))
       throw new InvalidCommitteeHeadException(head);
+
+    if (this.head == validHead)
+      throw new AlreadyHeadException(validHead, this);
 
     Lecturer prevHead = this.head;
     this.head = null;
