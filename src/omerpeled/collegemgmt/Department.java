@@ -1,8 +1,10 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_STUDENT_COUNT;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
@@ -10,8 +12,7 @@ import omerpeled.collegemgmt.exceptions.NotAddedException;
 public class Department {
   private String name;
   private int studentCount;
-  private Lecturer[] lecturers;
-  private int lecturerCount;
+  private ArrayList<Lecturer> lecturers;
 
   public Department(String name, int studentCount) {
     if (studentCount < 0)
@@ -21,8 +22,7 @@ public class Department {
 
     this.name = name;
     this.studentCount = studentCount;
-    this.lecturers = new Lecturer[1];
-    this.lecturerCount = 0;
+    this.lecturers = new ArrayList<Lecturer>();
   }
 
   public String getName() {
@@ -33,60 +33,47 @@ public class Department {
     return studentCount;
   }
 
-  public Lecturer[] getLecturers() {
+  public List<Lecturer> getLecturers() {
     return lecturers;
   }
 
+  // TODO: Remove as redundant
+  @Deprecated(forRemoval = true)
   public boolean hasLecturer(Lecturer lecturer) {
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i].getId().equals(lecturer.getId()))
-        return true;
-    }
-    return false;
+    return lecturers.contains(lecturer);
   }
 
   public void addLecturer(Lecturer lecturer) {
-    if (hasLecturer(lecturer))
+    if (lecturers.contains(lecturer))
       throw new AlreadyAddedException(lecturer.getName(), this.name);
 
-    if (lecturerCount == lecturers.length)
-      lecturers = doubleLecturersSize(lecturers);
-
-    lecturers[lecturerCount++] = lecturer;
+    lecturers.add(lecturer);
     if (lecturer.getDepartment() != this)
       lecturer.setDepartment(this);
   }
 
   public void removeLecturer(Lecturer lecturer) {
-    if (!hasLecturer(lecturer))
+    if (!lecturers.contains(lecturer))
       throw new NotAddedException(lecturer.getName(), this.name);
 
-    boolean removed = false;
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i].getId().equals(lecturer.getId()) && !removed)
-        removed = true;
-      if (removed)
-        lecturers[i] = i < (lecturerCount - 1) ? lecturers[i + 1] : null;
-    }
-
-    if (removed && lecturer.getDepartment() != null) {
-      lecturerCount--;
+    boolean removed = lecturers.remove(lecturer);
+    if (removed && lecturer.getDepartment() != null)
       lecturer.setDepartment(null);
-    }
   }
 
   @Override
   public String toString() {
     StringBuilder str = new StringBuilder(
         name + " (" + studentCount + " students)");
-    if (lecturerCount < 1)
+    if (lecturers.isEmpty())
       str.append("\n  No lecturers.");
     else {
-      for (int i = 0; i < lecturerCount; i++) {
-        str.append("\n  ").append(lecturers[i].getName()).append(" (")
-            .append(lecturers[i].getId()).append("), ")
-            .append(lecturers[i].getDegree().getDisplayName()).append(" in ")
-            .append(lecturers[i].getDegreeTitle());
+      for (int i = 0; i < lecturers.size(); i++) {
+        Lecturer currLecturer = lecturers.get(i);
+        str.append("\n  ").append(currLecturer.getName()).append(" (")
+            .append(currLecturer.getId()).append("), ")
+            .append(currLecturer.getDegree().getDisplayName()).append(" in ")
+            .append(currLecturer.getDegreeTitle());
       }
     }
     return str.toString();
@@ -94,18 +81,9 @@ public class Department {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Department dept) ||
-        !(this.name.equals(dept.name)) ||
-        this.studentCount != dept.studentCount ||
-        this.lecturerCount != dept.lecturerCount)
-      return false;
-
-    for (int i = 0; i < lecturerCount; i++) {
-      // By reference, using lecturer.equals() could cause infinite recursion
-      if (lecturers[i] != dept.lecturers[i])
-        return false;
-    }
-
-    return true;
+    return (obj instanceof Department dept &&
+        this.name.equals(dept.name) &&
+        this.studentCount == dept.studentCount &&
+        this.lecturers.equals(dept.lecturers));
   }
 }
