@@ -84,8 +84,11 @@ public class Lecturer {
     if (this.department == department)
       throw new AlreadyAddedException(this.name, department.getName());
 
-    if (this.department != null)
-      this.department.removeLecturer(this);
+    if (this.department != null) {
+      Department prevDepartment = this.department;
+      this.department = null;
+      prevDepartment.removeLecturer(this);
+    }
 
     this.department = department;
     if (department != null)
@@ -162,14 +165,20 @@ public class Lecturer {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Lecturer lect) ||
-        !(this.id.equals(lect.id)) ||
-        !(this.name.equals(lect.name)) ||
-        this.degree != lect.degree ||
-        !(this.degreeTitle.equals(lect.degreeTitle)) ||
-        this.salary != lect.salary ||
-        !(this.department.equals(lect.department)) ||
-        this.committeeCount != lect.committeeCount)
+    if (!(obj instanceof Lecturer lect))
+      return false;
+
+    boolean departmentsEqual = (this.department == lect.department)
+        || (this.department != null
+            && this.department.equals(lect.department));
+
+    if (!(this.id.equals(lect.id))
+        || !(this.name.equals(lect.name))
+        || this.degree != lect.degree
+        || !(this.degreeTitle.equals(lect.degreeTitle))
+        || this.salary != lect.salary
+        || !departmentsEqual
+        || this.committeeCount != lect.committeeCount)
       return false;
 
     for (int i = 0; i < committeeCount; i++) {
