@@ -3,10 +3,10 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.ArrayUtils.doubleCommitteesSize;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM;
-import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_REMOVE_COMMITTEE_HEAD;
 import static omerpeled.collegemgmt.utils.Messages.MSG_SALARY;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
+import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 
 public class Lecturer {
   public enum Degree {
@@ -116,9 +116,7 @@ public class Lecturer {
   public void removeCommittee(Committee committee) {
     if (!hasCommittee(committee))
       // To remove the head, a new head must be set first
-      throw new UnsupportedOperationException(
-          String.format(MSG_FAIL_REMOVE_COMMITTEE_HEAD, this.name,
-              committee.getName()));
+      throw new RemoveCommitteeHeadException(this, committee);
 
     boolean removed = false;
     for (int i = 0; i < committeeCount; i++) {
