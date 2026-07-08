@@ -95,7 +95,8 @@ public class College {
     double salarySum = 0;
     int deptLecturerCount = 0;
     for (int i = 0; i < lecturerCount; i++) {
-      if (department == null || department.hasLecturer(lecturers[i])) {
+      if (department == null
+          || department.getLecturers().contains(lecturers[i])) {
         salarySum = salarySum + lecturers[i].getSalary();
         deptLecturerCount++;
       }

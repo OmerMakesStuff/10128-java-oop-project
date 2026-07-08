@@ -37,12 +37,6 @@ public class Department {
     return lecturers;
   }
 
-  // TODO: Remove as redundant
-  @Deprecated(forRemoval = true)
-  public boolean hasLecturer(Lecturer lecturer) {
-    return lecturers.contains(lecturer);
-  }
-
   public void addLecturer(Lecturer lecturer) {
     if (lecturers.contains(lecturer))
       throw new AlreadyAddedException(lecturer.getName(), this.name);
@@ -84,6 +78,7 @@ public class Department {
     return (obj instanceof Department dept &&
         this.name.equals(dept.name) &&
         this.studentCount == dept.studentCount &&
+        // TODO: Check for infinite recursion here
         this.lecturers.equals(dept.lecturers));
   }
 }
