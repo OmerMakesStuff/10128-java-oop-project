@@ -626,7 +626,7 @@ public class Main {
           "%s - %s %s%n",
           sorted[i].getName(),
           sortType == CommitteeSortType.MEMBER_COUNT
-              ? sorted[i].getMemberCount()
+              ? sorted[i].getMembers().size()
               : sorted[i].getTotalArticleCount(),
           rowSuffix);
     }

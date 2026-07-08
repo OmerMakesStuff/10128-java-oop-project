@@ -1,6 +1,7 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.ArrayUtils.doubleLecturersSize;
+import java.util.ArrayList;
+import java.util.List;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.AlreadyHeadException;
@@ -11,17 +12,14 @@ import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 public class Committee implements Cloneable {
   private String name;
   private ValidCommitteeHead head;
-  private Lecturer[] members;
-  private int memberCount;
+  private ArrayList<Lecturer> members;
 
   public Committee(String name, Lecturer head) {
-    this.name = name;
-    this.members = new Lecturer[1];
-    this.memberCount = 0;
-
     if (!(head instanceof ValidCommitteeHead validHead))
       throw new InvalidCommitteeHeadException(head);
 
+    this.name = name;
+    this.members = new ArrayList<Lecturer>();
     this.head = validHead;
     head.addCommittee(this);
   }
@@ -34,18 +32,14 @@ public class Committee implements Cloneable {
     return head;
   }
 
-  public Lecturer[] getMembers() {
+  public List<Lecturer> getMembers() {
     return members;
-  }
-
-  public int getMemberCount() {
-    return memberCount;
   }
 
   public int getTotalArticleCount() {
     int result = head.getArticleCount();
-    for (int i = 0; i < memberCount; i++) {
-      if (this.members[i] instanceof ValidCommitteeHead member)
+    for (int i = 0; i < this.members.size(); i++) {
+      if (this.members.get(i) instanceof ValidCommitteeHead member)
         result += member.getArticleCount();
     }
 
@@ -56,44 +50,29 @@ public class Committee implements Cloneable {
     this.name = name;
   }
 
+  @Deprecated(forRemoval = true)
   public boolean hasMember(Lecturer lecturer) {
-    for (int i = 0; i < memberCount; i++) {
-      if (members[i].getId().equals(lecturer.getId()))
-        return true;
-    }
-    return false;
+    return members.contains(lecturer);
   }
 
   public void addMember(Lecturer lecturer) {
-    if (hasMember(lecturer) || this.head == lecturer)
+    if (members.contains(lecturer) || this.head == lecturer)
       throw new AlreadyAddedException(lecturer.getName(), this.name);
 
-    if (memberCount == members.length)
-      members = doubleLecturersSize(members);
-
-    members[memberCount++] = lecturer;
+    members.add(lecturer);
     lecturer.addCommittee(this);
   }
 
   public void removeMember(Lecturer lecturer) {
-    if (!hasMember(lecturer) && this.head != lecturer)
+    if (!(members.contains(lecturer)) && this.head != lecturer)
       throw new NotAddedException(lecturer.getName(), this.name);
     else if (this.head == lecturer)
       // To remove the head, a new head must be set first
       throw new RemoveCommitteeHeadException(lecturer, this);
 
-    boolean removed = false;
-    for (int i = 0; i < memberCount; i++) {
-      if (members[i].getId().equals(lecturer.getId()) && !removed)
-        removed = true;
-      if (removed)
-        members[i] = i < (memberCount - 1) ? members[i + 1] : null;
-    }
-
-    if (removed) {
-      memberCount--;
+    boolean removed = members.remove(lecturer);
+    if (removed)
       lecturer.removeCommittee(this);
-    }
   }
 
   public void setHead(Lecturer head) {
@@ -107,8 +86,9 @@ public class Committee implements Cloneable {
     this.head = null;
     prevHead.removeCommittee(this);
 
-    if (hasMember(head))
+    if (members.contains(head))
       removeMember(head);
+
     this.head = validHead;
     head.addCommittee(this);
 
@@ -120,13 +100,10 @@ public class Committee implements Cloneable {
   public Committee clone() throws CloneNotSupportedException {
     Committee cloned = (Committee) super.clone();
     this.head.addCommittee(cloned);
-
-    cloned.memberCount = 0; // Re-add all members
-    cloned.members = new Lecturer[this.members.length];
-    for (int i = 0; i < this.memberCount; i++) {
-      cloned.addMember(this.members[i]);
+    cloned.members = new ArrayList<Lecturer>(this.members);
+    for (Lecturer member : members) {
+      member.addCommittee(cloned);
     }
-
     return cloned;
   }
 
@@ -140,13 +117,13 @@ public class Committee implements Cloneable {
       str.append("Head: ").append(this.head.getName());
     str.append("\n  ");
 
-    if (memberCount < 1)
+    if (this.members.isEmpty())
       str.append("No members.");
     else {
       str.append("Members: ");
-      for (int i = 0; i < memberCount; i++) {
-        str.append(members[i].getName());
-        if (i < (memberCount - 1))
+      for (int i = 0; i < this.members.size(); i++) {
+        str.append(this.members.get(i).getName());
+        if (i < (this.members.size() - 1))
           str.append(", ");
       }
     }
@@ -155,18 +132,9 @@ public class Committee implements Cloneable {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Committee comm) ||
-        !(this.name.equals(comm.name)) ||
-        !(this.head.equals(comm.head)) ||
-        this.memberCount != comm.memberCount)
-      return false;
-
-    for (int i = 0; i < memberCount; i++) {
-      // By reference, using lecturer.equals() could cause infinite recursion
-      if (members[i] != comm.members[i])
-        return false;
-    }
-
-    return true;
+    return (obj instanceof Committee comm
+        && this.name.equals(comm.name)
+        && this.head.equals(comm.head)
+        && this.members.equals(comm.members));
   }
 }
