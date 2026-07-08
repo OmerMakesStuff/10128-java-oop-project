@@ -73,11 +73,12 @@ public abstract class ValidCommitteeHead extends Lecturer {
 
   @Override
   public boolean equals(Object obj) {
+    int articleCount = this.getArticleCount();
     if (!(this instanceof ValidCommitteeHead lect) ||
-        this.getArticleCount() != lect.getArticleCount())
+        articleCount != lect.getArticleCount())
       return false;
 
-    for (int i = 0; i < articles.length; i++) {
+    for (int i = 0; i < articleCount; i++) {
       if (!(this.articles[i].equals(lect.articles[i])))
         return false;
     }
