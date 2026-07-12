@@ -1,9 +1,10 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.ArrayUtils.doubleCommitteesSize;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM;
 import static omerpeled.collegemgmt.utils.Messages.MSG_SALARY;
+
+import java.util.ArrayList;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
@@ -32,8 +33,7 @@ public class Lecturer {
   private String degreeTitle;
   private double salary;
   private Department department;
-  private Committee[] committees;
-  private int committeeCount;
+  private ArrayList<Committee> committees;
 
   public Lecturer(
       String id,
@@ -52,8 +52,7 @@ public class Lecturer {
     this.degreeTitle = degreeTitle;
     this.salary = salary;
 
-    this.committees = new Committee[1];
-    this.committeeCount = 0;
+    this.committees = new ArrayList<Committee>();
   }
 
   public String getId() {
@@ -95,39 +94,30 @@ public class Lecturer {
       department.addLecturer(this);
   }
 
-  public boolean hasCommittee(Committee committee) {
-    for (int i = 0; i < committeeCount; i++) {
-      if (committees[i] == committee)
+  /// Unlike `committees.contains` which uses `equals`, this checks if
+  /// `committees` includes a committee **by reference.** Good for checking
+  /// inclusion of identical, but not equal committees.
+  public boolean hasCommitteeRef(Committee committee) {
+    for (int i = 0; i < this.committees.size(); i++) {
+      if (committees.get(i) == committee)
         return true;
     }
     return false;
   }
 
   public void addCommittee(Committee committee) {
-    if (hasCommittee(committee))
+    if (hasCommitteeRef(committee))
       throw new AlreadyAddedException(this.name, committee.getName());
 
-    if (committeeCount == committees.length)
-      committees = doubleCommitteesSize(committees);
-
-    committees[committeeCount++] = committee;
+    this.committees.add(committee);
   }
 
   public void removeCommittee(Committee committee) {
-    if (!hasCommittee(committee))
+    if (!hasCommitteeRef(committee))
       // To remove the head, a new head must be set first
       throw new RemoveCommitteeHeadException(this, committee);
 
-    boolean removed = false;
-    for (int i = 0; i < committeeCount; i++) {
-      if (committees[i] == committee && !removed)
-        removed = true;
-      if (removed)
-        committees[i] = i < (committeeCount - 1) ? committees[i + 1] : null;
-    }
-
-    if (removed)
-      committeeCount--;
+    this.committees.remove(committee);
   }
 
   protected StringBuilder toStringBuilder() {
@@ -142,13 +132,13 @@ public class Lecturer {
             MSG_SALARY,
             salary));
 
-    if (committeeCount < 1)
+    if (this.committees.isEmpty())
       str.append("No committees");
     else {
       str.append("Committees: ");
-      for (int i = 0; i < committeeCount; i++) {
-        str.append(committees[i].getName());
-        if (i < (committeeCount - 1))
+      for (int i = 0; i < this.committees.size(); i++) {
+        str.append(this.committees.get(i).getName());
+        if (i < (this.committees.size() - 1))
           str.append(", ");
       }
     }
@@ -175,13 +165,12 @@ public class Lecturer {
         || this.degree != lect.degree
         || !(this.degreeTitle.equals(lect.degreeTitle))
         || this.salary != lect.salary
-        || !departmentsEqual
-        || this.committeeCount != lect.committeeCount)
+        || !departmentsEqual)
       return false;
 
-    for (int i = 0; i < committeeCount; i++) {
+    for (int i = 0; i < this.committees.size(); i++) {
       // By reference, using committee.equals() could cause infinite recursion
-      if (committees[i] != lect.committees[i])
+      if (this.committees.get(i) != lect.committees.get(i))
         return false;
     }
 
