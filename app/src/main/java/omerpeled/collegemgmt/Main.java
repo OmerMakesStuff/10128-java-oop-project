@@ -481,21 +481,7 @@ public class Main {
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
 
     Committee committee = promptForCommittee();
-    // Already adds members, committee will be added anyway
-    Committee dupCommittee = committee.clone();
-    dupCommittee.setName(committee.getName() + "-new");
-
-    int newCount = 1;
-    boolean addSuccess = false;
-    do {
-      try {
-        college.addCommittee(dupCommittee);
-        addSuccess = true;
-      } catch (ItemExistsException _) {
-        // Rename to "-new2", "-new3", etc, and retry adding with new name
-        dupCommittee.setName(committee.getName() + "-new" + (++newCount));
-      }
-    } while (!addSuccess);
+    Committee dupCommittee = college.duplicateCommittee(committee);
 
     System.out.printf(MSG_SUCCESS_DUPLICATED, MSG_COMMITTEE,
         dupCommittee.getName());

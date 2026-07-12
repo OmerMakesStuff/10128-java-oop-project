@@ -3,6 +3,7 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.ArrayUtils.*;
 import static omerpeled.collegemgmt.utils.Messages.MSG_COMMITTEE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
+import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_NOT_EXISTS;
 import static omerpeled.collegemgmt.utils.Messages.MSG_LECTURER_WITH_ID;
 
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
@@ -133,6 +134,32 @@ public class College {
       committees = doubleCommitteesSize(committees);
 
     committees[committeeCount++] = newCommittee;
+  }
+
+  public Committee duplicateCommittee(Committee committee)
+      throws CloneNotSupportedException {
+    boolean exists = getCommitteeByName(committee.getName()) != null;
+    if (!exists)
+      throw new IllegalArgumentException(String.format(MSG_FAIL_NOT_EXISTS,
+          MSG_COMMITTEE + ' ' + committee.getName()));
+
+    // Already adds members, committee will be added anyway
+    Committee dupCommittee = committee.clone();
+    dupCommittee.setName(committee.getName() + "-new");
+
+    int newCount = 1;
+    boolean addSuccess = false;
+    do {
+      try {
+        this.addCommittee(dupCommittee);
+        addSuccess = true;
+      } catch (ItemExistsException _) {
+        // Rename to "-new2", "-new3", etc, and retry adding with new name
+        dupCommittee.setName(committee.getName() + "-new" + (++newCount));
+      }
+    } while (!addSuccess);
+
+    return dupCommittee;
   }
   // endregion
 
