@@ -15,10 +15,10 @@ Doc
 3
 many things
 5000
-The Truth Uncovered: Prof's FAKE Professor Title
-Important Scientific Article #1
-Important Scientific Article #2
-Research or whatever
+Doc article 1
+Doc article 2
+Doc article 3
+Doc article 4
 
 # 3. Prof - Prof
 1
@@ -27,16 +27,16 @@ Prof
 4
 everything
 100000
-Shit article one
-Shit article two
-Shit article three
-Shit article four
-Shit article five
-THIS ARTICLE IS NOT SHIT! YOU ARE SHIT!
-Explaining why my prof. title is NOT fake
-FUCK YOU DOC! YOU'RE THE FAKE ONE!
-DOC MUST BE FIRED
-Shit article six
+Prof article 1
+Prof article 2
+Prof article 3
+Prof article 4
+Prof article 5
+Prof article 6
+Prof article 7
+Prof article 8
+Prof article 9
+Prof article 10
 
 FAKE PROF FOR FREE!!!1!1
 # 4. Other Doc - PhD
@@ -46,8 +46,8 @@ Other Doc
 3
 many other things
 5000
-I agree with Doc - Prof's title IS fake
-Short article name
+Doc article 5
+Doc article 6
 
 # 5. Better Not prof - MsC
 1
