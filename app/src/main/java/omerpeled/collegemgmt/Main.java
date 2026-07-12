@@ -7,8 +7,11 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.ArrayUtils.doubleStringsSize;
 import static omerpeled.collegemgmt.utils.Messages.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.*;
@@ -437,7 +440,7 @@ public class Main {
 
   // region Committees
   private static void addCommitteeMember() {
-    if (college.getCommitteeCount() < 1)
+    if (college.getCommittees().isEmpty())
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
 
@@ -450,7 +453,7 @@ public class Main {
   }
 
   private static void removeCommitteeMember() {
-    if (college.getCommitteeCount() < 1)
+    if (college.getCommittees().isEmpty())
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
 
@@ -463,7 +466,7 @@ public class Main {
   }
 
   private static void setCommitteeHead() {
-    if (college.getCommitteeCount() < 1)
+    if (college.getCommittees().isEmpty())
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
 
@@ -476,7 +479,7 @@ public class Main {
   }
 
   private static void duplicateCommittee() throws CloneNotSupportedException {
-    if (college.getCommitteeCount() < 1)
+    if (college.getCommittees().isEmpty())
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_COMMITTEE.toLowerCase()));
 
@@ -544,14 +547,13 @@ public class Main {
   private static void showCommittees() {
     System.out.println("ALL COMMITTEES");
 
-    Committee[] committees = college.getCommittees();
-    if (committees[0] == null)
+    List<Committee> committees = college.getCommittees();
+    if (committees.isEmpty())
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
           MSG_COMMITTEE.toLowerCase());
     else {
-      for (int i = 0; i < college.getCommitteeCount(); i++) {
-        if (committees[i] != null)
-          System.out.println(committees[i]);
+      for (int i = 0; i < committees.size(); i++) {
+        System.out.println(committees.get(i));
       }
     }
   }
@@ -575,17 +577,13 @@ public class Main {
   }
 
   private static void compareCommittees() {
-    Committee[] committees = college.getCommittees();
-    int committeeCount = college.getCommitteeCount();
-    if (committeeCount < 1)
+    List<Committee> committees = college.getCommittees();
+    if (committees.isEmpty())
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
           MSG_COMMITTEE.toLowerCase());
 
-    // Clone array, so original is not modified
-    Committee[] sorted = new Committee[committeeCount];
-    for (int i = 0; i < committeeCount; i++) {
-      sorted[i] = committees[i];
-    }
+    // Clone list, so original is not modified
+    ArrayList<Committee> sorted = new ArrayList<>(committees);
 
     CommitteeSortType sortType = promptForCommitteeSortType();
     System.out.println();
@@ -604,15 +602,16 @@ public class Main {
         break;
     }
 
-    Arrays.sort(sorted, comparator);
+    Collections.sort(sorted, comparator);
     // Print in descending order
-    for (int i = sorted.length - 1; i >= 0; i--) {
+    for (int i = sorted.size() - 1; i >= 0; i--) {
+      Committee curr = sorted.get(i);
       System.out.printf(
           "%s - %s %s%n",
-          sorted[i].getName(),
+          curr.getName(),
           sortType == CommitteeSortType.MEMBER_COUNT
-              ? sorted[i].getMembers().size()
-              : sorted[i].getTotalArticleCount(),
+              ? curr.getMembers().size()
+              : curr.getTotalArticleCount(),
           rowSuffix);
     }
   }

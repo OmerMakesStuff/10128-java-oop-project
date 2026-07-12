@@ -16,8 +16,7 @@ public class College {
 
   private Lecturer[] lecturers;
   private int lecturerCount;
-  private Committee[] committees;
-  private int committeeCount;
+  private ArrayList<Committee> committees;
   private ArrayList<Department> departments;
 
   public College(String name) {
@@ -25,8 +24,7 @@ public class College {
 
     this.lecturers = new Lecturer[1];
     this.lecturerCount = 0;
-    this.committees = new Committee[1];
-    this.committeeCount = 0;
+    this.committees = new ArrayList<Committee>();
     this.departments = new ArrayList<Department>();
   }
 
@@ -109,18 +107,15 @@ public class College {
   // endregion
 
   // region Committees
-  public Committee[] getCommittees() {
+  public List<Committee> getCommittees() {
     return committees;
   }
 
-  public int getCommitteeCount() {
-    return committeeCount;
-  }
-
   public Committee getCommitteeByName(String name) {
-    for (int i = 0; i < committeeCount; i++) {
-      if (committees[i] != null && committees[i].getName().equals(name))
-        return committees[i];
+    for (int i = 0; i < committees.size(); i++) {
+      Committee curr = committees.get(i);
+      if (curr.getName().equals(name))
+        return curr;
     }
     return null;
   }
@@ -131,10 +126,7 @@ public class College {
       throw new ItemExistsException(
           MSG_COMMITTEE + ' ' + newCommittee.getName());
 
-    if (committeeCount == committees.length)
-      committees = doubleCommitteesSize(committees);
-
-    committees[committeeCount++] = newCommittee;
+    committees.add(newCommittee);
   }
 
   public Committee duplicateCommittee(Committee committee)
