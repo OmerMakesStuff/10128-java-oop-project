@@ -339,7 +339,7 @@ public class Main {
   }
 
   private static String[] promptForArticles() {
-    String[] result = new String[1];
+    ArrayList<String> result = new ArrayList<String>();
     int count = 0;
 
     String lastItem;
@@ -349,13 +349,12 @@ public class Main {
       lastItem = s.nextLine();
 
       if (!(lastItem.isBlank())) {
-        result[count++] = lastItem;
-        if (count == result.length)
-          result = doubleStringsSize(result);
+        result.add(lastItem);
       }
     } while (!(lastItem.isBlank()));
 
-    return result;
+    // TODO: Just return ArrayList when articles are an ArrayList
+    return result.toArray(new String[0]);
   }
   // endregion
 
