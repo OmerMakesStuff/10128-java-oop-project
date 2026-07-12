@@ -176,17 +176,32 @@ public class Main {
   private static final String DEGREE_MENU = buildDegreeMenuString();
 
   private enum CommitteeSortType {
-    MEMBER_COUNT("By number of members (not including head)"),
-    ARTICLE_COUNT("By total number of articles published (incl. by head)");
+    MEMBER_COUNT("By number of members (not including head)",
+        new CommitteeMemberCountComparator(), "member(s)"),
+    ARTICLE_COUNT("By total number of articles published (incl. by head)",
+        new CommitteeArticleCountComparator(), MSG_ARTICLE_COUNT_SHORT);
 
     private String displayText;
+    private Comparator<Committee> comparator;
+    private String rowSuffix;
 
-    CommitteeSortType(String displayText) {
+    CommitteeSortType(String displayText, Comparator<Committee> comparator,
+        String rowSuffix) {
       this.displayText = displayText;
+      this.comparator = comparator;
+      this.rowSuffix = rowSuffix;
     }
 
     public String getDisplayText() {
       return displayText;
+    }
+
+    public Comparator<Committee> getComparator() {
+      return comparator;
+    }
+
+    public String getRowSuffix() {
+      return rowSuffix;
     }
   }
 
@@ -588,21 +603,7 @@ public class Main {
     CommitteeSortType sortType = promptForCommitteeSortType();
     System.out.println();
 
-    Comparator<Committee> comparator = null;
-    String rowSuffix = null;
-
-    switch (sortType) {
-      case MEMBER_COUNT:
-        comparator = new CommitteeMemberCountComparator();
-        rowSuffix = "member(s)";
-        break;
-      case ARTICLE_COUNT:
-        comparator = new CommitteeArticleCountComparator();
-        rowSuffix = MSG_ARTICLE_COUNT_SHORT;
-        break;
-    }
-
-    Collections.sort(sorted, comparator);
+    Collections.sort(sorted, sortType.getComparator());
     // Print in descending order
     for (int i = sorted.size() - 1; i >= 0; i--) {
       Committee curr = sorted.get(i);
@@ -612,7 +613,7 @@ public class Main {
           sortType == CommitteeSortType.MEMBER_COUNT
               ? curr.getMembers().size()
               : curr.getTotalArticleCount(),
-          rowSuffix);
+          sortType.getRowSuffix());
     }
   }
   // endregion
