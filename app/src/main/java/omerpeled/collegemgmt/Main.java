@@ -491,7 +491,7 @@ public class Main {
   // region Departments
   private static void addDeptLecturer() {
     boolean lecturersExist = college.getLecturerCount() > 0;
-    boolean departmentsExist = college.getDepartmentCount() > 0;
+    boolean departmentsExist = college.getDepartments().isEmpty();
     if (!lecturersExist || !departmentsExist) {
       String msgReason = !lecturersExist ? MSG_LECTURER : MSG_DEPARTMENT;
       throw new OptionUnavailableException(
@@ -499,7 +499,6 @@ public class Main {
     }
 
     Lecturer lecturer = promptForLecturer();
-
     Department department = promptForDepartment();
 
     lecturer.setDepartment(department);
@@ -515,7 +514,7 @@ public class Main {
   }
 
   private static void showDeptSalaryAvg() {
-    boolean departmentsExist = college.getDepartmentCount() > 0;
+    boolean departmentsExist = college.getDepartments().isEmpty();
     if (!departmentsExist)
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_DEPARTMENT.toLowerCase()));

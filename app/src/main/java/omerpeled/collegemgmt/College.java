@@ -5,6 +5,9 @@ import static omerpeled.collegemgmt.utils.Messages.MSG_COMMITTEE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_LECTURER_WITH_ID;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 import omerpeled.collegemgmt.exceptions.ItemNotExistsException;
 
@@ -15,8 +18,7 @@ public class College {
   private int lecturerCount;
   private Committee[] committees;
   private int committeeCount;
-  private Department[] departments;
-  private int departmentCount;
+  private ArrayList<Department> departments;
 
   public College(String name) {
     this.name = name;
@@ -25,8 +27,7 @@ public class College {
     this.lecturerCount = 0;
     this.committees = new Committee[1];
     this.committeeCount = 0;
-    this.departments = new Department[1];
-    this.departmentCount = 0;
+    this.departments = new ArrayList<Department>();
   }
 
   public String getName() {
@@ -164,18 +165,15 @@ public class College {
   // endregion
 
   // region Departments
-  public Department[] getDepartments() {
+  public List<Department> getDepartments() {
     return departments;
   }
 
-  public int getDepartmentCount() {
-    return departmentCount;
-  }
-
   public Department getDepartmentByName(String name) {
-    for (int i = 0; i < departmentCount; i++) {
-      if (departments[i] != null && departments[i].getName().equals(name))
-        return departments[i];
+    for (int i = 0; i < departments.size(); i++) {
+      Department curr = departments.get(i);
+      if (curr.getName().equals(name))
+        return curr;
     }
     return null;
   }
@@ -186,10 +184,7 @@ public class College {
       throw new ItemExistsException(
           MSG_DEPARTMENT + ' ' + newDepartment.getName());
 
-    if (departmentCount == departments.length)
-      departments = doubleDepartmentsSize(departments);
-
-    departments[departmentCount++] = newDepartment;
+    departments.add(newDepartment);
   }
   // endregion
 }
