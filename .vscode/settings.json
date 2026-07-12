@@ -4,6 +4,8 @@
     "editor.detectIndentation": false
   },
   "cSpell.words": ["Afeka", "collegemgmt", "omerpeled", "Peled"],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "interactive",
   "java.format.settings.url": ".vscode/java-formatter.xml",
   "java.project.outputPath": "bin",
   "java.project.referencedLibraries": ["lib/**/*.jar"],
