@@ -1,6 +1,5 @@
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.ArrayUtils.*;
 import static omerpeled.collegemgmt.utils.Messages.MSG_COMMITTEE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_LECTURER_WITH_ID;
@@ -14,16 +13,14 @@ import omerpeled.collegemgmt.exceptions.ItemNotExistsException;
 public class College {
   private final String name;
 
-  private Lecturer[] lecturers;
-  private int lecturerCount;
+  private ArrayList<Lecturer> lecturers;
   private ArrayList<Committee> committees;
   private ArrayList<Department> departments;
 
   public College(String name) {
     this.name = name;
 
-    this.lecturers = new Lecturer[1];
-    this.lecturerCount = 0;
+    this.lecturers = new ArrayList<Lecturer>();
     this.committees = new ArrayList<Committee>();
     this.departments = new ArrayList<Department>();
   }
@@ -33,35 +30,24 @@ public class College {
   }
 
   // region Lecturers
-  public Lecturer[] getLecturers() {
+  public List<Lecturer> getLecturers() {
     return lecturers;
   }
 
-  public int getLecturerCount() {
-    return lecturerCount;
-  }
-
   public Lecturer getLecturerById(String id) {
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i] != null && lecturers[i].getId().equals(id))
-        return lecturers[i];
+    for (int i = 0; i < lecturers.size(); i++) {
+      Lecturer curr = lecturers.get(i);
+      if (curr != null && curr.getId().equals(id))
+        return curr;
     }
     return null;
   }
 
-  public ValidCommitteeHead[] getValidCommitteeHeads() {
-    int count = 0;
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i] instanceof ValidCommitteeHead)
-        count++;
-    }
-
-    // Avoid returning an array too long with null items
-    int nextIdx = 0;
-    ValidCommitteeHead[] result = new ValidCommitteeHead[count];
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i] instanceof ValidCommitteeHead validCommitteeHead)
-        result[nextIdx++] = validCommitteeHead;
+  public List<ValidCommitteeHead> getValidCommitteeHeads() {
+    ArrayList<ValidCommitteeHead> result = new ArrayList<ValidCommitteeHead>();
+    for (int i = 0; i < lecturers.size(); i++) {
+      if (lecturers.get(i) instanceof ValidCommitteeHead validHead)
+        result.add(validHead);
     }
 
     return result;
@@ -73,15 +59,12 @@ public class College {
       throw new ItemExistsException(
           String.format(MSG_LECTURER_WITH_ID, newLecturer.getId()));
 
-    if (lecturerCount == lecturers.length)
-      lecturers = doubleLecturersSize(lecturers);
-
-    lecturers[lecturerCount++] = newLecturer;
+    lecturers.add(newLecturer);
   }
 
   public boolean validCommitteeHeadExists() {
-    for (int i = 0; i < lecturerCount; i++) {
-      if (lecturers[i] instanceof ValidCommitteeHead)
+    for (int i = 0; i < lecturers.size(); i++) {
+      if (lecturers.get(i) instanceof ValidCommitteeHead)
         return true;
     }
     return false;
@@ -94,10 +77,11 @@ public class College {
   public double getLecturerSalaryAvg(Department department) {
     double salarySum = 0;
     int deptLecturerCount = 0;
-    for (int i = 0; i < lecturerCount; i++) {
+    for (int i = 0; i < lecturers.size(); i++) {
+      Lecturer curr = lecturers.get(i);
       if (department == null
-          || department.getLecturers().contains(lecturers[i])) {
-        salarySum = salarySum + lecturers[i].getSalary();
+          || department.getLecturers().contains(curr)) {
+        salarySum = salarySum + curr.getSalary();
         deptLecturerCount++;
       }
     }

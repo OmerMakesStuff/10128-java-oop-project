@@ -508,10 +508,10 @@ public class Main {
 
   // region Departments
   private static void addDeptLecturer() {
-    boolean lecturersExist = college.getLecturerCount() > 0;
-    boolean departmentsExist = college.getDepartments().isEmpty();
-    if (!lecturersExist || !departmentsExist) {
-      String msgReason = !lecturersExist ? MSG_LECTURER : MSG_DEPARTMENT;
+    boolean lecturersEmpty = college.getLecturers().isEmpty();
+    boolean departmentsEmpty = college.getDepartments().isEmpty();
+    if (lecturersEmpty || departmentsEmpty) {
+      String msgReason = lecturersEmpty ? MSG_LECTURER : MSG_DEPARTMENT;
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, msgReason.toLowerCase()));
     }
@@ -545,16 +545,16 @@ public class Main {
   }
 
   // FIXME: CODE DUPLICATION due to different array types :(
+  // TODO: Unify show methods with generics
   private static void showLecturers() {
     System.out.println("ALL LECTURERS");
 
-    Lecturer[] lecturers = college.getLecturers();
-    if (lecturers[0] == null)
+    List<Lecturer> lecturers = college.getLecturers();
+    if (lecturers.isEmpty())
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n", MSG_LECTURER.toLowerCase());
     else {
-      for (int i = 0; i < college.getLecturerCount(); i++) {
-        if (lecturers[i] != null)
-          System.out.println(lecturers[i]);
+      for (int i = 0; i < college.getLecturers().size(); i++) {
+        System.out.println(lecturers.get(i));
       }
     }
   }
@@ -576,16 +576,17 @@ public class Main {
   private static void compareLecturers() {
     System.out.println("LECTURERS BY ARTICLES PUBLISHED");
 
-    ValidCommitteeHead[] filtered = college.getValidCommitteeHeads();
-    Arrays.sort(filtered, new LecturerArticleCountComparator());
-    if (filtered.length < 1)
+    List<ValidCommitteeHead> filtered = college.getValidCommitteeHeads();
+    if (filtered.isEmpty())
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
           String.format(MSG_VALID, MSG_LECTURER.toLowerCase()));
     else {
+      Collections.sort(filtered, new LecturerArticleCountComparator());
       // Print in descending order
-      for (int i = filtered.length - 1; i >= 0; i--) {
+      for (int i = filtered.size() - 1; i >= 0; i--) {
+        ValidCommitteeHead curr = filtered.get(i);
         System.out.printf("%s - %s %s%n",
-            filtered[i].getName(), filtered[i].getArticleCount(),
+            curr.getName(), curr.getArticleCount(),
             MSG_ARTICLE_COUNT_SHORT);
       }
     }
@@ -602,7 +603,6 @@ public class Main {
 
     CommitteeSortType sortType = promptForCommitteeSortType();
     System.out.println();
-
     Collections.sort(sorted, sortType.getComparator());
     // Print in descending order
     for (int i = sorted.size() - 1; i >= 0; i--) {
