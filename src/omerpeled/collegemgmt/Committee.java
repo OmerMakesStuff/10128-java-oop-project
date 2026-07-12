@@ -132,9 +132,15 @@ public class Committee implements Cloneable {
 
   @Override
   public boolean equals(Object obj) {
-    return (obj instanceof Committee comm
-        && this.name.equals(comm.name)
-        && this.head.equals(comm.head)
+    if (!(obj instanceof Committee comm))
+      return false;
+
+    boolean headsEqual = (this.head == comm.head)
+        || (this.head != null
+            && this.head.equals(comm.head));
+
+    return (this.name.equals(comm.name)
+        && headsEqual
         && this.members.equals(comm.members));
   }
 }
