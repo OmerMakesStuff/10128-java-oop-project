@@ -12,7 +12,8 @@ d1
 123
 d2
 # ------------ COMMITTEES -------------
-# New committee for PhD, Not prof as head (should fail)
+# New committee for PhD, Not prof as head (should fail - invalid committee
+# head)
 2
 c1
 123
@@ -21,7 +22,7 @@ c1
 c1
 456
 2
-# Add Not prof to c1 (should fail)
+# Add Not prof to c1 (should fail - invalid member degree)
 3
 123
 c1
@@ -64,7 +65,8 @@ c2-new2
 4
 ABC
 c2-new2
-# Remove Doc from c2-new2
+# Remove Doc from c2-new2 (should fail - invalid member degree, so already
+# removed)
 5
 456
 c2-new2
