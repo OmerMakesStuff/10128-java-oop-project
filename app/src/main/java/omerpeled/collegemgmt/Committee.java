@@ -3,6 +3,7 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.Messages.MSG_MEMBER_DEGREE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_PROMPT_ENUM;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import omerpeled.collegemgmt.exceptions.NotAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 import omerpeled.collegemgmt.utils.MenuOption;
 
-public class Committee implements Cloneable {
+public class Committee implements Cloneable, Serializable {
   public enum MemberDegree implements MenuOption {
     BSC_OR_MSC(String.format(
         "%s or %s",
