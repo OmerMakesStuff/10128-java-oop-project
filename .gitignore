@@ -13,3 +13,6 @@ out/
 
 # Kotlin plugin data
 .kotlin
+
+# Binary files
+*.dat
