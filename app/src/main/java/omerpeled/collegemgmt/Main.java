@@ -550,7 +550,7 @@ public class Main {
       throw new IllegalArgumentException(
           "Items argument must be one of: college.getLecturers(), college.getCommittees()");
 
-    System.out.printf("ALL %s%n", typeMsg.toUpperCase());
+    System.out.printf("ALL %sS%n", typeMsg.toUpperCase());
     if (items.isEmpty())
       System.err.printf(MSG_FAIL_NONE_EXIST + "%n", typeMsg.toLowerCase());
     else {
