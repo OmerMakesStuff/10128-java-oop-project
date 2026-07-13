@@ -6,6 +6,12 @@ package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.Messages.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,14 +23,20 @@ import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Main {
   static Scanner s;
-  static College college;
+  static College college = null;
+
+  private static final String DEFAULT_FILENAME = "college.dat";
 
   public static void main(String[] args) {
     s = new Scanner(System.in);
 
-    System.out.print("Welcome!\nEnter college name: ");
-    String collegeName = s.nextLine();
-    college = new College(collegeName);
+    // TODO: Skip if --no-load arg was passed
+    loadFile();
+    if (college == null) {
+      System.out.print("Welcome!\nEnter college name: ");
+      String collegeName = s.nextLine();
+      college = new College(collegeName);
+    }
 
     MainMenuOption choice;
     do {
@@ -35,6 +47,8 @@ public class Main {
       try {
         switch (choice) {
           case EXIT:
+            // TODO: Skip if --no-save arg was passed
+            saveFile();
             break;
 
           case ADD_LECTURER:
@@ -562,6 +576,33 @@ public class Main {
               ? curr.getMembers().size()
               : curr.getTotalArticleCount(),
           sortType.getRowSuffix());
+    }
+  }
+  // endregion
+
+  // region Files
+  private static void loadFile() {
+    try (ObjectInputStream inFile = new ObjectInputStream(
+        new FileInputStream(DEFAULT_FILENAME))) {
+      Object loadedData = inFile.readObject();
+      if (loadedData instanceof College loadedCollege)
+        college = loadedCollege;
+    } catch (FileNotFoundException _) {
+      // TODO: If no filename arg, just fail silently
+      System.err.println(String.format("File %s not found.", DEFAULT_FILENAME));
+    } catch (IOException | ClassNotFoundException e) {
+      System.err.println(String.format(
+          "Could not load file %s: %s", DEFAULT_FILENAME, e.getMessage()));
+    }
+  }
+
+  private static void saveFile() throws IOException {
+    try (ObjectOutputStream outFile = new ObjectOutputStream(
+        new FileOutputStream(DEFAULT_FILENAME))) {
+      outFile.writeObject(college);
+    } catch (FileNotFoundException e) {
+      System.err
+          .println("Could not save to file: " + e);
     }
   }
   // endregion
