@@ -305,9 +305,8 @@ public class Main {
           + MSG_PROMPT_EMPTY_TO_FINISH);
       lastItem = s.nextLine();
 
-      if (!(lastItem.isBlank())) {
+      if (!(lastItem.isBlank()))
         result.add(lastItem);
-      }
     } while (!(lastItem.isBlank()));
 
     return result;
