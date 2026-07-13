@@ -15,15 +15,20 @@ import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Committee implements Cloneable {
   public enum MemberDegree implements MenuOption {
-    BSC_OR_MSC(String.format("%s or %s", Lecturer.Degree.BSC.getDisplayText(),
-        Lecturer.Degree.MSC.getDisplayText())),
-    PHD(Lecturer.Degree.PHD.getDisplayText()),
-    PROF(Lecturer.Degree.PROF.getDisplayText());
+    BSC_OR_MSC(String.format(
+        "%s or %s",
+        Lecturer.Degree.BSC.getDisplayText(),
+        Lecturer.Degree.MSC.getDisplayText()),
+        Lecturer.Degree.BSC, Lecturer.Degree.MSC),
+    PHD(Lecturer.Degree.PHD.getDisplayText(), Lecturer.Degree.PHD),
+    PROF(Lecturer.Degree.PROF.getDisplayText(), Lecturer.Degree.PROF);
 
     private final String displayText;
+    private final Lecturer.Degree[] validDegrees;
 
-    MemberDegree(String displayName) {
+    MemberDegree(String displayName, Lecturer.Degree... validDegrees) {
       this.displayText = displayName;
+      this.validDegrees = validDegrees;
     }
 
     @Override
