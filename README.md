@@ -50,6 +50,14 @@ Replace `<ARGS>` with the arguments you would like. For example:
 ./gradlew app:run -q --console=plain --args="../test/playground.dat --no-save"
 ```
 
+## Run tests
+
+There are some JUnit tests available to test the app. You can run them with
+
+```sh
+./gradlew test
+```
+
 ## VS Code tasks
 
 If running this project in VS Code, you have some tasks you can run from the command palette (`Ctrl+Shift+P`) → Run task. These include:
