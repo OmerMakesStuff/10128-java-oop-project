@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import omerpeled.collegemgmt.exceptions.*;
+import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Main {
   static Scanner s;
@@ -25,10 +26,10 @@ public class Main {
     String collegeName = s.nextLine();
     college = new College(collegeName);
 
-    MenuOption choice;
+    MainMenuOption choice;
     do {
-      choice = promptForMenuOption();
-      if (choice != MenuOption.EXIT)
+      choice = promptForMenuOption(MainMenuOption.class);
+      if (choice != MainMenuOption.EXIT)
         System.out.println(); // Separate from menu
 
       try {
@@ -99,15 +100,15 @@ public class Main {
         System.err.printf(MSG_FAIL_EXCEPTION, e);
       }
 
-      if (choice != MenuOption.EXIT)
+      if (choice != MainMenuOption.EXIT)
         System.out.println(); // Separate from menu
-    } while (choice != MenuOption.EXIT);
+    } while (choice != MainMenuOption.EXIT);
 
     s.close();
   }
 
   // region Menus
-  private enum MenuOption {
+  private enum MainMenuOption implements MenuOption {
     EXIT("Exit"),
     /* LECTURERS */
     ADD_LECTURER("Add lecturer"),
@@ -136,44 +137,23 @@ public class Main {
 
     private final String displayText;
 
-    MenuOption(String displayText) {
+    MainMenuOption(String displayText) {
       this.displayText = displayText;
     }
 
+    @Override
     public String getDisplayText() {
       return displayText;
     }
-  }
 
-  static final MenuOption[] MENU_OPTIONS = MenuOption.values();
-
-  private static String buildMainMenuString() {
-    StringBuilder str = new StringBuilder(
-        "COLLEGE STAFF MANAGEMENT - %s\n\n");
-    for (int i = 0; i < MENU_OPTIONS.length; i++) {
-      str.append(MENU_OPTIONS[i].ordinal()).append(") ")
-          .append(MENU_OPTIONS[i].getDisplayText()).append("\n");
+    @Override
+    public String getPromptTitle() {
+      return String.format("COLLEGE STAFF MANAGEMENT - %s%n",
+          college.getName());
     }
-    return str.toString();
   }
 
-  private static final String MAIN_MENU = buildMainMenuString();
-
-  static final Lecturer.Degree[] DEGREE_OPTIONS = Lecturer.Degree.values();
-
-  private static String buildDegreeMenuString() {
-    StringBuilder buf = new StringBuilder(
-        String.format(MSG_PROMPT_ENUM, MSG_DEGREE.toLowerCase()));
-    for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
-      buf.append("\n").append(i + 1).append(") ")
-          .append(DEGREE_OPTIONS[i].getDisplayText());
-    }
-    return buf.toString();
-  }
-
-  private static final String DEGREE_MENU = buildDegreeMenuString();
-
-  private enum CommitteeSortType {
+  private enum CommitteeSortType implements MenuOption {
     MEMBER_COUNT("By number of members (not including head)",
         new CommitteeMemberCountComparator(), "member(s)"),
     ARTICLE_COUNT("By total number of articles published (incl. by head)",
@@ -190,6 +170,7 @@ public class Main {
       this.rowSuffix = rowSuffix;
     }
 
+    @Override
     public String getDisplayText() {
       return displayText;
     }
@@ -201,78 +182,56 @@ public class Main {
     public String getRowSuffix() {
       return rowSuffix;
     }
+
+    @Override
+    public String getPromptTitle() {
+      return String.format(MSG_PROMPT_ENUM,
+          String.format("how to sort %ss", MSG_COMMITTEE.toLowerCase()));
+    }
   }
 
   static final CommitteeSortType[] COMMITTEE_SORT_OPTIONS = CommitteeSortType
       .values();
 
-  private static String buildCommitteeSortMenuString() {
-    StringBuilder buf = new StringBuilder(
-        String.format(MSG_PROMPT_ENUM,
-            String.format("how to sort %ss", MSG_COMMITTEE.toLowerCase())));
-    for (int i = 0; i < COMMITTEE_SORT_OPTIONS.length; i++) {
-      buf.append("\n").append(i + 1).append(") ")
-          .append(COMMITTEE_SORT_OPTIONS[i].getDisplayText());
-    }
-    return buf.toString();
-  }
+  private static <T extends Enum<T> & MenuOption> String buildMenuString(
+      Class<T> enumClass, int optionOffset) {
+    T[] options = enumClass.getEnumConstants();
+    if (options == null || options.length < 1)
+      throw new IllegalArgumentException(
+          "enumClass is not an enum or has no constants");
 
-  private static final String COMMITTEE_SORT_MENU = buildCommitteeSortMenuString();
+    StringBuilder str = new StringBuilder(options[0].getPromptTitle());
+    for (int i = 0; i < options.length; i++) {
+      str.append("\n").append(i + optionOffset).append(") ")
+          .append(options[i].getDisplayText());
+    }
+    return str.toString();
+  }
   // endregion
 
   // region Prompt for types
-  private static MenuOption promptForMenuOption() {
-    int choiceIdx = -1;
-    boolean isValid = false;
-    do {
-      System.out.printf(MAIN_MENU, college.getName());
-      System.out.printf("\n" + MSG_PROMPT, MSG_CHOICE);
-      try {
-        // Avoid \n in buffer after Enter
-        choiceIdx = Integer.parseInt(s.nextLine());
-      } catch (NumberFormatException _) {
-        System.err.println(MSG_FAIL_INVALID_CHOICE);
-        continue;
-      }
-
-      // Handle choices not covered by MenuOption enum
-      isValid = choiceIdx >= 0 && choiceIdx < MENU_OPTIONS.length;
-      if (!isValid)
-        System.err.println(MSG_FAIL_INVALID_CHOICE);
-    } while (!isValid);
-
-    return MENU_OPTIONS[choiceIdx];
+  private static <T extends Enum<T> & MenuOption> T promptForMenuOption(
+      Class<T> enumClass) {
+    return promptForMenuOption(enumClass, 0);
   }
 
-  private static Lecturer.Degree promptForDegree() {
+  private static <T extends Enum<T> & MenuOption> T promptForMenuOption(
+      Class<T> enumClass, int optionOffset) {
+    T[] options = enumClass.getEnumConstants();
+    if (options == null || options.length < 1)
+      throw new IllegalArgumentException(
+          "enumClass is not an enum or has no constants");
+
     int choiceIdx = -1;
     boolean isValid = false;
     do {
       System.out
-          .print(DEGREE_MENU + '\n' + String.format(MSG_PROMPT, MSG_CHOICE));
-      try {
-        choiceIdx = Integer.parseInt(s.nextLine()) - 1;
-        isValid = choiceIdx >= 0 && choiceIdx < DEGREE_OPTIONS.length;
-        if (!isValid)
-          System.err.println(MSG_FAIL_INVALID_CHOICE);
-      } catch (NumberFormatException _) {
-        System.err.println(MSG_FAIL_INVALID_CHOICE);
-      }
-    } while (!isValid);
-
-    return DEGREE_OPTIONS[choiceIdx];
-  }
-
-  private static CommitteeSortType promptForCommitteeSortType() {
-    int choiceIdx = -1;
-    boolean isValid = false;
-    do {
-      System.out
-          .print(COMMITTEE_SORT_MENU + '\n'
+          .print(buildMenuString(enumClass, optionOffset) + '\n'
               + String.format(MSG_PROMPT, MSG_CHOICE));
       try {
-        choiceIdx = Integer.parseInt(s.nextLine()) - 1;
-        isValid = choiceIdx >= 0 && choiceIdx < COMMITTEE_SORT_OPTIONS.length;
+        // Avoid \n in buffer after Enter
+        choiceIdx = Integer.parseInt(s.nextLine()) - optionOffset;
+        isValid = choiceIdx >= 0 && choiceIdx < options.length;
         if (!isValid)
           System.err.println(MSG_FAIL_INVALID_CHOICE);
       } catch (NumberFormatException _) {
@@ -280,7 +239,7 @@ public class Main {
       }
     } while (!isValid);
 
-    return COMMITTEE_SORT_OPTIONS[choiceIdx];
+    return options[choiceIdx];
   }
 
   private static Lecturer promptForLecturer() {
@@ -364,7 +323,7 @@ public class Main {
       String id = s.nextLine();
       System.out.printf(MSG_PROMPT, MSG_LECTURER + " name");
       String name = s.nextLine();
-      Lecturer.Degree degree = promptForDegree();
+      Lecturer.Degree degree = promptForMenuOption(Lecturer.Degree.class, 1);
       System.out.printf(MSG_PROMPT, "degree title");
       String degreeTitle = s.nextLine();
       System.out.printf(MSG_PROMPT, MSG_SALARY.toLowerCase());
@@ -588,7 +547,8 @@ public class Main {
     // Clone list, so original is not modified
     ArrayList<Committee> sorted = new ArrayList<>(committees);
 
-    CommitteeSortType sortType = promptForCommitteeSortType();
+    CommitteeSortType sortType = promptForMenuOption(CommitteeSortType.class,
+        1);
     System.out.println();
     Collections.sort(sorted, sortType.getComparator());
     // Print in descending order

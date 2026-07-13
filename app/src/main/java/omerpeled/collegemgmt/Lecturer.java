@@ -1,16 +1,19 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.Messages.MSG_DEGREE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_NUM;
+import static omerpeled.collegemgmt.utils.Messages.MSG_PROMPT_ENUM;
 import static omerpeled.collegemgmt.utils.Messages.MSG_SALARY;
 
 import java.util.ArrayList;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
+import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Lecturer {
-  public enum Degree {
+  public enum Degree implements MenuOption {
     BSC("BSc"),
     MSC("MSc"),
     PHD("PhD"),
@@ -22,8 +25,14 @@ public class Lecturer {
       this.displayText = displayName;
     }
 
+    @Override
     public String getDisplayText() {
       return displayText;
+    }
+
+    @Override
+    public String getPromptTitle() {
+      return String.format(MSG_PROMPT_ENUM, MSG_DEGREE.toLowerCase());
     }
   }
 
