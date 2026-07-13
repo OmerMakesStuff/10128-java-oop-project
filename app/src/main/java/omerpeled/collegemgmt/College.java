@@ -4,13 +4,14 @@ import static omerpeled.collegemgmt.utils.Messages.MSG_COMMITTEE;
 import static omerpeled.collegemgmt.utils.Messages.MSG_DEPARTMENT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_LECTURER_WITH_ID;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import omerpeled.collegemgmt.exceptions.ItemExistsException;
 import omerpeled.collegemgmt.exceptions.ItemNotExistsException;
 
-public class College {
+public class College implements Serializable {
   private final String name;
 
   private ArrayList<Lecturer> lecturers;
