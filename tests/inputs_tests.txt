@@ -38,7 +38,7 @@ c1
 4
 789
 c1
-# New committee for BsC, Doc as head
+# New committee for BSc, Doc as head
 2
 c2
 456

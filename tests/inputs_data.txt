@@ -1,7 +1,7 @@
 # ------------ COLLEGE NAME -----------
 College of Test
 # ------------- LECTURERS -------------
-# 1. Not prof - BsC
+# 1. Not prof - BSc
 1
 123
 Not prof
@@ -49,7 +49,7 @@ many other things
 Doc article 5
 Doc article 6
 
-# 5. Better Not prof - MsC
+# 5. Better Not prof - MSc
 1
 DEF
 Better Not prof
