@@ -528,8 +528,8 @@ public class Main {
   }
 
   private static void showDeptSalaryAvg() {
-    boolean departmentsExist = college.getDepartments().isEmpty();
-    if (!departmentsExist)
+    boolean departmentsEmpty = college.getDepartments().isEmpty();
+    if (departmentsEmpty)
       throw new OptionUnavailableException(
           String.format(MSG_FAIL_NONE_EXIST, MSG_DEPARTMENT.toLowerCase()));
 
