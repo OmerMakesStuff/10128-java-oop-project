@@ -9,6 +9,7 @@ import java.util.List;
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.AlreadyHeadException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
+import omerpeled.collegemgmt.exceptions.InvalidCommitteeMemberException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
 import omerpeled.collegemgmt.utils.MenuOption;
@@ -88,16 +89,23 @@ public class Committee implements Cloneable {
     this.name = name;
   }
 
-  @Deprecated(forRemoval = true)
-  public boolean hasMember(Lecturer lecturer) {
-    return members.contains(lecturer);
+  public boolean isMemberDegreeValid(Lecturer lecturer) {
+    Lecturer.Degree[] validDegrees = this.memberDegree.validDegrees;
+    boolean result = false;
+    for (int i = 0; i < validDegrees.length; i++) {
+      if (lecturer.getDegree() == validDegrees[i])
+        result = true;
+    }
+
+    return result;
   }
 
   public void addMember(Lecturer lecturer) {
     if (members.contains(lecturer) || this.head == lecturer)
       throw new AlreadyAddedException(lecturer.getName(), this.name);
 
-    // TODO: Only allow members whose degree == memberDegree
+    if (!isMemberDegreeValid(lecturer))
+      throw new InvalidCommitteeMemberException(this, lecturer);
 
     members.add(lecturer);
     lecturer.addCommittee(this);
@@ -132,9 +140,9 @@ public class Committee implements Cloneable {
     this.head = validHead;
     head.addCommittee(this);
 
-    // Previous head stays in the committee as a member
-    // TODO: Remove them instead if their degree != memberDegree
-    addMember(prevHead);
+    // Previous head stays in the committee as a member, if possible
+    if (isMemberDegreeValid(prevHead))
+      addMember(prevHead);
   }
 
   @Override
