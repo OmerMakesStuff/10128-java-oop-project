@@ -3,8 +3,33 @@
   "tasks": [
     {
       "label": "Run program",
+      "detail": "Load from & save to the default college.dat",
       "type": "shell",
       "command": "./gradlew app:run -q --console=plain",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "Run program - fresh",
+      "detail": "Don't load from college.dat, but save to it on exit",
+      "type": "shell",
+      "command": "./gradlew app:run -q --console=plain --args=\"--no-load\"",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "Run program - fresh & no save",
+      "detail": "Don't load from college.dat or save to it",
+      "type": "shell",
+      "command": "./gradlew app:run -q --console=plain --args=\"--no-load --no-save\"",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "Run program - playground",
+      "detail": "Load test data from test/playground.dat without saving",
+      "type": "shell",
+      "command": "./gradlew app:run -q --console=plain --args=\"../test/playground.dat --no-save\"",
       "problemMatcher": [],
       "group": { "kind": "test", "isDefault": true }
     },
