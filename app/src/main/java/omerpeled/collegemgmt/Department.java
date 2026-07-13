@@ -3,13 +3,14 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INPUT_NOT_POSITIVE_INT;
 import static omerpeled.collegemgmt.utils.Messages.MSG_STUDENT_COUNT;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import omerpeled.collegemgmt.exceptions.AlreadyAddedException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
 
-public class Department {
+public class Department implements Serializable {
   private String name;
   private int studentCount;
   private ArrayList<Lecturer> lecturers;
