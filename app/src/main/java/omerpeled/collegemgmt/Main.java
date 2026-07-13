@@ -22,21 +22,20 @@ import omerpeled.collegemgmt.exceptions.*;
 import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Main {
-  static Scanner s;
-  static College college = null;
-
   private static final String DEFAULT_FILENAME = "college.dat";
 
-  public static void main(String[] args) {
-    s = new Scanner(System.in);
+  static Scanner s;
+  static College college;
 
-    // TODO: Skip if --no-load arg was passed
-    loadFile();
-    if (college == null) {
-      System.out.print("Welcome!\nEnter college name: ");
-      String collegeName = s.nextLine();
-      college = new College(collegeName);
-    }
+  // File load/save related args
+  private static String filename;
+  private static boolean noLoad;
+  private static boolean noSave;
+
+  public static void main(String[] args) {
+    parseArgs(args);
+    s = new Scanner(System.in);
+    college = loadCollege();
 
     MainMenuOption choice;
     do {
@@ -47,8 +46,7 @@ public class Main {
       try {
         switch (choice) {
           case EXIT:
-            // TODO: Skip if --no-save arg was passed
-            saveFile();
+            saveCollege();
             break;
 
           case ADD_LECTURER:
@@ -580,29 +578,78 @@ public class Main {
   }
   // endregion
 
-  // region Files
-  private static void loadFile() {
-    try (ObjectInputStream inFile = new ObjectInputStream(
-        new FileInputStream(DEFAULT_FILENAME))) {
-      Object loadedData = inFile.readObject();
-      if (loadedData instanceof College loadedCollege)
-        college = loadedCollege;
-    } catch (FileNotFoundException _) {
-      // TODO: If no filename arg, just fail silently
-      System.err.println(String.format("File %s not found.", DEFAULT_FILENAME));
-    } catch (IOException | ClassNotFoundException e) {
-      System.err.println(String.format(
-          "Could not load file %s: %s", DEFAULT_FILENAME, e.getMessage()));
-    }
+  // region Data load & save
+  private static College loadNewCollege() {
+    System.out.print("Welcome!\nEnter college name: ");
+    String collegeName = s.nextLine();
+    return new College(collegeName);
   }
 
-  private static void saveFile() throws IOException {
+  private static College loadCollege() {
+    if (noLoad) // Start fresh if --no-load arg was passed
+      return loadNewCollege();
+
+    String loadFilename = filename != null ? filename : DEFAULT_FILENAME;
+    try (ObjectInputStream inFile = new ObjectInputStream(
+        new FileInputStream(loadFilename))) {
+      Object loadedData = inFile.readObject();
+      if (loadedData instanceof College loadedCollege)
+        return loadedCollege;
+      else
+        System.err.printf("Error: File %s is in an invalid format.",
+            loadFilename);
+    } catch (FileNotFoundException _) {
+      if (filename != null)
+        System.err
+            .printf("Error: File %s not found.%n%n", loadFilename);
+    } catch (IOException | ClassNotFoundException e) {
+      System.err.printf("Could not load file %s: %s%n%n", loadFilename,
+          e.getMessage());
+    }
+
+    // If loading failed, start fresh instead
+    return loadNewCollege();
+  }
+
+  private static void saveCollege() throws IOException {
+    if (noSave) // Skip saving if --no-save arg was passed
+      return;
+
+    String saveFilename = filename != null ? filename : DEFAULT_FILENAME;
+
     try (ObjectOutputStream outFile = new ObjectOutputStream(
-        new FileOutputStream(DEFAULT_FILENAME))) {
+        new FileOutputStream(saveFilename))) {
       outFile.writeObject(college);
     } catch (FileNotFoundException e) {
       System.err
           .println("Could not save to file: " + e);
+    }
+  }
+  // endregion
+
+  // region Parse args
+  private static void parseArgs(String[] args) {
+    // Default values
+    filename = null;
+    noLoad = false;
+    noSave = false;
+
+    for (int i = 0; i < args.length; i++) {
+      String arg = args[i];
+      if (arg.equals("--no-load"))
+        noLoad = true;
+      else if (arg.equals("--no-save"))
+        noSave = true;
+      else if (filename == null)
+        filename = arg;
+    }
+
+    // Passing a filename with both --no-load and --no-save is pointless,
+    // what would you do with the filename?
+    if (filename != null && noLoad && noSave) { // NOSONAR: false positive
+      System.err.println(
+          "Filename may not be provided alongside both --no-load and --no-save.");
+      System.exit(1);
     }
   }
   // endregion
