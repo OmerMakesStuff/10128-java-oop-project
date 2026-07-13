@@ -77,7 +77,7 @@ public class Main {
             break;
 
           case SHOW_LECTURERS:
-            showLecturers();
+            showItems(college.getLecturers());
             break;
 
           case COMPARE_LECTURERS:
@@ -85,7 +85,7 @@ public class Main {
             break;
 
           case SHOW_COMMITTEES:
-            showCommittees();
+            showItems(college.getCommittees());
             break;
 
           case COMPARE_COMMITTEES:
@@ -540,31 +540,22 @@ public class Main {
             + deptSalaryAvg + "₪");
   }
 
-  // FIXME: CODE DUPLICATION due to different array types :(
-  // TODO: Unify show methods with generics
-  private static void showLecturers() {
-    System.out.println("ALL LECTURERS");
+  private static <T> void showItems(List<T> items) {
+    String typeMsg;
+    if (items == college.getLecturers())
+      typeMsg = MSG_LECTURER;
+    else if (items == college.getCommittees())
+      typeMsg = MSG_COMMITTEE;
+    else
+      throw new IllegalArgumentException(
+          "Items argument must be one of: college.getLecturers(), college.getCommittees()");
 
-    List<Lecturer> lecturers = college.getLecturers();
-    if (lecturers.isEmpty())
-      System.err.printf(MSG_FAIL_NONE_EXIST + "%n", MSG_LECTURER.toLowerCase());
+    System.out.printf("ALL %s%n", typeMsg.toUpperCase());
+    if (items.isEmpty())
+      System.err.printf(MSG_FAIL_NONE_EXIST + "%n", typeMsg.toLowerCase());
     else {
-      for (int i = 0; i < college.getLecturers().size(); i++) {
-        System.out.println(lecturers.get(i));
-      }
-    }
-  }
-
-  private static void showCommittees() {
-    System.out.println("ALL COMMITTEES");
-
-    List<Committee> committees = college.getCommittees();
-    if (committees.isEmpty())
-      System.err.printf(MSG_FAIL_NONE_EXIST + "%n",
-          MSG_COMMITTEE.toLowerCase());
-    else {
-      for (int i = 0; i < committees.size(); i++) {
-        System.out.println(committees.get(i));
+      for (int i = 0; i < items.size(); i++) {
+        System.out.println(items.get(i));
       }
     }
   }
