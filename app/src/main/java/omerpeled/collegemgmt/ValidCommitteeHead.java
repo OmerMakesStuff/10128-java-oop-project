@@ -2,8 +2,10 @@ package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.utils.Messages.MSG_FAIL_INVALID_DEGREE;
 
+import java.util.List;
+
 public abstract class ValidCommitteeHead extends Lecturer {
-  private String[] articles;
+  private List<String> articles;
 
   protected ValidCommitteeHead(
       String id,
@@ -11,7 +13,7 @@ public abstract class ValidCommitteeHead extends Lecturer {
       Degree degree,
       String degreeTitle,
       double salary,
-      String[] articles,
+      List<String> articles,
       /**
        * Only valid degree for this lecturer. Subclasses should pass a constant
        * here and NOT allow passing in their own constructor.
@@ -27,7 +29,7 @@ public abstract class ValidCommitteeHead extends Lecturer {
     this.articles = articles;
   }
 
-  protected ValidCommitteeHead(Lecturer base, String[] articles,
+  protected ValidCommitteeHead(Lecturer base, List<String> articles,
       Degree validDegree) {
     this(
         base.getId(),
@@ -40,25 +42,20 @@ public abstract class ValidCommitteeHead extends Lecturer {
   }
 
   public int getArticleCount() {
-    int result = 0;
-    for (int i = 0; i < articles.length; i++) {
-      if (this.articles[i] != null)
-        result++;
-    }
-    return result;
+    return articles.size();
   }
 
   @Override
   protected StringBuilder toStringBuilder() {
-    int articleCount = this.getArticleCount();
+    int articleCount = this.articles.size();
     StringBuilder str = super.toStringBuilder().append("\n  Published ")
-        .append(articleCount < 1 ? "no" : articleCount).append(" article");
+        .append(articles.isEmpty() ? "no" : articleCount).append(" article");
     if (articleCount != 1)
       str.append("s");
     if (articleCount > 0) {
       str.append(": ");
       for (int i = 0; i < articleCount; i++) {
-        str.append(this.articles[i]);
+        str.append(this.articles.get(i));
         if (i < (articleCount - 1))
           str.append(", ");
       }
@@ -73,16 +70,8 @@ public abstract class ValidCommitteeHead extends Lecturer {
 
   @Override
   public boolean equals(Object obj) {
-    int articleCount = this.getArticleCount();
-    if (!(this instanceof ValidCommitteeHead lect) ||
-        articleCount != lect.getArticleCount())
-      return false;
-
-    for (int i = 0; i < articleCount; i++) {
-      if (!(this.articles[i].equals(lect.articles[i])))
-        return false;
-    }
-
-    return super.equals(obj);
+    return (super.equals(obj)
+        && this instanceof ValidCommitteeHead validHead
+        && this.articles.equals(validHead.articles));
   }
 }

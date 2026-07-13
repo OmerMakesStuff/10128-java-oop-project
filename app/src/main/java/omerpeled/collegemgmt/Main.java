@@ -4,11 +4,9 @@
 
 package omerpeled.collegemgmt;
 
-import static omerpeled.collegemgmt.utils.ArrayUtils.doubleStringsSize;
 import static omerpeled.collegemgmt.utils.Messages.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -338,7 +336,7 @@ public class Main {
     return department;
   }
 
-  private static String[] promptForArticles() {
+  private static ArrayList<String> promptForArticles() {
     ArrayList<String> result = new ArrayList<String>();
     int count = 0;
 
@@ -353,8 +351,7 @@ public class Main {
       }
     } while (!(lastItem.isBlank()));
 
-    // TODO: Just return ArrayList when articles are an ArrayList
-    return result.toArray(new String[0]);
+    return result;
   }
   // endregion
 
@@ -381,7 +378,7 @@ public class Main {
             degreeTitle,
             salary);
         if (degree == Lecturer.Degree.PHD || degree == Lecturer.Degree.PROF) {
-          String[] articles = promptForArticles();
+          ArrayList<String> articles = promptForArticles();
 
           if (degree == Lecturer.Degree.PROF) {
             System.out.printf(MSG_PROMPT, "Prof. awarding body");

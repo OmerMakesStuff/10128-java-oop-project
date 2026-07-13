@@ -1,5 +1,7 @@
 package omerpeled.collegemgmt;
 
+import java.util.List;
+
 public class ProfLecturer extends ValidCommitteeHead {
   private String awardingBodyName;
 
@@ -9,14 +11,14 @@ public class ProfLecturer extends ValidCommitteeHead {
       Degree degree,
       String degreeTitle,
       double salary,
-      String[] articles,
+      List<String> articles,
       String awardingBodyName) {
     super(id, name, degree, degreeTitle, salary, articles, Degree.PROF);
 
     this.awardingBodyName = awardingBodyName;
   }
 
-  public ProfLecturer(Lecturer base, String[] articles,
+  public ProfLecturer(Lecturer base, List<String> articles,
       String awardingBodyName) {
     this(base.getId(),
         base.getName(),
@@ -44,10 +46,8 @@ public class ProfLecturer extends ValidCommitteeHead {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(this instanceof ProfLecturer lect) ||
-        !(this.awardingBodyName.equals(lect.awardingBodyName)))
-      return false;
-
-    return super.equals(obj);
+    return (super.equals(obj)
+        && this instanceof ProfLecturer lect
+        && this.awardingBodyName.equals(lect.awardingBodyName));
   }
 }
