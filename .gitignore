@@ -16,3 +16,4 @@ out/
 
 # Binary files
 *.dat
+!test/*.dat
