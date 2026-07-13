@@ -393,9 +393,11 @@ public class Main {
       System.out.printf(MSG_PROMPT, MSG_COMMITTEE_NAME);
       String name = s.nextLine();
       Lecturer head = promptForLecturer("head lecturer ID");
+      Committee.MemberDegree memberDegree = promptForMenuOption(
+          Committee.MemberDegree.class, 1);
 
       try {
-        Committee newCommittee = new Committee(name, head);
+        Committee newCommittee = new Committee(name, head, memberDegree);
         college.addCommittee(newCommittee);
         addSuccess = true;
       } catch (InvalidCommitteeHeadException e) {

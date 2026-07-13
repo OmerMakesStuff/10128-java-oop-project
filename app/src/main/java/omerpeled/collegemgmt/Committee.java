@@ -1,5 +1,8 @@
 package omerpeled.collegemgmt;
 
+import static omerpeled.collegemgmt.utils.Messages.MSG_MEMBER_DEGREE;
+import static omerpeled.collegemgmt.utils.Messages.MSG_PROMPT_ENUM;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,17 +11,43 @@ import omerpeled.collegemgmt.exceptions.AlreadyHeadException;
 import omerpeled.collegemgmt.exceptions.InvalidCommitteeHeadException;
 import omerpeled.collegemgmt.exceptions.NotAddedException;
 import omerpeled.collegemgmt.exceptions.RemoveCommitteeHeadException;
+import omerpeled.collegemgmt.utils.MenuOption;
 
 public class Committee implements Cloneable {
+  public enum MemberDegree implements MenuOption {
+    BSC_OR_MSC(String.format("%s or %s", Lecturer.Degree.BSC.getDisplayText(),
+        Lecturer.Degree.MSC.getDisplayText())),
+    PHD(Lecturer.Degree.PHD.getDisplayText()),
+    PROF(Lecturer.Degree.PROF.getDisplayText());
+
+    private final String displayText;
+
+    MemberDegree(String displayName) {
+      this.displayText = displayName;
+    }
+
+    @Override
+    public String getDisplayText() {
+      return displayText;
+    }
+
+    @Override
+    public String getPromptTitle() {
+      return String.format(MSG_PROMPT_ENUM, MSG_MEMBER_DEGREE);
+    }
+  }
+
   private String name;
   private ValidCommitteeHead head;
+  private MemberDegree memberDegree;
   private ArrayList<Lecturer> members;
 
-  public Committee(String name, Lecturer head) {
+  public Committee(String name, Lecturer head, MemberDegree memberDegree) {
     if (!(head instanceof ValidCommitteeHead validHead))
       throw new InvalidCommitteeHeadException(head);
 
     this.name = name;
+    this.memberDegree = memberDegree;
     this.members = new ArrayList<Lecturer>();
     this.head = validHead;
     head.addCommittee(this);
@@ -30,6 +59,10 @@ public class Committee implements Cloneable {
 
   public Lecturer getHead() {
     return head;
+  }
+
+  public MemberDegree getMemberDegree() {
+    return memberDegree;
   }
 
   public List<Lecturer> getMembers() {
@@ -58,6 +91,8 @@ public class Committee implements Cloneable {
   public void addMember(Lecturer lecturer) {
     if (members.contains(lecturer) || this.head == lecturer)
       throw new AlreadyAddedException(lecturer.getName(), this.name);
+
+    // TODO: Only allow members whose degree == memberDegree
 
     members.add(lecturer);
     lecturer.addCommittee(this);
@@ -93,6 +128,7 @@ public class Committee implements Cloneable {
     head.addCommittee(this);
 
     // Previous head stays in the committee as a member
+    // TODO: Remove them instead if their degree != memberDegree
     addMember(prevHead);
   }
 
@@ -115,7 +151,9 @@ public class Committee implements Cloneable {
       str.append("No head");
     else
       str.append("Head: ").append(this.head.getName());
-    str.append("\n  ");
+
+    str.append("\n  Member degree: ")
+        .append(this.getMemberDegree().getDisplayText()).append("\n  ");
 
     if (this.members.isEmpty())
       str.append("No members.");
