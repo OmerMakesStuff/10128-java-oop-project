@@ -24,6 +24,7 @@ public class Messages {
   public static final String MSG_FAIL_ALREADY_HEAD = "%s is already the head of %s!";
   public static final String MSG_FAIL_NO_VALID_COMMITTEE_HEAD = "valid committee head doesn't exist.";
   public static final String MSG_FAIL_INVALID_COMMITTEE_HEAD = "%s cannot be a committee head! (degree must be %s or %s)";
+  public static final String MSG_FAIL_INVALID_COMMITTEE_MEMBER = "%s cannot be added to this committee! (member degree must be %s)";
   public static final String MSG_FAIL_REMOVE_COMMITTEE_HEAD = "%s is the head of %s! To remove them, a new head must be set first.";
   public static final String MSG_FAIL_INVALID_CHOICE = "Invalid choice!\n";
   public static final String MSG_FAIL_INPUT_NOT_POSITIVE_NUM = "%s must be a positive number!";
