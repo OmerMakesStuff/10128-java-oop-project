@@ -13,7 +13,7 @@ public class InvalidCommitteeHeadException extends CollegeException {
     super(String.format(
         MSG_FAIL_INVALID_COMMITTEE_HEAD,
         lecturer.getName(),
-        Lecturer.Degree.PHD.getDisplayName(),
-        Lecturer.Degree.PROF.getDisplayName()));
+        Lecturer.Degree.PHD.getDisplayText(),
+        Lecturer.Degree.PROF.getDisplayText()));
   }
 }

@@ -16,14 +16,14 @@ public class Lecturer {
     PHD("PhD"),
     PROF("Prof.");
 
-    private final String displayName;
+    private final String displayText;
 
     Degree(String displayName) {
-      this.displayName = displayName;
+      this.displayText = displayName;
     }
 
-    public String getDisplayName() {
-      return displayName;
+    public String getDisplayText() {
+      return displayText;
     }
   }
 
@@ -125,7 +125,7 @@ public class Lecturer {
         String.format("%s (%s), %s in %s%n  %s: %s | %s: %s₪%n  ",
             name,
             id,
-            degree.getDisplayName(),
+            degree.getDisplayText(),
             degreeTitle,
             MSG_DEPARTMENT,
             department == null ? "None" : department.getName(),

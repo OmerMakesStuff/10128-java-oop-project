@@ -66,7 +66,7 @@ public class Department {
         Lecturer currLecturer = lecturers.get(i);
         str.append("\n  ").append(currLecturer.getName()).append(" (")
             .append(currLecturer.getId()).append("), ")
-            .append(currLecturer.getDegree().getDisplayName()).append(" in ")
+            .append(currLecturer.getDegree().getDisplayText()).append(" in ")
             .append(currLecturer.getDegreeTitle());
       }
     }

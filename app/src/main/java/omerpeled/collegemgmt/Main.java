@@ -107,7 +107,7 @@ public class Main {
   }
 
   // region Menus
-  public enum MenuOption {
+  private enum MenuOption {
     EXIT("Exit"),
     /* LECTURERS */
     ADD_LECTURER("Add lecturer"),
@@ -129,8 +129,8 @@ public class Main {
     SHOW_LECTURERS("Show all lecturer details"),
     COMPARE_LECTURERS(String.format(
         "Compare lecturers (%s/%s)",
-        Lecturer.Degree.PHD.getDisplayName(),
-        Lecturer.Degree.PROF.getDisplayName())),
+        Lecturer.Degree.PHD.getDisplayText(),
+        Lecturer.Degree.PROF.getDisplayText())),
     SHOW_COMMITTEES("Show all committee details"),
     COMPARE_COMMITTEES("Compare committees");
 
@@ -166,7 +166,7 @@ public class Main {
         String.format(MSG_PROMPT_ENUM, MSG_DEGREE.toLowerCase()));
     for (int i = 0; i < DEGREE_OPTIONS.length; i++) {
       buf.append("\n").append(i + 1).append(") ")
-          .append(DEGREE_OPTIONS[i].getDisplayName());
+          .append(DEGREE_OPTIONS[i].getDisplayText());
     }
     return buf.toString();
   }
