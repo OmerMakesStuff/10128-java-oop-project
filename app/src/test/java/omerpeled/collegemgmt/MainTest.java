@@ -34,7 +34,7 @@ class MainTest {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       System.setOut(new PrintStream(out));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertTrue(out.toString().contains("Lecturer added."),
           "adding a BSc lecturer should succeed");
     }
@@ -50,7 +50,7 @@ class MainTest {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       System.setOut(new PrintStream(out));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertTrue(out.toString().contains("Lecturer added."),
           "adding a MSc lecturer should succeed");
     }
@@ -66,7 +66,7 @@ class MainTest {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       System.setOut(new PrintStream(out));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertTrue(out.toString().contains("Lecturer added."),
           "adding a PhD lecturer should succeed");
     }
@@ -82,7 +82,7 @@ class MainTest {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       System.setOut(new PrintStream(out));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertTrue(out.toString().contains("Lecturer added."),
           "adding a Prof. lecturer should succeed");
     }
@@ -101,7 +101,7 @@ class MainTest {
       ByteArrayOutputStream err = new ByteArrayOutputStream();
       System.setErr(new PrintStream(err));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertTrue(
           err.toString().contains("Lecturer with ID 123 already exists!"),
           "adding a duplicate lecturer should fail");
@@ -120,7 +120,7 @@ class MainTest {
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       System.setOut(new PrintStream(out));
 
-      Main.main(new String[] {});
+      Main.main(DEFAULT_ARGS);
       assertAll("listing added lecturers should succeed",
           () -> assertTrue(out.toString().contains("First (123)")),
           () -> assertTrue(out.toString().contains("Second (456)")));

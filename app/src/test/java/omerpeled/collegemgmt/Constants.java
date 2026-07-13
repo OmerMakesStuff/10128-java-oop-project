@@ -3,6 +3,8 @@ package omerpeled.collegemgmt;
 import static omerpeled.collegemgmt.Utils.joinLines;
 
 public class Constants {
+  static final String[] DEFAULT_ARGS = { "--no-load", "--no-save" };
+
   static final String COLLEGE_NAME = "College of Test";
 
   static final String LECTURER_BSC = joinLines(
