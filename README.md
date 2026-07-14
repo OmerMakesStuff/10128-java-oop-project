@@ -33,10 +33,11 @@ You can also use any of the VS Code scripts below.
 The app accepts the following arguments:
 
 - Filename: load a file other than `college.dat`
-- `--no-load`: don't load from file, but still save to it
+- `--no-load`: don't load from file, even if it exists, but still save to it
 - `--no-save`: don't save to file, but still load from it
 
-`--no-load` and `--no-save` can be used together to avoid touching any files, but not with a filename as that would be pointless.
+`--no-load` and `--no-save` can be used together to avoid touching any files. \
+A filename may be provided alongside either `--no-load` or `--no-save`, but not both as that would be pointless.
 
 To run the app with arguments:
 
