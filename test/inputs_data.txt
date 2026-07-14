@@ -1,16 +1,23 @@
 # ------------ COLLEGE NAME -----------
 College of Test
 # ------------- LECTURERS -------------
-# 1. Not prof - BSc
+# 1. First - BSc
 1
 123
-Not prof
+First
 1
 something
 1000
-# 2. Doc - PhD
+# 2. Second - MSc
 1
 456
+Second
+2
+something but better
+1000
+# 3. Doc - PhD
+1
+789
 Doc
 3
 many things
@@ -20,9 +27,19 @@ Doc article 2
 Doc article 3
 Doc article 4
 
-# 3. Prof - Prof
+# 4. Other Doc - PhD
 1
-789
+ABC
+Other Doc
+3
+many other things
+5000
+Doc article 5
+Doc article 6
+
+# 5. Prof - Prof
+1
+DEF
 Prof
 4
 everything
@@ -39,23 +56,6 @@ Prof article 9
 Prof article 10
 
 FAKE PROF FOR FREE!!!1!1
-# 4. Other Doc - PhD
-1
-ABC
-Other Doc
-3
-many other things
-5000
-Doc article 5
-Doc article 6
-
-# 5. Better Not prof - MSc
-1
-DEF
-Better Not prof
-2
-something but better
-1000
 # ------------ DEPARTMENTS ------------
 7
 d1
