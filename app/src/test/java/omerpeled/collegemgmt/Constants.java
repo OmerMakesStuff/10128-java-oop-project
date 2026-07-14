@@ -2,58 +2,78 @@ package omerpeled.collegemgmt;
 
 import static omerpeled.collegemgmt.Utils.joinLines;
 
-public class Constants {
+class Constants {
   static final String[] DEFAULT_ARGS = { "--no-load", "--no-save" };
 
   static final String COLLEGE_NAME = "College of Test";
 
+  // region Lecturers
   static final String LECTURER_BSC = joinLines(
-      "1", // Main menu: Add lecturer
-      "123", // ID
-      "First", // Name
-      "1", // Degree: BSc
-      "something", // Degree title
-      "1000" // Salary
-  );
+      "1", "123", "First", "1", "something", "1000");
+
   static final String LECTURER_MSC = joinLines(
-      "1", // Main menu: Add lecturer
-      "456", // ID
-      "Second", // Name
-      "2", // Degree: MSc
-      "something else", // Degree title
-      "1000" // Salary
-  );
+      "1", "456", "Second", "2", "something but better", "1000");
+
   static final String LECTURER_PHD = joinLines(
-      "1", // Main menu: Add lecturer
-      "789", // ID
-      "Doc", // Name
-      "3", // Degree: PhD
-      "many things", // Degree title
-      "5000", // Salary
-      "Doc article 1", // Articles
-      "Doc article 2",
-      "Doc article 3",
-      "Doc article 4",
-      "" // End of articles
+      "1", "789", "Doc", "3", "many things", "5000",
+      "Doc article 1", "Doc article 2", "Doc article 3", "Doc article 4",
+      "" // end of articles
   );
+
+  static final String LECTURER_PHD_2 = joinLines(
+      "1", "ABC", "Other Doc", "3", "many other things", "5000",
+      "Doc article 5", "Doc article 6",
+      "" // end of articles
+  );
+
   static final String LECTURER_PROF = joinLines(
-      "1", // Main menu: Add lecturer
-      "DEF", // ID
-      "Prof", // Name
-      "4", // Degree: Prof.
-      "everything", // Degree title
-      "100000", // Salary
-      "Prof article 1", // Articles
-      "Prof article 2",
-      "Prof article 3",
-      "Prof article 4",
-      "Prof article 5",
-      "Prof article 6",
-      "Prof article 7",
-      "Prof article 8",
-      "Prof article 9",
-      "Prof article 10",
-      "", // End of articles
-      "FAKE PROF FOR FREE!!!1!1" // Prof. awarding body
-  );
+      "1", "DEF", "Prof", "4", "everything", "100000",
+      "Prof article 1", "Prof article 2", "Prof article 3", "Prof article 4",
+      "Prof article 5", "Prof article 6", "Prof article 7", "Prof article 8",
+      "Prof article 9", "Prof article 10",
+      "", // end of articles
+      "FAKE PROF FOR FREE!!!1!1");
+
+  static final String ALL_LECTURERS = joinLines(
+      LECTURER_BSC, LECTURER_MSC, LECTURER_PHD, LECTURER_PHD_2, LECTURER_PROF);
+  // endregion
+
+  // region Departments
+  static final String DEPT_D1 = joinLines("7", "d1", "111");
+  static final String DEPT_D2 = joinLines("7", "d2", "222");
+
+  static final String ALL_DEPARTMENTS = joinLines(DEPT_D1, DEPT_D2);
+
+  static final String SETUP_DATA = joinLines(ALL_LECTURERS, ALL_DEPARTMENTS);
+  // endregion
+
+  // region Input builders
+  static String addToDept(String lecturerId, String deptName) {
+    return joinLines("8", lecturerId, deptName);
+  }
+
+  /** memberDegree: 1=BSc/MSc, 2=PhD, 3=Prof. */
+  static String addCommittee(String name, String headId, int memberDegree) {
+    return joinLines("2", name, headId, String.valueOf(memberDegree));
+  }
+
+  static String addToCommittee(String lecturerId, String committeeName) {
+    return joinLines("3", lecturerId, committeeName);
+  }
+
+  static String removeFromCommittee(String lecturerId, String committeeName) {
+    return joinLines("5", lecturerId, committeeName);
+  }
+
+  static String setCommitteeHead(String lecturerId, String committeeName) {
+    return joinLines("4", lecturerId, committeeName);
+  }
+
+  static String duplicateCommittee(String committeeName) {
+    return joinLines("6", committeeName);
+  }
+
+  static final String LIST_LECTURERS = "11";
+  static final String LIST_COMMITTEES = "13";
+  // endregion
 }
