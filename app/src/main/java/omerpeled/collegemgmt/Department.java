@@ -79,7 +79,6 @@ public class Department implements Serializable {
     return (obj instanceof Department dept &&
         this.name.equals(dept.name) &&
         this.studentCount == dept.studentCount &&
-        // TODO: Check for infinite recursion here
         this.lecturers.equals(dept.lecturers));
   }
 }

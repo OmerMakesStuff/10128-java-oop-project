@@ -258,7 +258,6 @@ public class Main {
     return promptForLecturer(MSG_LECTURER_ID);
   }
 
-  // FIXME: CODE DUPLICATION due to different types :(
   private static Lecturer promptForLecturer(String promptMsg) {
     String lecturerId;
     Lecturer lecturer;
