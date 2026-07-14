@@ -7,7 +7,7 @@
       "type": "shell",
       "command": "./gradlew app:run -q --console=plain",
       "problemMatcher": [],
-      "group": { "kind": "test", "isDefault": true }
+      "group": { "kind": "none", "isDefault": true }
     },
     {
       "label": "Run program - fresh",
@@ -15,7 +15,7 @@
       "type": "shell",
       "command": "./gradlew app:run -q --console=plain --args=\"--no-load\"",
       "problemMatcher": [],
-      "group": { "kind": "test", "isDefault": true }
+      "group": { "kind": "none" }
     },
     {
       "label": "Run program - fresh & no save",
@@ -23,7 +23,7 @@
       "type": "shell",
       "command": "./gradlew app:run -q --console=plain --args=\"--no-load --no-save\"",
       "problemMatcher": [],
-      "group": { "kind": "test", "isDefault": true }
+      "group": { "kind": "none" }
     },
     {
       "label": "Run program - playground",
@@ -31,24 +31,23 @@
       "type": "shell",
       "command": "./gradlew app:run -q --console=plain --args=\"../test/playground.dat --no-save\"",
       "problemMatcher": [],
-      "group": { "kind": "test", "isDefault": true }
-    },
-    // LEGACY - LINUX ONLY
-    {
-      "label": "LEGACY - Run program with preset data input",
-      "type": "shell",
-      "command": "(grep -h -v -E '^\\s*#' ${workspaceFolder}/test/inputs_data.txt; cat -) | ./gradlew app:run -q --console=plain --args=\"--no-load --no-save\"",
-      "problemMatcher": [],
-      "group": { "kind": "test" },
-      "detail": "Not supported on Windows (CMD/Powershell)!"
+      "group": { "kind": "none" }
     },
     {
-      "label": "LEGACY - Run program with preset data & tests input",
+      "label": "Run tests",
+      "detail": "Run JUnit tests normally",
       "type": "shell",
-      "command": "(grep -h -v -E '^\\s*#' ${workspaceFolder}/test/inputs_data.txt ${workspaceFolder}/test/inputs_tests.txt; cat -) | ./gradlew app:run -q --console=plain --args=\"--no-load --no-save\"",
+      "command": "./gradlew app:test",
       "problemMatcher": [],
-      "group": { "kind": "test" },
-      "detail": "Not supported on Windows (CMD/Powershell)!"
+      "group": { "kind": "test" }
+    },
+    {
+      "label": "Run tests - clean",
+      "detail": "Clean & run JUnit tests with `--rerun`",
+      "type": "shell",
+      "command": "./gradlew clean app:test --rerun",
+      "problemMatcher": [],
+      "group": { "kind": "test" }
     }
   ]
 }
