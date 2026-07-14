@@ -47,7 +47,7 @@ To run the app with arguments:
 Replace `<ARGS>` with the arguments you would like. For example:
 
 ```sh
-./gradlew app:run -q --console=plain --args="../test/playground.dat --no-save"
+./gradlew app:run -q --console=plain --args="other.dat --no-save"
 ```
 
 ## Run tests
@@ -55,7 +55,13 @@ Replace `<ARGS>` with the arguments you would like. For example:
 There are some JUnit tests available to test the app. You can run them with
 
 ```sh
-./gradlew test
+./gradlew app:test
+```
+
+To force running tests and clean up before running them:
+
+```sh
+./gradlew clean app:test --rerun
 ```
 
 ## VS Code tasks
@@ -70,11 +76,7 @@ If running this project in VS Code, you have some tasks you can run from the com
   Don't load from `college.dat` or save to it. Otherwise, same as Run program.
 - **Run program - playground** \
   Load some preset test data from `test/playground.dat`, without saving to it on exit.
-
-> [!IMPORTANT]
-> The following are **legacy scripts** and might be removed later. They have only been tested on Linux, but _might_ work on other Unix OSes, like macOS. **They definitely do NOT work on Windows (CMD/Powershell)!**
-
-- **Run program with preset data input** \
-  Start with preset data (lecturers & departments) defined in `test/inputs_data.txt`.
-- **Run program with preset data & tests inputs** \
-  Same as previous option, but also adds some testing (add to department, committee, etc) from `test/inputs_tests.txt`.
+- **Run tests** \
+  Run all JUnit tests normally. Won't load from or save to a file.
+- **Run tests - clean** \
+  Force running all tests from a clean slate. (`clean` and `--rerun`)
